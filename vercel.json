@@ -1,4 +1,5 @@
-# WLandStudio — Vercel
-# Framework preset: Vite
-# Build: npm run build
-# Output: dist
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}
