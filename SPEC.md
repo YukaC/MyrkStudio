@@ -54,7 +54,7 @@ id|status|task|cites
 T1|x|bootstrap repo: SPEC README LICENSE gitignore AGENTS docs|§G
 T2|x|migrar HTML base → React+Vite+TW demo deployable|V1,V2,V4,V6
 T3|x|invite code field + prioridad UX (demo local validate)|V3
-T4|.|deploy demo Vercel + README how-to|§I
+T4|x|deploy demo Vercel + README how-to|§I
 T5|x|cotización + plan fases (QUOTE PLAN ROADMAP)|§G
 T6|.|Cloudflare DNS WLandStudio.net → Vercel|§C
 T7|.|API applications + Discord webhook + store|V3,V4,V5
