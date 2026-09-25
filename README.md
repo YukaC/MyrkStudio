@@ -35,6 +35,9 @@ React 19 · Vite 7 · TypeScript · Tailwind 4 · Vercel (demo) · Cloudflare DN
 - Discord: https://discord.gg/3PvWKJBw
 - Repo: https://github.com/YukaC/WLandStudio
 - Dominio prod (plan): `WLandStudio.net`
+- **CI:** push a `main` → GitHub Actions → Vercel prod (secrets `VERCEL_*`)
+
+> Nota: la integración nativa Vercel↔GitHub App no conecta repos privados sin instalar la app en la org/repo. Mientras tanto el workflow `.github/workflows/deploy.yml` hace el deploy.
 
 ## Licencia
 

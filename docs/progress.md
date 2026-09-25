@@ -4,6 +4,8 @@
 |---|---|
 | 2026-09-25 | Kickoff: SPEC, docs, plan, quote. Repo `YukaC/WLandStudio`. |
 | 2026-09-25 | Demo Vite + invite UX. Deploy https://wlandstudio.vercel.app |
+| 2026-09-25 | SEO + Kuda + design system. Favicon bold. |
+| 2026-09-25 | CI: GHA → Vercel prod (secrets). GitHub App nativa pendiente (repo privado). |
 
-Hecho: T1–T5 (docs, demo, invite UX, Vercel, quote).  
-Próximo: F2 Cloudflare `WLandStudio.net` · F3 API real.
+Hecho: T1–T5 · CI deploy.  
+Próximo: F2 Cloudflare `WLandStudio.net` · instalar Vercel GitHub App en el repo privado (opcional).
