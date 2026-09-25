@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Wasteland">
+  <rect width="64" height="64" fill="#070708"/>
+  <rect x="8" y="8" width="48" height="48" fill="none" stroke="#e11d48" stroke-width="2"/>
+  <text x="32" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="22" font-weight="700" fill="#fafafa">W</text>
+  <circle cx="48" cy="16" r="3" fill="#e11d48"/>
+</svg>

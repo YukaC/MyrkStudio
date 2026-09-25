@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wlandstudio.vercel.app/sitemap.xml

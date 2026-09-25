@@ -1,6 +1,6 @@
 # Cotización — WLandStudio (precio cerrado)
 
-> **No es factura.** Pitch a Maxi / Holy.  
+> **No es factura.** Pitch a Kuda / Holy.  
 > Modelo: **precio fijo por web entregada** (no por hora). Estándar mercado landing/funnel estudio indie.  
 > Fecha: 2026-09-25 · Yuka (Agustín Ciucani)
 

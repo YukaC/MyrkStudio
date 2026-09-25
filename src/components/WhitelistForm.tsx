@@ -43,14 +43,14 @@ export function WhitelistForm() {
       ? hasPriority
         ? `Invitación: ${inviteCode.trim().toUpperCase()} (PRIORIDAD / PLAZA RESERVADA)`
         : `Invitación: ${inviteCode.trim().toUpperCase()} (código no válido en demo)`
-      : "Invitación: — (cola pública)";
+      : "Invitación: - (cola pública)";
 
     const text = [
       "=== POSTULACIÓN WASTELAND ===",
       `Discord: ${discord.trim()}`,
       `Minecraft: ${minecraft.trim()} (${platform})`,
       `Edad: ${age.trim()}`,
-      `Experiencia previa: ${experience.trim() || "—"}`,
+      `Experiencia previa: ${experience.trim() || "-"}`,
       `Motivo: ${motive.trim()}`,
       priorityLine,
       "Normas aceptadas: Sí",
@@ -76,12 +76,12 @@ export function WhitelistForm() {
 
   const statusClass =
     status.kind === "error"
-      ? "text-[var(--red)]"
+      ? "text-accent"
       : status.kind === "success"
-        ? "text-[var(--green)]"
+        ? "text-success"
         : status.kind === "warn"
-          ? "text-[var(--amber)]"
-          : "text-[var(--faint)]";
+          ? "text-warning"
+          : "text-faint";
 
   return (
     <form className="space-y-5" onSubmit={handleCopy} noValidate>
@@ -168,18 +168,14 @@ export function WhitelistForm() {
           />
           <p id="wl-invite-hint" className="mt-1.5 font-term text-[0.7rem] leading-snug">
             {invitePriority === true && (
-              <span className="text-[var(--green)]">
-                Código válido — prioridad / plaza reservada
-              </span>
+              <span className="text-success">Código válido - prioridad / plaza reservada</span>
             )}
             {invitePriority === false && (
-              <span className="text-[var(--amber)]">
+              <span className="text-warning">
                 Código no reconocido. Podés postular igual (cola pública).
               </span>
             )}
-            {invitePriority === null && (
-              <span className="text-[var(--faint)]">Sin código = cola pública</span>
-            )}
+            {invitePriority === null && <span className="text-faint">Sin código = cola pública</span>}
           </p>
         </div>
       </div>
@@ -213,28 +209,23 @@ export function WhitelistForm() {
         />
       </div>
 
-      <label className="flex cursor-pointer items-start gap-3 text-sm text-[var(--muted)]">
+      <label className="flex cursor-pointer items-start gap-3 text-sm text-muted">
         <input
           required
           id="wl-normas"
           type="checkbox"
           checked={acceptedRules}
           onChange={(e) => setAcceptedRules(e.target.checked)}
-          className="mt-1 size-4 shrink-0 accent-[var(--red)]"
+          className="mt-1 size-4 shrink-0 accent-[var(--color-accent)]"
         />
         <span>Leí y acepto las normas del servidor.</span>
       </label>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-        <button type="submit" className="btn btn-primary scan-btn flex-1 sm:flex-[2]">
+        <button type="submit" className="btn btn-primary flex-1 sm:flex-[2]">
           Copiar postulación
         </button>
-        <a
-          href={DISCORD_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="btn btn-discord flex-1"
-        >
+        <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-discord flex-1">
           Abrir Discord
         </a>
       </div>
@@ -248,13 +239,13 @@ export function WhitelistForm() {
           readOnly
           rows={8}
           value={output}
-          className="field-control font-term text-xs text-[var(--green)]"
+          className="field-control font-term text-xs text-success"
           onClick={(e) => (e.target as HTMLTextAreaElement).select()}
           aria-label="Texto de postulación copiable"
         />
       ) : null}
 
-      <p className="text-center font-term text-[0.7rem] text-[var(--faint)]">
+      <p className="text-center font-term text-[0.7rem] text-faint">
         Plazas {PLAZAS.occupied}/{PLAZAS.total} · invite válido = prioridad · pegá en #whitelist
       </p>
     </form>

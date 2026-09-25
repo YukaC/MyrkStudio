@@ -13,7 +13,7 @@ Ordenado para **demo rápida → prod con dominio → backend whitelist**.
 | **Discord** | Hub comunidad: https://discord.gg/3PvWKJBw |
 | **Dominio** | `WLandStudio.net` vía Cloudflare |
 | **Demo** | Vercel ya, sin backend (clipboard → `#whitelist`) |
-| **Staff público** | Maxi (cara), Holy/Diego (financia), Yuka (web), resto vía Discord |
+| **Staff público** | Kuda (cara), Holy/Diego (financia), Yuka (web), resto vía Discord |
 
 Fuentes lore/guion: Google Doc "Wasteland Migrado" + Miro escaleta (spoilers ⊥ web pública).
 
@@ -69,7 +69,7 @@ Fuentes lore/guion: Google Doc "Wasteland Migrado" + Miro escaleta (spoilers ⊥
 
 ## Fase 5 — Contenido & polish (continuo)
 
-1. Bios reales + fotos staff (OK Maxi/Holy)
+1. Bios reales + fotos staff (OK Kuda/Holy)
 2. Assets brand (logo, trailer embed)
 3. Próximas series (clasificado → reveal)
 4. Lore terminal codes in-game → unlock teaser web (nice-to-have)

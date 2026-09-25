@@ -34,7 +34,7 @@ Un incidente en ensayos humanos + fallo de contención → brote → colapso. El
 
 | Nombre | Rol público |
 |---|---|
-| Maxi (Kuda) | Fundador / cara |
+| Kuda | Fundador / cara |
 | Holy (Diego) | Co-owner |
 | Yuka | Web / admin |
 | + builders, guionistas, programadores | Ver Discord |
