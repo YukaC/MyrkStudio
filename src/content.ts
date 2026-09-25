@@ -13,12 +13,49 @@ export const SERIES_NAME = "Wasteland: Japan Apocalypse";
 export type StaffMember = {
   name: string;
   role: string;
+  callsign: string;
 };
 
 export const STAFF: StaffMember[] = [
-  { name: "Maxi", role: "Fundador / Cara pública" },
-  { name: "Holy", role: "Co-owner / Financiación" },
-  { name: "Yuka", role: "Web / Administración" },
+  { name: "Maxi", role: "Fundador / Cara pública", callsign: "CMD-01" },
+  { name: "Holy", role: "Co-owner / Financiación", callsign: "CMD-02" },
+  { name: "Yuka", role: "Web / Administración", callsign: "OPS-WEB" },
+];
+
+export type SeriesFeature = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+export const SERIES_FEATURES: SeriesFeature[] = [
+  {
+    id: "01",
+    title: "Supervivencia real",
+    body: "Escasez, decisiones con consecuencias y un mundo que no perdona.",
+  },
+  {
+    id: "02",
+    title: "Facciones",
+    body: "Grupos con intereses propios disputándose la zona cero.",
+  },
+  {
+    id: "03",
+    title: "Eventos guionizados",
+    body: "Una escaleta narrativa dirige la historia semana a semana.",
+  },
+  {
+    id: "04",
+    title: "Zona cero explorable",
+    body: "Un Japón post-colapso, distinto a cualquier apocalipsis típico.",
+  },
+];
+
+export const WEEK1_DAYS = [
+  { label: "DÍA 1", detail: "Apertura", state: "open" as const },
+  { label: "DÍA 2", detail: "[CORRUPTO]", state: "corrupt" as const },
+  { label: "DÍA 3", detail: "[CORRUPTO]", state: "corrupt" as const },
+  { label: "DÍA 4", detail: "Asentamiento", state: "open" as const },
 ];
 
 /** Demo-only invite codes. Prod validates server-side (§V3, §V5). */
@@ -36,4 +73,8 @@ export function isValidDemoInvite(code: string): boolean {
   const normalized = code.trim().toUpperCase();
   if (!normalized) return false;
   return getDemoInviteCodes().has(normalized);
+}
+
+export function plazasPercent(): number {
+  return Math.round((PLAZAS.occupied / PLAZAS.total) * 100);
 }

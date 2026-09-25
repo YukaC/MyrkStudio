@@ -21,6 +21,7 @@ Landing + form whitelist (invitación prioriza plaza) para Wasteland Studio; ser
 - licencia: MIT · autor: Agustín Ciucani (Yuka) + Wasteland Studio
 - idioma UI: español · código/idents: inglés
 - repo: `git@github.com:YukaC/WLandStudio.git` (privado)
+- comercial: cotización **fixed-price** por web entregada (no hora) → `docs/QUOTE.md` · B=USD 1400 · C=USD 2200
 
 ## §I
 

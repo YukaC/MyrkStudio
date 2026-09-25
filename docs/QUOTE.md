@@ -1,88 +1,128 @@
-# Cotización estimada — WLandStudio
+# Cotización — WLandStudio (precio cerrado)
 
-> **No es factura.** Estimación para pitch a dueños (Maxi / Holy).  
-> Ajustar tarifa horaria en la tabla de abajo. Montos en **USD** (horas × tarifa).  
-> Fecha: 2026-09-25 · Autor estimación: Yuka (Agustín Ciucani)
+> **No es factura.** Pitch a Maxi / Holy.  
+> Modelo: **precio fijo por web entregada** (no por hora). Estándar mercado landing/funnel estudio indie.  
+> Fecha: 2026-09-25 · Yuka (Agustín Ciucani)
 
-## Tarifa (editar)
+## Por qué fixed-price
 
-| Concepto | Valor |
+Landing + whitelist + dominio = alcance **cerrable**. Hora confunde al dueño (“¿cuánto sale la web?”).  
+Se cotiza **paquete entregable**; cambios de scope → addendum (no comerse el fixed).
+
+Mercado ref (LATAM / freelance mid, USD 2025–26):
+
+| Tipo | Rango típico |
 |---|---|
-| Tarifa sugerida desarrollo web | **USD 25 / h** (cambiar si acordás otra) |
-| Moneda cotización | USD |
-| IVA / facturación AR | a definir con Holy (no incluido abajo) |
+| Landing marketing sola | USD 400–900 |
+| Landing + form + deploy + dominio | USD 900–1 600 |
+| + backend + invites + Discord + admin básico | USD 1 600–2 800 |
+
+Este proyecto cae en la **tercera fila** si quieren “web terminada” operativa.
 
 ---
 
-## Resumen por fase
+## Paquetes (elegir uno)
 
-| Fase | Qué incluye | Horas (rango) | @ USD 25/h | Prioridad |
-|---|---|---|---|---|
-| **F0** Docs + bootstrap repo | SPEC, plan, quote, arquitectura | 4–6 | 100–150 | Hecho / en curso |
-| **F1** Demo landing Vercel | React+Vite, form, invite UX, deploy | 10–16 | 250–400 | **Pitch YA** |
-| **F2** Cloudflare + dominio | DNS, SSL, redirects, OG | 2–4 | 50–100 | Post-demo |
-| **F3** Backend whitelist | API, DB, invites, webhook Discord, anti-spam | 16–28 | 400–700 | Core prod |
-| **F4** Admin staff | auth, cola, aceptar/rechazar, plazas live | 12–20 | 300–500 | Operación |
-| **F5** Contenido & polish | bios, assets, lore terminal, analytics | 8–16 | 200–400 | Continuo |
-| **Buffer** imprevistos (~15%) | QA, cambios copy, reuniones | 8–12 | 200–300 | — |
+### A — Demo pitch *(ya hecha)*
 
-### Totales orientativos
+| | |
+|---|---|
+| **Precio** | **USD 0** incluido en kickoff / cortesía pitch (o **USD 200** si facturan demo aparte) |
+| **Entrega** | https://wlandstudio.vercel.app · docs · form clipboard + invite UX demo |
+| **No incluye** | API real · dominio · admin |
 
-| Paquete | Horas | USD @ 25/h | Notas |
-|---|---|---|---|
-| **Demo pitch** (F0+F1) | 14–22 | **350–550** | Suficiente para “tirarle la demo por la cabeza” |
-| **MVP prod** (F0–F3 + F2) | 32–54 | **800–1 350** | Dominio + form real |
-| **Proyecto completo** (F0–F5 + buffer) | **60–102** | **1 500–2 550** | Admin + polish |
+Útil solo para mostrar. Holy ya puede verla.
 
 ---
 
-## Detalle de alcance incluido / excluido
+### B — Web MVP terminada ★ recomendada
 
-### Incluido en “proyecto total”
+| | |
+|---|---|
+| **Precio cerrado** | **USD 1 400** |
+| **Rango negociación** | USD 1 200 – 1 600 |
+| **Plazo típico** | ~2–3 semanas desde OK + assets |
 
-- Landing responsive (serie + studio + staff + próximas series)
-- Form whitelist + códigos invitación con prioridad/reserva
-- Deploy demo Vercel + DNS Cloudflare `WLandStudio.net`
-- Persistencia postulaciones + notificación Discord
-- Panel admin mínimo (revisión staff)
-- Docs (SPEC, plan, arquitectura) mantenidos
+**Incluye**
 
-### Excluido (cotizar aparte)
+- Landing responsive (serie + estudio + staff + próximas series)
+- Form whitelist **real** (guarda postulaciones)
+- Códigos invitación → prioridad / reserva plaza
+- Webhook Discord → canal staff
+- DNS Cloudflare `WLandStudio.net` + HTTPS + redirects
+- Deploy prod (Vercel o CF Pages)
+- Anti-spam básico (rate limit / honeypot)
+- 1 ronda de feedback copy/UI post-entrega
+- Docs técnicos del repo
 
-- Plugins/mods Minecraft, builds del mapa, cinemáticas
-- Bot Discord full (roles, tickets, economía)
-- App móvil / launcher
-- Captación pagos (donaciones, merch)
-- Branding completo (logo set, motion, trailer edit)
-- Hosting del **servidor MC** (solo la web)
-
----
-
-## Forma de trabajo sugerida
-
-1. **Kickoff** con Maxi + Holy: OK tarifa, alcance MVP, fecha soft-launch
-2. Entrega **demo F1** (URL Vercel) → feedback 48–72 h
-3. Cierre F2+F3 (dominio + form real)
-4. F4 cuando haya volumen real de postulantes
-5. F5 en paralelo con contenido del studio
-
-Pago sugerido: **40% al kickoff · 40% al MVP prod · 20% al cierre admin/polish** (negociable).
+**No incluye** → ver exclusiones abajo.
 
 ---
 
-## Comparativa rápida “qué comprar”
+### C — Web completa (MVP + operación staff)
 
-| Opción | Pagan | Obtienen |
+| | |
+|---|---|
+| **Precio cerrado** | **USD 2 200** |
+| **Rango negociación** | USD 1 900 – 2 500 |
+| **Plazo típico** | ~3–5 semanas |
+
+**Todo lo de B, más**
+
+- Panel admin mínimo (login staff, cola, aceptar/rechazar, notas)
+- Contador plazas live desde admin
+- Polish contenido (bios, OG image, SEO básico) con assets que pase el studio
+- 2 rondas de feedback
+
+---
+
+## Resumen para WhatsApp / pitch
+
+```
+Opción B — Web MVP terminada:  USD 1.400
+Opción C — Web + admin staff:  USD 2.200
+Demo actual: ya online (cortesía)
+Dominio WLandStudio.net: incluido en B/C (vos comprás dominio; yo configuro DNS)
+```
+
+---
+
+## Exclusiones (siempre aparte)
+
+- Servidor Minecraft / plugins / mapa / cinemáticas / bot Discord full
+- Branding desde cero (logo pack, motion, trailer edit)
+- Pagos / merch / app móvil
+- Multi-idioma · CMS headless grande
+- Mantenimiento mensual (opcional: **USD 40–80/mes** post-entrega)
+
+Cambio de alcance mid-proyecto → cotización addendum (no se “absorbe” en el fixed).
+
+---
+
+## Forma de pago sugerida
+
+| Hito | % | Cuándo |
 |---|---|---|
-| A — Solo demo | ~USD 350–550 | URL para mostrar + docs |
-| B — MVP prod | ~USD 800–1 350 | Dominio + form + invites + Discord |
-| C — Full | ~USD 1 500–2 550 | + admin + polish contenido |
+| Kickoff (OK alcance + contrato verbal/escrito) | **40%** | Al arrancar B o C |
+| Entrega staging / dominio live | **40%** | Web usable en `WLandStudio.net` |
+| Cierre + handoff | **20%** | Feedback rounds OK · acceso admin/docs |
+
+IVA / monotributo / factura AR: a definir con Holy (montos arriba **netos USD**, sin impuestos).
 
 ---
 
-## Notas honestas
+## Qué decirle a Holy (script corto)
 
-- Horas asumen copy/staff assets entregados a tiempo por el studio.
-- Si el backend se hace en **Cloudflare Workers + D1** (mismo vendor DNS), F3 puede ir al piso del rango.
-- Si piden Next.js full + CMS headless desde día 1, sumar ~20–30% a F1/F5.
-- Cotización válida ~30 días; re-estimar si cambia alcance (bot, pagos, multi-idioma).
+> La web del studio (landing + whitelist con invitaciones + Discord + dominio) la cotizo **cerrada**, no por hora.  
+> **USD 1.400** web operativa (form real + invites + dominio).  
+> **USD 2.200** si quieren panel para que el staff acepte/rechace postulantes.  
+> Demo ya está: wlandstudio.vercel.app
+
+---
+
+## Notas
+
+- Precio asume copy/staff/fotos a tiempo; delay de assets = delay de calendario, no sube precio solo.
+- Dominio lo compra el studio (~USD 10–15/año); config DNS incluida en B/C.
+- Cotización válida **30 días**.
+- Interna: horas estimadas siguen en `docs/PLAN.md` (solo planning; **no** se venden al cliente).

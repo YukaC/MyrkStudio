@@ -33,7 +33,7 @@ export function WhitelistForm() {
     if (!discord.trim() || !minecraft.trim() || !age.trim() || !motive.trim() || !acceptedRules) {
       setStatus({
         kind: "error",
-        message: "⚠ Completa los campos obligatorios (*) y acepta las normas.",
+        message: "Completá los campos obligatorios (*) y aceptá las normas.",
       });
       return;
     }
@@ -63,8 +63,8 @@ export function WhitelistForm() {
       setStatus({
         kind: "success",
         message: hasPriority
-          ? "✓ Copiado con PRIORIDAD. Pegalo en #whitelist."
-          : "✓ Copiado. Pegalo en #whitelist en Discord.",
+          ? "Copiado con PRIORIDAD. Pegalo en #whitelist."
+          : "Copiado. Pegalo en #whitelist en Discord.",
       });
     } catch {
       setStatus({
@@ -76,150 +76,170 @@ export function WhitelistForm() {
 
   const statusClass =
     status.kind === "error"
-      ? "text-red-500"
+      ? "text-[var(--red)]"
       : status.kind === "success"
-        ? "text-green-500"
+        ? "text-[var(--green)]"
         : status.kind === "warn"
-          ? "text-yellow-500"
-          : "text-zinc-500";
+          ? "text-[var(--amber)]"
+          : "text-[var(--faint)]";
 
   return (
-    <form id="wl-form" className="space-y-4" onSubmit={handleCopy}>
-      <div>
-        <label htmlFor="wl-discord" className="mb-1 block text-xs font-term text-zinc-400">
-          Usuario de Discord *
-        </label>
-        <input
-          required
-          id="wl-discord"
-          type="text"
-          placeholder="tuusuario"
-          value={discord}
-          onChange={(e) => setDiscord(e.target.value)}
-          className="w-full border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
-        />
-      </div>
+    <form className="space-y-5" onSubmit={handleCopy} noValidate>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div className="sm:col-span-2">
+          <label htmlFor="wl-discord" className="field-label">
+            Usuario de Discord *
+          </label>
+          <input
+            required
+            id="wl-discord"
+            type="text"
+            autoComplete="username"
+            placeholder="tuusuario"
+            value={discord}
+            onChange={(e) => setDiscord(e.target.value)}
+            className="field-control"
+          />
+        </div>
 
-      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label htmlFor="wl-mc" className="mb-1 block text-xs font-term text-zinc-400">
+          <label htmlFor="wl-mc" className="field-label">
             Usuario de Minecraft *
           </label>
           <input
             required
             id="wl-mc"
             type="text"
+            autoComplete="off"
             placeholder="Steve123"
             value={minecraft}
             onChange={(e) => setMinecraft(e.target.value)}
-            className="w-full border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
+            className="field-control"
           />
         </div>
+
         <div>
-          <label htmlFor="wl-edad" className="mb-1 block text-xs font-term text-zinc-400">
+          <label htmlFor="wl-edad" className="field-label">
             Edad *
           </label>
           <input
             required
             id="wl-edad"
             type="number"
+            inputMode="numeric"
             min={1}
             max={120}
             placeholder="18"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            className="w-full border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
+            className="field-control"
           />
+        </div>
+
+        <div>
+          <label htmlFor="wl-plataforma" className="field-label">
+            Plataforma
+          </label>
+          <select
+            id="wl-plataforma"
+            value={platform}
+            onChange={(e) => setPlatform(e.target.value as Platform)}
+            className="field-control"
+          >
+            <option value="Java">Java</option>
+            <option value="Bedrock">Bedrock</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="wl-invite" className="field-label">
+            Código de invitación
+          </label>
+          <input
+            id="wl-invite"
+            type="text"
+            autoComplete="off"
+            spellCheck={false}
+            placeholder="WL-XXXX (opcional)"
+            value={inviteCode}
+            onChange={(e) => setInviteCode(e.target.value)}
+            className="field-control uppercase"
+            aria-describedby="wl-invite-hint"
+          />
+          <p id="wl-invite-hint" className="mt-1.5 font-term text-[0.7rem] leading-snug">
+            {invitePriority === true && (
+              <span className="text-[var(--green)]">
+                Código válido — prioridad / plaza reservada
+              </span>
+            )}
+            {invitePriority === false && (
+              <span className="text-[var(--amber)]">
+                Código no reconocido. Podés postular igual (cola pública).
+              </span>
+            )}
+            {invitePriority === null && (
+              <span className="text-[var(--faint)]">Sin código = cola pública</span>
+            )}
+          </p>
         </div>
       </div>
 
       <div>
-        <label htmlFor="wl-plataforma" className="mb-1 block text-xs font-term text-zinc-400">
-          Plataforma
-        </label>
-        <select
-          id="wl-plataforma"
-          value={platform}
-          onChange={(e) => setPlatform(e.target.value as Platform)}
-          className="w-full border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
-        >
-          <option value="Java">Java</option>
-          <option value="Bedrock">Bedrock</option>
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="wl-invite" className="mb-1 block text-xs font-term text-zinc-400">
-          Código de invitación (opcional)
-        </label>
-        <input
-          id="wl-invite"
-          type="text"
-          placeholder="WL-XXXX"
-          value={inviteCode}
-          onChange={(e) => setInviteCode(e.target.value)}
-          className="w-full border border-zinc-800 bg-zinc-900 p-3 text-sm uppercase text-white transition focus:border-red-600"
-        />
-        {invitePriority === true && (
-          <p className="mt-1 text-xs font-term text-green-500">
-            ✓ Código válido — prioridad / plaza reservada ({PLAZAS.total} cupos)
-          </p>
-        )}
-        {invitePriority === false && (
-          <p className="mt-1 text-xs font-term text-yellow-500">
-            Código no reconocido en demo. Podés postular igual (cola pública).
-          </p>
-        )}
-      </div>
-
-      <div>
-        <label htmlFor="wl-exp" className="mb-1 block text-xs font-term text-zinc-400">
-          ¿Experiencia previa en roleplay/SMP narrativos?
+        <label htmlFor="wl-exp" className="field-label">
+          Experiencia en roleplay / SMP narrativos
         </label>
         <textarea
           id="wl-exp"
           rows={2}
-          placeholder="Cuéntanos brevemente..."
+          placeholder="Contanos brevemente…"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
-          className="w-full resize-none border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
+          className="field-control"
         />
       </div>
 
       <div>
-        <label htmlFor="wl-motivo" className="mb-1 block text-xs font-term text-zinc-400">
-          ¿Por qué quieres unirte a Wasteland? *
+        <label htmlFor="wl-motivo" className="field-label">
+          ¿Por qué querés unirte a Wasteland? *
         </label>
         <textarea
           required
           id="wl-motivo"
-          rows={3}
-          placeholder="Escribe tu motivación..."
+          rows={4}
+          placeholder="Motivación…"
           value={motive}
           onChange={(e) => setMotive(e.target.value)}
-          className="w-full resize-none border border-zinc-800 bg-zinc-900 p-3 text-sm text-white transition focus:border-red-600"
+          className="field-control"
         />
       </div>
 
-      <label className="flex items-start gap-2 text-xs text-zinc-400">
+      <label className="flex cursor-pointer items-start gap-3 text-sm text-[var(--muted)]">
         <input
           required
           id="wl-normas"
           type="checkbox"
           checked={acceptedRules}
           onChange={(e) => setAcceptedRules(e.target.checked)}
-          className="mt-0.5 accent-red-600"
+          className="mt-1 size-4 shrink-0 accent-[var(--red)]"
         />
-        He leído y acepto las normas del servidor.
+        <span>Leí y acepto las normas del servidor.</span>
       </label>
 
-      <button
-        type="submit"
-        className="scan-btn w-full bg-white px-6 py-3 text-sm font-bold tracking-wide text-black uppercase transition hover:bg-zinc-200"
-      >
-        Copiar postulación
-      </button>
-      <p className={`h-4 text-center text-xs font-term ${statusClass}`} aria-live="polite">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+        <button type="submit" className="btn btn-primary scan-btn flex-1 sm:flex-[2]">
+          Copiar postulación
+        </button>
+        <a
+          href={DISCORD_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-discord flex-1"
+        >
+          Abrir Discord
+        </a>
+      </div>
+
+      <p className={`min-h-[1.25rem] text-center font-term text-xs ${statusClass}`} aria-live="polite">
         {status.message}
       </p>
 
@@ -228,23 +248,15 @@ export function WhitelistForm() {
           readOnly
           rows={8}
           value={output}
-          className="w-full resize-none border border-zinc-800 bg-black p-3 font-term text-xs text-green-500"
+          className="field-control font-term text-xs text-[var(--green)]"
           onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+          aria-label="Texto de postulación copiable"
         />
       ) : null}
 
-      <p className="text-center text-[11px] font-term text-zinc-600">
-        Plazas: {PLAZAS.occupied}/{PLAZAS.total} · Sin invite = cola pública · Con invite válido =
-        prioridad
+      <p className="text-center font-term text-[0.7rem] text-[var(--faint)]">
+        Plazas {PLAZAS.occupied}/{PLAZAS.total} · invite válido = prioridad · pegá en #whitelist
       </p>
-      <a
-        href={DISCORD_URL}
-        target="_blank"
-        rel="noreferrer"
-        className="block text-center text-xs font-term text-indigo-400 hover:text-indigo-300"
-      >
-        Abrir Discord → pegar en #whitelist
-      </a>
     </form>
   );
 }
