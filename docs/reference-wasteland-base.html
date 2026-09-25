@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wasteland | Japan Apocalypse</title>
+<meta name="description" content="Wasteland: Japan Apocalypse — serie de supervivencia post-apocalíptica en Minecraft. Postula a la whitelist y únete al Discord.">
+<meta property="og:title" content="Wasteland | Japan Apocalypse">
+<meta property="og:description" content="Japón ha caído. Postula a la whitelist y sobrevive.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☣️</text></svg>">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@500;600;700&family=Inter:wght@400;500;700;900&display=swap');
+
+  :root{
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --bg: #09090b;
+    --panel: #0f0f12;
+    --line: #26262b;
+    --red: #dc2626;
+    --green: #22c55e;
+  }
+  html{ scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top,0px) + 76px); }
+  body{
+    background-color: var(--bg);
+    color: #d4d4d8;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .font-display{ font-family: 'Oswald', 'Inter', sans-serif; }
+  .font-term{ font-family: 'Share Tech Mono', ui-monospace, monospace; }
+
+  .crt-overlay{
+    position: fixed; inset: 0;
+    background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,.15) 50%);
+    background-size: 100% 4px;
+    z-index: 50; pointer-events: none; opacity: .35;
+  }
+  .glitch-text{ text-shadow: 2px 0 var(--red), -2px 0 #06b6d4; }
+
+  .log-label{
+    font-family: 'Share Tech Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    color: #71717a;
+  }
+  .log-label b{ color: #a1a1aa; }
+
+  nav{ padding-top: env(safe-area-inset-top, 0px); }
+
+  input, textarea, select{ background: transparent; }
+  input:focus, textarea:focus, select:focus, button:focus, a:focus{
+    outline: 2px solid var(--red); outline-offset: 2px;
+  }
+  ::selection{ background:#7f1d1d; color:#fff; }
+
+  .scan-btn{ transition: background-color .15s ease, transform .1s ease; }
+  .scan-btn:active{ transform: scale(.98); }
+</style>
+</head>
+<body class="relative overflow-x-hidden">
+<div class="crt-overlay"></div>
+
+<!-- NAV -->
+<nav class="fixed w-full z-40 bg-zinc-950/85 backdrop-blur-md border-b border-zinc-800/60">
+  <div class="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto">
+    <a href="#top" class="font-display font-bold text-lg tracking-tight text-white">
+      WASTELAND<span class="text-red-600">.</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 font-term text-xs uppercase tracking-widest text-zinc-400">
+      <a href="#serie" class="hover:text-white transition">La Serie</a>
+      <a href="#estudio" class="hover:text-white transition">Estudio</a>
+      <a href="#staff" class="hover:text-white transition">Staff</a>
+      <a href="#whitelist" class="px-4 py-2 bg-red-700 text-white hover:bg-red-600 transition normal-case tracking-normal">Postular</a>
+    </div>
+    <button id="menu-btn" class="md:hidden text-zinc-400 hover:text-white transition" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden flex-col border-t border-zinc-800/60 bg-zinc-950 font-term text-xs uppercase tracking-widest text-zinc-400">
+    <a href="#serie" class="px-6 py-3 border-b border-zinc-900 hover:text-white">La Serie</a>
+    <a href="#estudio" class="px-6 py-3 border-b border-zinc-900 hover:text-white">Estudio</a>
+    <a href="#staff" class="px-6 py-3 border-b border-zinc-900 hover:text-white">Staff</a>
+    <a href="#whitelist" class="px-6 py-3 text-red-500">Postular a Whitelist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="top" class="relative pt-32 pb-16 px-6 flex flex-col items-center text-center border-b border-zinc-800">
+  <div class="inline-flex items-center gap-3 mb-6 px-3 py-1.5 text-xs font-term text-red-500 bg-red-950/30 border border-red-900/50 rounded-full">
+    <span class="relative flex h-1.5 w-1.5">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
+    </span>
+    SISTEMA EN LÍNEA · <span id="plazas-text">35/90 PLAZAS</span>
+  </div>
+
+  <!-- barra de ocupación estilo terminal, edita OCUPADAS/TOTAL abajo en el <script> -->
+  <div class="flex gap-[3px] mb-8" aria-hidden="true">
+    <div class="w-3 h-3 bg-red-600"></div><div class="w-3 h-3 bg-red-600"></div><div class="w-3 h-3 bg-red-600"></div>
+    <div class="w-3 h-3 bg-red-600"></div><div class="w-3 h-3 bg-red-600"></div><div class="w-3 h-3 bg-red-600"></div>
+    <div class="w-3 h-3 bg-red-600"></div><div class="w-3 h-3 bg-red-600"></div>
+    <div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div>
+    <div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div>
+    <div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div>
+    <div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div><div class="w-3 h-3 bg-zinc-800"></div>
+  </div>
+
+  <p class="font-term text-xs text-zinc-500 mb-3 uppercase tracking-[0.2em]">Wasteland Studio presenta</p>
+  <h1 class="font-display text-5xl sm:text-6xl font-bold text-white leading-[0.95] tracking-tight mb-5 uppercase">
+    Japan<br><span class="text-red-600 glitch-text">Apocalypse</span>
+  </h1>
+
+  <p class="text-zinc-400 mb-9 max-w-sm text-sm leading-relaxed">
+    Japón ha caído. Lo que fue el pináculo de la civilización es ahora una zona cero: un ecosistema letal, no una simple plaga de muertos vivientes.
+  </p>
+
+  <div class="flex flex-col w-full max-w-xs gap-3">
+    <a href="#whitelist" class="px-6 py-3 bg-white text-black font-bold uppercase text-sm tracking-wide hover:bg-zinc-200 transition text-center">
+      Postular a Whitelist
+    </a>
+    <a href="#" id="discord-link" class="px-6 py-3 bg-indigo-600 text-white font-bold uppercase text-sm tracking-wide hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+      <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+      Unirse al Discord
+    </a>
+  </div>
+  <p class="font-term text-[11px] text-zinc-600 mt-4">*enlace de Discord pendiente de configurar</p>
+</header>
+
+<!-- LA SERIE -->
+<section id="serie" class="p-6 border-b border-zinc-800 max-w-3xl mx-auto">
+  <p class="log-label mb-3">[LOG_01] <b>LA SERIE</b> // WASTELAND: JAPAN APOCALYPSE</p>
+  <p class="text-zinc-300 text-sm leading-relaxed mb-6">
+    No es una serie de zombies. Es una serie sobre lo que queda después del colapso: facciones que se disputan territorio, recursos que se agotan y un virus que apenas es el punto de partida de algo mucho más grande.
+  </p>
+  <div class="grid grid-cols-2 gap-3">
+    <div class="bg-zinc-900/60 border border-zinc-800 p-4">
+      <p class="text-white font-display font-semibold text-sm mb-1">Supervivencia real</p>
+      <p class="text-zinc-500 text-xs leading-relaxed">Escasez, decisiones con consecuencias y un mundo que no perdona.</p>
+    </div>
+    <div class="bg-zinc-900/60 border border-zinc-800 p-4">
+      <p class="text-white font-display font-semibold text-sm mb-1">Facciones</p>
+      <p class="text-zinc-500 text-xs leading-relaxed">Grupos con intereses propios disputándose la zona cero.</p>
+    </div>
+    <div class="bg-zinc-900/60 border border-zinc-800 p-4">
+      <p class="text-white font-display font-semibold text-sm mb-1">Eventos guionizados</p>
+      <p class="text-zinc-500 text-xs leading-relaxed">Una escaleta narrativa dirige la historia semana a semana.</p>
+    </div>
+    <div class="bg-zinc-900/60 border border-zinc-800 p-4">
+      <p class="text-white font-display font-semibold text-sm mb-1">Zona cero explorable</p>
+      <p class="text-zinc-500 text-xs leading-relaxed">Un Japón post-colapso, distinto a cualquier apocalipsis típico.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TERMINAL LORE -->
+<section class="p-6 border-b border-zinc-800 bg-zinc-950 max-w-3xl mx-auto w-full">
+  <p class="log-label mb-4">[LOG_02] <b>BASE DE DATOS</b> // ACCESO RESTRINGIDO</p>
+  <div class="bg-black border border-zinc-800 p-4 font-term text-sm">
+    <p class="text-green-500 mb-2">&gt; INICIANDO PROTOCOLO_</p>
+    <p class="text-zinc-500 mb-4">&gt; ACCESO DENEGADO. LORE CLASIFICADO.</p>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="text-green-500">&gt; INGRESE CÓDIGO IN-GAME:</span>
+      <input type="text" maxlength="8" class="bg-transparent border-b border-zinc-700 outline-none text-red-500 focus:border-red-500 transition w-24 uppercase" placeholder="XXXX">
+    </div>
+    <p class="text-xs text-zinc-600 mt-3">La verdad está en el servidor, no aquí. Encuentra cintas y documentos en la zona de exclusión para descifrarla.</p>
+  </div>
+</section>
+
+<!-- ESCALETA -->
+<section class="p-6 border-b border-zinc-800 max-w-3xl mx-auto w-full">
+  <p class="log-label mb-1">[LOG_03] <b>ESCALETA DE EVENTOS</b></p>
+  <p class="text-zinc-600 text-xs font-term mb-5">EN BASE A GUION FINAL · EN PROCESO</p>
+
+  <div class="space-y-3">
+    <div class="border border-zinc-800 bg-zinc-900/50 p-4">
+      <h3 class="font-display font-semibold text-white mb-2 text-sm">SEMANA 1</h3>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-term">
+        <div class="bg-zinc-950 border border-zinc-800 p-2 text-center text-zinc-400">DÍA 1: Apertura</div>
+        <div class="bg-zinc-950 border border-zinc-800 p-2 text-center text-red-500/70 line-through">DÍA 2: [CORRUPTO]</div>
+        <div class="bg-zinc-950 border border-zinc-800 p-2 text-center text-red-500/70 line-through">DÍA 3: [CORRUPTO]</div>
+        <div class="bg-zinc-950 border border-zinc-800 p-2 text-center text-zinc-400">DÍA 4: Asentamiento</div>
+      </div>
+    </div>
+
+    <div class="border border-zinc-800 bg-zinc-900/50 p-4 opacity-50">
+      <h3 class="font-display font-semibold text-white mb-2 text-sm">SEMANAS 2 · 3 · 4</h3>
+      <p class="text-xs font-term text-zinc-500">&gt; CALENDARIO BLOQUEADO HASTA PROGRESIÓN DEL SERVIDOR</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTUDIO + PRÓXIMAS SERIES -->
+<section id="estudio" class="p-6 border-b border-zinc-800 max-w-3xl mx-auto w-full">
+  <p class="log-label mb-3">[LOG_04] <b>EL ESTUDIO</b> // WASTELAND</p>
+  <p class="text-zinc-400 text-sm mb-8 leading-relaxed">
+    Wasteland no es una serie, es el estudio detrás de ella. "Japan Apocalypse" es nuestra primera producción: un colapso concreto, en un lugar concreto. Cada futura serie de Wasteland explorará un escenario de colapso distinto, no siempre zombies.
+  </p>
+
+  <h3 class="font-term text-xs text-zinc-500 uppercase tracking-widest mb-3">Próximas producciones</h3>
+  <div class="grid grid-cols-2 gap-3">
+    <div class="border border-dashed border-zinc-700 bg-zinc-900/30 p-4 flex flex-col items-center justify-center text-center gap-2">
+      <svg class="w-4 h-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      <span class="font-term text-xs text-zinc-500">PROYECTO_02<br>[CLASIFICADO]</span>
+    </div>
+    <div class="border border-dashed border-zinc-700 bg-zinc-900/30 p-4 flex flex-col items-center justify-center text-center gap-2">
+      <svg class="w-4 h-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+      <span class="font-term text-xs text-zinc-500">PROYECTO_03<br>[CLASIFICADO]</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAFF -->
+<section id="staff" class="p-6 border-b border-zinc-800 max-w-3xl mx-auto w-full">
+  <p class="log-label mb-4">[LOG_05] <b>EQUIPO DE COMANDO</b></p>
+  <div class="grid grid-cols-2 gap-3">
+    <div class="bg-zinc-900 border border-zinc-800 p-3 flex flex-col">
+      <span class="text-white font-display font-semibold text-sm">Maxi</span>
+      <span class="text-zinc-500 text-xs font-term">Fundador / Owner</span>
+    </div>
+    <div class="bg-zinc-900 border border-zinc-800 p-3 flex flex-col">
+      <span class="text-white font-display font-semibold text-sm">Yuka</span>
+      <span class="text-zinc-500 text-xs font-term">Administración</span>
+    </div>
+    <a href="#" id="discord-link-2" class="bg-zinc-900 border border-dashed border-zinc-700 p-3 flex flex-col col-span-2 items-center justify-center py-4 hover:border-zinc-500 transition">
+      <span class="text-zinc-500 text-xs font-term">+ VER EQUIPO COMPLETO EN DISCORD</span>
+    </a>
+  </div>
+</section>
+
+<!-- WHITELIST -->
+<section id="whitelist" class="p-6 border-b border-zinc-800 max-w-3xl mx-auto w-full">
+  <p class="log-label mb-3">[LOG_06] <b>POSTULACIÓN</b> // WHITELIST</p>
+  <ol class="text-xs font-term text-zinc-500 mb-6 space-y-1 list-decimal list-inside">
+    <li>Únete al Discord de Wasteland.</li>
+    <li>Completa el formulario de abajo.</li>
+    <li>Copia tu postulación y pégala en el canal <span class="text-zinc-300">#whitelist</span>.</li>
+    <li>Espera la respuesta del staff.</li>
+  </ol>
+
+  <form id="wl-form" class="space-y-4" onsubmit="return false;">
+    <div>
+      <label for="wl-discord" class="block text-xs font-term text-zinc-400 mb-1">Usuario de Discord *</label>
+      <input required id="wl-discord" type="text" placeholder="tuusuario" class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition">
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label for="wl-mc" class="block text-xs font-term text-zinc-400 mb-1">Usuario de Minecraft *</label>
+        <input required id="wl-mc" type="text" placeholder="Steve123" class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition">
+      </div>
+      <div>
+        <label for="wl-edad" class="block text-xs font-term text-zinc-400 mb-1">Edad *</label>
+        <input required id="wl-edad" type="number" min="1" max="120" placeholder="18" class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition">
+      </div>
+    </div>
+    <div>
+      <label for="wl-plataforma" class="block text-xs font-term text-zinc-400 mb-1">Plataforma</label>
+      <select id="wl-plataforma" class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition">
+        <option>Java</option>
+        <option>Bedrock</option>
+      </select>
+    </div>
+    <div>
+      <label for="wl-exp" class="block text-xs font-term text-zinc-400 mb-1">¿Experiencia previa en roleplay/SMP narrativos?</label>
+      <textarea id="wl-exp" rows="2" placeholder="Cuéntanos brevemente..." class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition resize-none"></textarea>
+    </div>
+    <div>
+      <label for="wl-motivo" class="block text-xs font-term text-zinc-400 mb-1">¿Por qué quieres unirte a Wasteland? *</label>
+      <textarea required id="wl-motivo" rows="3" placeholder="Escribe tu motivación..." class="w-full bg-zinc-900 border border-zinc-800 focus:border-red-600 p-3 text-sm text-white transition resize-none"></textarea>
+    </div>
+    <label class="flex items-start gap-2 text-xs text-zinc-400">
+      <input required id="wl-normas" type="checkbox" class="mt-0.5 accent-red-600">
+      He leído y acepto las normas del servidor.
+    </label>
+
+    <button type="button" id="wl-copy-btn" class="scan-btn w-full px-6 py-3 bg-white text-black font-bold uppercase text-sm tracking-wide hover:bg-zinc-200 transition">
+      Copiar postulación
+    </button>
+    <p id="wl-status" class="text-xs font-term text-center h-4" aria-live="polite"></p>
+
+    <textarea id="wl-output" readonly rows="8" class="hidden w-full bg-black border border-zinc-800 p-3 text-xs font-term text-green-500 resize-none" onclick="this.select()"></textarea>
+  </form>
+</section>
+
+<footer class="p-6 text-center text-xs text-zinc-600 font-term">
+  <p>WASTELAND STUDIO © 2026.</p>
+  <p>SISTEMA AISLADO.</p>
+</footer>
+
+<script>
+  // menú móvil
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.toggle('hidden');
+    mobileMenu.classList.toggle('flex');
+    menuBtn.setAttribute('aria-expanded', String(!isHidden));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  // TODO: reemplazar por el enlace real de invitación de Discord
+  const DISCORD_URL = 'https://discord.gg/tu-invitacion';
+  document.getElementById('discord-link').href = DISCORD_URL;
+  document.getElementById('discord-link-2').href = DISCORD_URL;
+
+  // copiar postulación de whitelist
+  document.getElementById('wl-copy-btn').addEventListener('click', async () => {
+    const val = id => document.getElementById(id).value.trim();
+    const checked = document.getElementById('wl-normas').checked;
+    const status = document.getElementById('wl-status');
+    const output = document.getElementById('wl-output');
+
+    if (!val('wl-discord') || !val('wl-mc') || !val('wl-edad') || !val('wl-motivo') || !checked) {
+      status.textContent = '⚠ Completa los campos obligatorios (*) y acepta las normas.';
+      status.className = 'text-xs font-term text-center h-4 text-red-500';
+      return;
+    }
+
+    const text = [
+      '=== POSTULACIÓN WASTELAND ===',
+      `Discord: ${val('wl-discord')}`,
+      `Minecraft: ${val('wl-mc')} (${document.getElementById('wl-plataforma').value})`,
+      `Edad: ${val('wl-edad')}`,
+      `Experiencia previa: ${val('wl-exp') || '—'}`,
+      `Motivo: ${val('wl-motivo')}`,
+      'Normas aceptadas: Sí'
+    ].join('\n');
+
+    output.value = text;
+    output.classList.remove('hidden');
+
+    try {
+      await navigator.clipboard.writeText(text);
+      status.textContent = '✓ Copiado. Pégalo en #whitelist en Discord.';
+      status.className = 'text-xs font-term text-center h-4 text-green-500';
+    } catch (e) {
+      status.textContent = 'No se pudo copiar automáticamente: selecciona el texto de abajo.';
+      status.className = 'text-xs font-term text-center h-4 text-yellow-500';
+      output.focus();
+      output.select();
+    }
+  });
+</script>
+</body>
+</html>
