@@ -1,4 +1,4 @@
-import { PLAZAS, plazasPercent } from "../content";
+import { PLAZAS, STAT_COUNTERS_LABEL, plazasPercent } from "../content";
 
 type StatItem = {
   value: string;
@@ -18,7 +18,7 @@ export function StatCounters() {
   const stats = buildWhitelistStats();
 
   return (
-    <dl className="grid grid-cols-3 gap-3">
+    <dl aria-label={STAT_COUNTERS_LABEL} className="grid grid-cols-3 gap-3">
       {stats.map((stat) => (
         <div key={stat.label} className="border border-line bg-black/30 px-3 py-2.5 text-center">
           <dt className="font-term text-[0.6rem] tracking-wider text-faint uppercase">

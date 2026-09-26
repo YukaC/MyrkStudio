@@ -116,9 +116,9 @@ export type FeaturedStreamer = {
 };
 
 export const STREAMERS_SECTION = {
-  title: "Streamers destacados",
-  blurb: "Quién va a llevar la serie en vivo.",
-  note: "Roster inicial. Los perfiles de streaming se anuncian con el lanzamiento.",
+  title: "El equipo, en sus canales",
+  blurb: "Las cuentas públicas del equipo de Wasteland.",
+  note: "Los perfiles de streaming se anuncian con el lanzamiento. Roster completo en Discord.",
 } as const;
 
 /**
@@ -213,6 +213,25 @@ export const WHITELIST_STEPS: WhitelistStep[] = [
   { id: "03", text: "Copiá y pegá en el canal de postulaciones.", channel: "#whitelist" },
   { id: "04", text: "Esperá respuesta del staff." },
 ];
+
+/** Hero copy with state semantics — single source (§V6) */
+export const HERO = {
+  statusLabel: "Sistema en línea",
+} as const;
+
+/** How the invite/priority rule reads to the applicant. One string, two surfaces (§V6) */
+export const WHITELIST_INVITE_NOTE =
+  "Invitación + formulario público. Si venís por invitación, el staff prioriza tu plaza al revisar tu postulación.";
+
+/** Accessible name for the plazas counter group */
+export const STAT_COUNTERS_LABEL = "Ocupación de plazas de whitelist";
+
+/** Premiere copy — single source (§V6) */
+export const PREMIERE = {
+  countdownLabel: "Estreno de",
+  expiredLabel: "Estreno",
+  liveNow: "Ya está en el aire",
+} as const;
 
 export type Notice = {
   text: string;

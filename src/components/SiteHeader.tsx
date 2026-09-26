@@ -5,7 +5,7 @@ import { DiscordIcon, MenuIcon } from "./icons";
 const NAV_LINKS = [
   { href: "#serie", label: "La Serie" },
   { href: "#estudio", label: "Estudio" },
-  { href: "#streamers", label: "Streamers" },
+  { href: "#streamers", label: "Equipo" },
   { href: "#staff", label: "Staff" },
   { href: "#faq", label: "FAQ" },
 ] as const;

@@ -37,9 +37,12 @@ api (v1): POST /api/applications → Application {discord,mc,age,platform,exp,mo
 api (v1): GET /api/invite/:code → {valid,priority,reservedSlot?}
 env: VITE_DISCORD_URL → invite Discord
 env: VITE_SITE_URL → canonical prod (reservado p/ T6; hoy los og: viven hardcodeados en index.html)
-env: VITE_DEMO_INVITE_CODES → csv de códigos demo (solo v0)
+env: VITE_DEMO_INVITE_CODES → csv de códigos demo. **Sin uso en v0** (el campo salió del form, T3);
+      reservado para T7, que los valida server-side (§V5) — ver §B B8
 env (v1): DISCORD_WEBHOOK_URL · DATABASE_URL · INVITE_SECRET
 file: src/content.ts → copy staff/series/plazas/fecha Premiere/steps (fuente única, §V6)
+      exports sin uso hoy, a propósito: `SEO`/`SITE_URL`/`absoluteUrl` (T15 · B6) y
+      `getDemoInviteCodes`/`isValidDemoInvite` (T7 · B8)
 file: src/hooks/useCountdown.ts → tick 1s → {days,hours,minutes,seconds,isExpired}
 file: src/components/*.tsx → 1 sección = 1 componente (SiteHeader HeroSeries LoreTerminal Escaleta
        Studio Staff FeaturedStreamers Faq Whitelist Cta SiteFooter) + primitivas
@@ -94,3 +97,5 @@ B4|2026-09-26|estreno "dentro de un año" (relativo, sin fecha absoluta) → 202
 B5|2026-09-26|`<ol>` de postulación hardcodeaba `Wasteland` y parseaba `#whitelist` con `split()` → nombre duplicado (⊥V6) y copy frágil al editarlo|canal como campo `channel?: string` en `WHITELIST_STEPS`; texto con `STUDIO_NAME` por template
 B6|2026-09-26|`SEO`/`SITE_URL`/`absoluteUrl` en content.ts sin uso: los og: viven hardcodeados en index.html → dos fuentes de verdad del mismo dato, drift silencioso|T15: al migrar dominio (T6) elegir una sola fuente
 B7|2026-09-26|T3 removió el campo invite del form → el copy del paso 02 se ajustó, pero §V3 sigue incluyendo invites: **copy y spec desalineados**|RESUELTO en T3: v0 sin campo, prioridad manual por staff en Discord; copy de whitelist + FAQ + JSON-LD reescritos a esa realidad
+B8|2026-09-26|Al sacar el campo quedaron **sin uso** `getDemoInviteCodes`/`isValidDemoInvite`; su único consumidor válido es el backend, no este repo. Sin nota, se leía como código muerto que borrar|documentados en §I y en `docs/ARCHITECTURE.md` como reservados para T7; borrarlos recién con la API
+B9|2026-09-26|La 4ª copia del copy de invites (panel del hero) decía "Código invite = prioridad" → la página seguía vendiendo un campo inexistente, y en JSX (⊥V6). Y `STREAMERS` reutilizaba `role` de staff como `tag`, mezclando dominio staff vs streaming|hero usa `HERO.inviteNote` desde content.ts (las 4 copias alineadas); sección re-titulada "El equipo, en sus canales" (son cuentas del staff, ⊥ roster de streamers) + nav "Equipo"

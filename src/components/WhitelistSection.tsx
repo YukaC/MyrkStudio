@@ -1,3 +1,4 @@
+import { WHITELIST_INVITE_NOTE } from "../content";
 import { HowItWorks } from "./HowItWorks";
 import { SectionHeader } from "./SectionHeader";
 import { WhitelistForm } from "./WhitelistForm";
@@ -16,7 +17,7 @@ export function WhitelistSection() {
             title="Reservá tu plaza"
             log={{ main: "Postulación", tail: "whitelist" }}
             blurbClassName="mb-6"
-            blurb={<>Invitación + formulario público. Si venís por invitación, el staff prioriza tu plaza al revisar tu postulación.</>}
+            blurb={<>{WHITELIST_INVITE_NOTE}</>}
           />
           <HowItWorks />
         </div>

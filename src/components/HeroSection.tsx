@@ -1,4 +1,4 @@
-import { DISCORD_URL, STUDIO_NAME } from "../content";
+import { DISCORD_URL, HERO, STUDIO_NAME, WHITELIST_INVITE_NOTE } from "../content";
 import { DiscordIcon } from "./icons";
 import { Panel } from "./Panel";
 import { PlazasMeter } from "./PlazasMeter";
@@ -21,9 +21,8 @@ export function HeroSection() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
             </span>
-            Sistema en línea
+            {HERO.statusLabel}
           </div>
-
           <p className="reveal reveal-delay-1 mb-2 font-term text-[0.7rem] tracking-[0.22em] text-faint uppercase sm:text-xs">
             {STUDIO_NAME} Studio presenta
           </p>
@@ -61,7 +60,7 @@ export function HeroSection() {
               <PlazasMeter compact />
               <StatCounters />
               <p className="font-term text-[0.7rem] leading-relaxed text-faint">
-                Invitación + form público. Código invite = prioridad de plaza.
+                {WHITELIST_INVITE_NOTE}
               </p>
               <PremiereCountdown />
               <a href="#whitelist" className="btn btn-accent w-full">
