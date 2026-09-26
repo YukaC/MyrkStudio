@@ -1,7 +1,5 @@
-import { FormEvent, useMemo, useState } from "react";
-import { DISCORD_URL, isValidDemoInvite, PLAZAS } from "../content";
-
-type Platform = "Java" | "Bedrock";
+import { FormEvent, useState } from "react";
+import { DISCORD_URL, PLAZAS } from "../content";
 
 type FormStatus = {
   kind: "idle" | "error" | "success" | "warn";
@@ -14,18 +12,11 @@ export function WhitelistForm() {
   const [discord, setDiscord] = useState("");
   const [minecraft, setMinecraft] = useState("");
   const [age, setAge] = useState("");
-  const [platform, setPlatform] = useState<Platform>("Java");
   const [experience, setExperience] = useState("");
   const [motive, setMotive] = useState("");
-  const [inviteCode, setInviteCode] = useState("");
   const [acceptedRules, setAcceptedRules] = useState(false);
   const [output, setOutput] = useState("");
   const [status, setStatus] = useState<FormStatus>(INITIAL_STATUS);
-
-  const invitePriority = useMemo(() => {
-    if (!inviteCode.trim()) return null;
-    return isValidDemoInvite(inviteCode);
-  }, [inviteCode]);
 
   async function handleCopy(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -38,21 +29,13 @@ export function WhitelistForm() {
       return;
     }
 
-    const hasPriority = isValidDemoInvite(inviteCode);
-    const priorityLine = inviteCode.trim()
-      ? hasPriority
-        ? `Invitación: ${inviteCode.trim().toUpperCase()} (PRIORIDAD / PLAZA RESERVADA)`
-        : `Invitación: ${inviteCode.trim().toUpperCase()} (código no válido en demo)`
-      : "Invitación: - (cola pública)";
-
     const text = [
       "=== POSTULACIÓN WASTELAND ===",
       `Discord: ${discord.trim()}`,
-      `Minecraft: ${minecraft.trim()} (${platform})`,
+      `Minecraft: ${minecraft.trim()}`,
       `Edad: ${age.trim()}`,
       `Experiencia previa: ${experience.trim() || "-"}`,
       `Motivo: ${motive.trim()}`,
-      priorityLine,
       "Normas aceptadas: Sí",
     ].join("\n");
 
@@ -62,9 +45,7 @@ export function WhitelistForm() {
       await navigator.clipboard.writeText(text);
       setStatus({
         kind: "success",
-        message: hasPriority
-          ? "Copiado con PRIORIDAD. Pegalo en #whitelist."
-          : "Copiado. Pegalo en #whitelist en Discord.",
+        message: "Copiado. Pegalo en #whitelist en Discord.",
       });
     } catch {
       setStatus({
@@ -136,48 +117,6 @@ export function WhitelistForm() {
           />
         </div>
 
-        <div>
-          <label htmlFor="wl-plataforma" className="field-label">
-            Plataforma
-          </label>
-          <select
-            id="wl-plataforma"
-            value={platform}
-            onChange={(e) => setPlatform(e.target.value as Platform)}
-            className="field-control"
-          >
-            <option value="Java">Java</option>
-            <option value="Bedrock">Bedrock</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="wl-invite" className="field-label">
-            Código de invitación
-          </label>
-          <input
-            id="wl-invite"
-            type="text"
-            autoComplete="off"
-            spellCheck={false}
-            placeholder="WL-XXXX (opcional)"
-            value={inviteCode}
-            onChange={(e) => setInviteCode(e.target.value)}
-            className="field-control uppercase"
-            aria-describedby="wl-invite-hint"
-          />
-          <p id="wl-invite-hint" className="mt-1.5 font-term text-[0.7rem] leading-snug">
-            {invitePriority === true && (
-              <span className="text-success">Código válido - prioridad / plaza reservada</span>
-            )}
-            {invitePriority === false && (
-              <span className="text-warning">
-                Código no reconocido. Podés postular igual (cola pública).
-              </span>
-            )}
-            {invitePriority === null && <span className="text-faint">Sin código = cola pública</span>}
-          </p>
-        </div>
       </div>
 
       <div>
@@ -246,7 +185,7 @@ export function WhitelistForm() {
       ) : null}
 
       <p className="text-center font-term text-[0.7rem] text-faint">
-        Plazas {PLAZAS.occupied}/{PLAZAS.total} · invite válido = prioridad · pegá en #whitelist
+        Plazas {PLAZAS.occupied}/{PLAZAS.total} · pegá en #whitelist
       </p>
     </form>
   );
