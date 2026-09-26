@@ -21,6 +21,32 @@ Este proyecto cae en la **tercera fila** si quieren “web terminada” operativ
 
 ---
 
+## Estado del alcance (2026-09-26) — leer antes de re-cotizar
+
+> **Los precios de abajo NO se tocaron.** Esto es solo el registro de qué se hizo después
+> de armar la cotización, para que la decisión de precio sea informada (SPEC §T T17).
+
+| Qué se agregó | Dónde | Estado |
+|---|---|---|
+| Secciones streamers · statement · FAQ · CTA banner | SPEC T11 | En el demo (USD 0) |
+| Countdown al estreno + contadores de plazas en hero | SPEC T13 | En el demo (USD 0) |
+| Footer por columnas + disclaimer de marca | `SiteFooter` | En el demo (USD 0) |
+| `App.tsx` 513 → 45 líneas (19 componentes + hook) | SPEC T12 | En el demo (USD 0) |
+| Código de invitación **fuera** del form | SPEC T3 | **Quita alcance de B**: "Códigos invitación → prioridad" pasó a depender del backend (T7) |
+
+Dos efectos que cambian el valor entregado de B:
+
+1. **B incluye "Códigos invitación → prioridad/reserva plaza"** — hoy no hay campo para emitirlos
+   (decisión T3). Se cumple de verdad recién con T7 (API + tabla de invites). B no debería
+   cerrarse sin ese punto resuelto.
+2. **El demo creció** (5 superficies nuevas) — se absorbe en el paquete A (USD 0) o se reconoce
+   como addendum. Decisión del dueño.
+
+**Pendiente de confirmar antes de cobrar B:** fecha/hora real del estreno (hoy asumida
+2027-09-26 20:00 ART, SPEC §B B4) y visto bueno del copy de FAQ al estudio (SPEC T16).
+
+---
+
 ## Paquetes (elegir uno)
 
 ### A — Demo pitch *(ya hecha)*

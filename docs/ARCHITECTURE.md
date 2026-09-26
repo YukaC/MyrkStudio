@@ -29,20 +29,73 @@ Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan A
 | DB v1 | Turso / CF D1 / Neon | Google Sheets (solo prototipo) |
 | Invites | tabla `invites(code, maxUses, used, priority)` | lista env JSON (demo) |
 
-## Superficies UI
+## Superficies UI (orden de render en `App.tsx`)
 
-1. **Hero** — brand serie + plazas + CTA Postular / Discord
-2. **La Serie** — pitch no-zombie, facciones, eventos
-3. **Terminal lore** — teaser clasificado (códigos in-game futuro)
-4. **Escaleta** — semanas teaser, sin spoilers
-5. **Estudio** — Wasteland + próximas series clasificadas
-6. **Staff** — owners + link Discord equipo
-7. **Whitelist form** — campos §V4 + invite code §V3
+| # | Componente | Sección / ancla | Qué |
+|---|---|---|---|
+| 0 | `StatusBanner` | global (arriba) | Aviso de mantenimiento; `NOTICE = null` → no renderiza |
+| 1 | `SiteHeader` | nav | Nav desktop + menú mobile (overlay, foco y `body` overflow) |
+| 2 | `HeroSection` | `#top` | Brand serie · **PlazasMeter** + **StatCounters** + **PremiereCountdown** + CTA |
+| 3 | `SeriesSection` | `#serie` | Pitch no-zombie + features (`SERIES_FEATURES`) |
+| 4 | `LoreTerminal` | — | Teaser clasificado; input de código decorativo (sin submit) |
+| 5 | `EscaletaSection` | — | Semana 1 teaser; semanas 2–4 bloqueadas (⊥V7) |
+| 6 | `StudioSection` | `#estudio` | Wasteland ≠ serie + `StudioStatement` + próximos proyectos |
+| 7 | `StaffSection` | `#staff` | Roster (`STAFF`) + link Discord |
+| 8 | `FeaturedStreamers` | `#streamers` | Cards con avatar mc-heads; derivado de `STAFF`; `LiveBadge` si `isLive` |
+| 9 | `FaqSection` | `#faq` | Accordion nativo (`details[name]`) |
+| 10 | `WhitelistSection` | `#whitelist` | `HowItWorks` (`WHITELIST_STEPS`) + `WhitelistForm` |
+| 11 | `CtaBanner` | — | Cierre a Discord + posto |
+| 12 | `SiteFooter` | — | Columnas de navegación + disclaimer de marca + CTAs |
+
+**Primitivas reutilizables:** `SectionHeader` (`[LOG] label` + h2 + blurb) · `Panel` (barra de estado con badge) · `PlazasMeter` (barra segmentada) · `StatCounters` (`dl` derivado de `PLAZAS`) · `HowItWorks` (`ol` data-driven) · `PremiereCountdown` · `icons.tsx`.
+
+**Hooks:** `useCountdown(targetIso)` → tick 1s, se auto-detiene al expirar, guarda `NaN` (fecha mal formada → `isExpired`).
+
+## Estructura de archivos
+
+```
+src/
+  content.ts          ← fuente única: copy, PLAZAS, STAFF, PREMIERE_DATE, WHITELIST_STEPS, FAQ
+  App.tsx             ← orquestador (solo compone secciones)
+  hooks/
+    useCountdown.ts   ← tick 1s → {days,hours,minutes,seconds,isExpired}
+  components/
+    SiteHeader · HeroSection · SeriesSection · LoreTerminal · EscaletaSection
+    StudioSection · StaffSection · FeaturedStreamers · FaqSection · WhitelistSection
+    CtaBanner · SiteFooter · StudioStatement · WhitelistForm
+    SectionHeader · Panel · PlazasMeter · StatCounters · HowItWorks
+    StatusBanner · PremiereCountdown · icons
+```
+
+Reglas de estructura: 1 sección = 1 componente · `App.tsx` sin markup de sección (§V11) ·
+ningún componente sin montar (§V10) · copy y datos numéricos **nunca** en el JSX (§V6).
+
+## Referencias de diseño (patrones, no data)
+
+Tomadas de `dedsafiostats.com` y `dedsafio4.com` (proyectos de fans de otra serie):
+
+| Patrón | Dónde se aplicó | Qué **no** se tomó |
+|---|---|---|
+| Contadores de estado en hero | `StatCounters` | El ranking de jugadores / muertes / tótems: no hay data |
+| Cuenta regresiva a próximo evento | `PremiereCountdown` | El calendario con horarios por país |
+| Bloque "cómo funciona" numerado | `HowItWorks` | — |
+| Accordion de FAQ | `FaqSection` | — |
+| Banner de estado / advertencia | `StatusBanner` | — |
+| Badge "en vivo" | `LiveBadge` (tras `isLive`) | Detectar stream en vivo: requiere fuente de datos |
+| Footer por columnas + disclaimer | `SiteFooter` | — |
 
 ## Invitaciones (regla de negocio)
 
+> **Decidido (SPEC §T T3 · §B B7).** El campo de código de invitación se quitó del form por
+> pedido, así que en **v0 no hay path de UI**: el postulante completa el form, pega en
+> `#whitelist` y **el staff aplica la prioridad al revisar** las que llegan por invitación.
+> El copy de la sección whitelist, el FAQ y su JSON-LD se reescribieron para decir eso
+> (antes prometían un código que el form no pedía → B7).
+> El campo vuelve **solo** cuando exista backend con `GET /api/invite/:code` (T7, ya previsto
+> en §I). `getDemoInviteCodes`/`isValidDemoInvite` quedan disponibles, sin uso, para ese momento.
+
 ```
-submit(application):
+submit(application):              # v1 (T7)
   if inviteCode válido y con cupo:
     priority = high
     optional: reservedSlot = true

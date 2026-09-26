@@ -23,20 +23,35 @@ Fuentes lore/guion: Google Doc "Wasteland Migrado" + Miro escaleta (spoilers ⊥
 
 - [x] SPEC / README / LICENSE / AGENTS
 - [x] PLAN + QUOTE + ARCHITECTURE + LORE público
-- [ ] App Vite runnable + Discord link real
-- [ ] Push `main` a `YukaC/WLandStudio`
+- [x] App Vite runnable + Discord link real
+- [x] Push `main` a `YukaC/WLandStudio`
 
 **Salida:** repo listo para tirarle demo + PDF/MD de cotización al dueño (Holy).
 
-## Fase 1 — Demo landing (1–3 días)
+## Fase 1 — Demo landing (1–3 días) ✅ cerrada
 
 1. Migrar HTML → React components (nav, hero, serie, terminal lore, escaleta teaser, estudio, staff, form)
 2. Content config (`src/content.ts`): plazas, staff, Discord URL
-3. Campo **código invitación** + badge prioridad (validación local demo con lista mock)
+3. ~~Campo **código invitación** + badge prioridad~~ → **removido por pedido** (ver "Desvíos")
 4. Deploy Vercel preview/prod URL
 5. Soft QA mobile + a11y básica
+6. **+ Secciones nuevas** (T11): streamers · statement del estudio · FAQ accordion · CTA banner
+7. **+ Countdown de estreno** + StatCounters en hero (T13) · STREAMERS derivado de STAFF (T14)
+8. **+ Extracción de componentes** (T12): `App.tsx` 513 → 45 líneas, 19 componentes
 
-**Salida:** URL pública para pitch.
+**Salida:** URL pública para pitch. https://wlandstudio.vercel.app
+
+### Desvíos de F1 (decisiones que se apartaron del plan original)
+
+| # | Plan original | Qué pasó | Dónde |
+|---|---|---|---|
+| D1 | Campo código invitación en el form, con prioridad (§V3) | **Removido del form por pedido** y **resuelto** (SPEC T3): v0 sin campo, el staff aplica prioridad al revisar en Discord; el campo vuelve solo si T7 expone `GET /api/invite/:code`. Copy de whitelist + FAQ + JSON-LD reescritos | SPEC T3 · B7 |
+| D2 | "Kuda (cara), Holy/Diego (financia)" | Nombre público = **Holy** (sin Diego). 3 staff con X/Twitter real | `content.ts` `STAFF[].twitter` |
+| D3 | Sin countdown | Estreno **2027-09-26** (interpretación de "este día, dentro de un año"); **hora 20:00 ART asumida** | `PREMIERE_DATE` · B4 |
+| D4 | Roster de streamers aparte | Se **deriva de `STAFF`** (⊥ roster paralelo). `isLive` existe pero es dato de entrada, nunca adivinado | `content.ts` `STREAMERS` |
+| D5 | Referencia visual: solo HTML base | Se toman patrones de UI de `dedsafiostats.com` (contadores, countdown, accordion, banner, footer por columnas) y `dedsafio4.com` (hud, horarios). **⊥ su data**: ranks/muertes/hermandad no existen acá | §C · T11–T14 |
+| D6 | `App.tsx` monolítico con secciones inline | 1 sección = 1 componente (19 en total) + `src/hooks/useCountdown.ts`. `App.tsx` = orquestador de 45 líneas | SPEC §V10/§V11 · T12 |
+| D7 | SEO meta en `content.ts` | Los `og:` viven hardcodeados en `index.html`; `SEO`/`SITE_URL`/`absoluteUrl` quedaron sin uso → **dos fuentes de verdad** | T15 · B6 |
 
 ## Fase 2 — Dominio Cloudflare (medio día)
 
