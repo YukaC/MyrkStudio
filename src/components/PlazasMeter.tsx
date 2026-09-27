@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { PLAZAS, plazasPercent } from "../content";
+import { PLAZAS, PLAZAS_METER_LABEL, plazasMeterAriaLabel, plazasPercent } from "../content";
 
 export function PlazasMeter({ compact = false }: { compact?: boolean }) {
   const percent = plazasPercent();
@@ -11,7 +11,7 @@ export function PlazasMeter({ compact = false }: { compact?: boolean }) {
     <div className="w-full" role="group" aria-labelledby={labelId}>
       <div className="mb-2 flex items-end justify-between gap-3 font-term text-[0.7rem] tracking-wider uppercase">
         <span id={labelId} className="text-muted">
-          Ocupación whitelist
+          {PLAZAS_METER_LABEL}
         </span>
         <span className="text-accent tabular-nums">
           {PLAZAS.occupied}/{PLAZAS.total} · {percent}%
@@ -23,7 +23,7 @@ export function PlazasMeter({ compact = false }: { compact?: boolean }) {
         aria-valuenow={PLAZAS.occupied}
         aria-valuemin={0}
         aria-valuemax={PLAZAS.total}
-        aria-label={`${PLAZAS.occupied} de ${PLAZAS.total} plazas ocupadas`}
+        aria-label={plazasMeterAriaLabel()}
       >
         {Array.from({ length: segments }, (_, index) => (
           <div

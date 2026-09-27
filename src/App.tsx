@@ -3,7 +3,7 @@ import { EscaletaSection } from "./components/EscaletaSection";
 import { FaqSection } from "./components/FaqSection";
 import { FeaturedStreamers } from "./components/FeaturedStreamers";
 import { HeroSection } from "./components/HeroSection";
-import { LoreTerminal } from "./components/LoreTerminal";
+import { ClassifiedDossier } from "./components/ClassifiedDossier";
 import { SeriesSection } from "./components/SeriesSection";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
@@ -29,7 +29,7 @@ export default function App() {
 
       <main>
         <SeriesSection />
-        <LoreTerminal />
+        <ClassifiedDossier />
         <EscaletaSection />
         <StudioSection />
         <StaffSection />

@@ -16,7 +16,7 @@ export function WhitelistSection() {
             titleId="whitelist-title"
             title="Reservá tu plaza"
             log={{ main: "Postulación", tail: "whitelist" }}
-            blurbClassName="mb-6"
+            blurbClassName="prose-muted mb-6"
             blurb={<>{WHITELIST_INVITE_NOTE}</>}
           />
           <HowItWorks />

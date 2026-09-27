@@ -1,5 +1,6 @@
 import { accentStyle, STREAMERS, STREAMERS_SECTION } from "../content";
 import type { FeaturedStreamer } from "../content";
+import { SectionHeader } from "./SectionHeader";
 
 const MC_HEADS_ORIGIN = "https://mc-heads.net";
 
@@ -103,13 +104,13 @@ export function FeaturedStreamers() {
   return (
     <section id="streamers" className="section-block" aria-labelledby="streamers-title">
       <div className="page-shell">
-        <p className="log-label mb-2">
-          [LOG] <b>Cobertura</b> // en vivo
-        </p>
-        <h2 id="streamers-title" className="section-title">
-          {STREAMERS_SECTION.title}
-        </h2>
-        <p className="prose-muted mb-6 md:mb-8">{STREAMERS_SECTION.blurb}</p>
+        <SectionHeader
+          titleId="streamers-title"
+          title={STREAMERS_SECTION.title}
+          log={STREAMERS_SECTION.log}
+          blurbClassName="prose-muted mb-6 md:mb-8"
+          blurb={STREAMERS_SECTION.blurb}
+        />
 
         <ol className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
           {STREAMERS.map((streamer, index) => (

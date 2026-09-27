@@ -6,10 +6,7 @@ export function HowItWorks() {
       {WHITELIST_STEPS.map((step) => (
         <li key={step.id} className="flex gap-3">
           <span className="text-accent">{step.id}</span>
-          <span>
-            {step.text}
-            {step.channel ? <span className="text-white"> {step.channel}</span> : null}
-          </span>
+          <span>{step.text}</span>
         </li>
       ))}
     </ol>

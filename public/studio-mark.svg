@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img" aria-label="Emblema de Wasteland Studio: letra W en bloques con señal roja">
+  <defs>
+    <radialGradient id="glow" cx="52%" cy="40%" r="34%">
+      <stop offset="0%" stop-color="#e11d48" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#e11d48" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#ffffff" opacity="0.04"/>
+    </pattern>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="58%">
+      <stop offset="52%" stop-color="#070708" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#070708" stop-opacity="0.9"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="500" fill="#070708"/>
+  <circle cx="200" cy="240" r="115" fill="url(#glow)"/>
+  <polygon points="206.97,333.40 162.28,304.52 162.28,279.35 206.97,308.23" fill="#757582" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="114.70,432.00 168.52,413.64 168.52,178.69 114.70,197.04" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="168.52,346.51 206.97,333.40 206.97,308.23 168.52,321.34" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="114.70,197.04 168.52,178.69 123.83,149.81 70.01,168.17" fill="#e8e8f0" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="168.52,321.34 276.17,284.62 276.17,234.27 168.52,270.99" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="206.97,224.31 237.72,213.82 193.03,184.95 162.28,195.44" fill="#e8e8f0" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="237.72,247.39 193.03,218.51 193.03,184.95 237.72,213.82" fill="#757582" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="237.72,322.91 276.17,309.80 276.17,284.62 237.72,297.74" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="206.97,257.88 237.72,247.39 237.72,213.82 206.97,224.31" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="329.99,358.57 285.30,329.69 285.30,94.74 329.99,123.61" fill="#757582" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="276.17,376.93 329.99,358.57 329.99,123.61 276.17,141.97" fill="#b0b0bc" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="299.23,100.54 329.99,90.05 302.06,72.00 271.30,82.49" fill="#f04368" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="329.99,123.61 302.06,105.57 302.06,72.00 329.99,90.05" fill="#7a122c" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <polygon points="299.23,134.10 329.99,123.61 329.99,90.05 299.23,100.54" fill="#c41e48" stroke="#0c0c10" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke fill"/>
+  <rect width="400" height="500" fill="url(#scanlines)"/>
+  <rect width="400" height="500" fill="url(#vignette)"/>
+</svg>

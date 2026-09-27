@@ -1,4 +1,4 @@
-import { SERIES_FEATURES, SERIES_NAME } from "../content";
+import { SERIES_FEATURES, SERIES_SECTION } from "../content";
 import { SectionHeader } from "./SectionHeader";
 
 export function SeriesSection() {
@@ -7,14 +7,10 @@ export function SeriesSection() {
       <div className="page-shell">
         <SectionHeader
           titleId="serie-title"
-          title="No es una serie de zombies"
-          blurbClassName="mb-8 md:mb-10"
-          blurb={
-            <>
-              {SERIES_NAME} trata de lo que queda después del colapso: territorio, recursos y un
-              virus que apenas abre la historia.
-            </>
-          }
+          title={SERIES_SECTION.title}
+          log={SERIES_SECTION.log}
+          blurbClassName="prose-muted mb-8 md:mb-10"
+          blurb={SERIES_SECTION.blurb}
         />
 
         <ul className="feature-row list-none p-0">

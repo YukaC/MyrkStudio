@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
-import { DISCORD_URL } from "../content";
+import { CTA_LABEL, DISCORD_URL, NAV_LINKS } from "../content";
 import { DiscordIcon, MenuIcon } from "./icons";
-
-const NAV_LINKS = [
-  { href: "#serie", label: "La Serie" },
-  { href: "#estudio", label: "Estudio" },
-  { href: "#streamers", label: "Equipo" },
-  { href: "#staff", label: "Staff" },
-  { href: "#faq", label: "FAQ" },
-] as const;
 
 export function SiteHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -40,13 +32,13 @@ export function SiteHeader() {
             </a>
           ))}
           <a href="#whitelist" className="nav-cta ml-2">
-            Postular
+            {CTA_LABEL}
           </a>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
           <a href="#whitelist" className="nav-cta">
-            Postular
+            {CTA_LABEL}
           </a>
           <button
             type="button"

@@ -21,7 +21,7 @@ invariantes + estado: [`SPEC.md`](SPEC.md)
 | id | Decisión | Bloquea | Notas |
 |---|---|---|---|
 | B4 | Confirmar fecha/hora real del estreno | Copy de la campaña | Hoy `2027-09-26T20:00:00-03:00`, hora asumida |
-| T15 | ¿SEO vive en `index.html` o en `content.ts`? | T6 (migración de dominio) | Hoy están los dos, sin conectar (B6) |
+| T15 | ¿SEO vive en `index.html` o en `content/site.ts`? | T6 (migración de dominio) | Hoy están los dos, sin conectar (B6) |
 | T6 | ¿comprar/configurar `WLandStudio.net`? | Quote B/C (lo incluye) | Falta zona en Cloudflare |
 | T16 | Copy real de FAQ / bios / proyectos | Lanzamiento | Hoy redactado desde §G, sin visto bueno del estudio |
 | T17 | ¿El demo ampliado entra en B o va como addendum? | Precio | Decisión del dueño; precios sin tocar |

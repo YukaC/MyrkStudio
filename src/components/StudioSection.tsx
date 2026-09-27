@@ -1,9 +1,7 @@
-import { STUDIO_NAME } from "../content";
+import { STUDIO_SECTION, UPCOMING_PROJECTS } from "../content";
 import { LockIcon } from "./icons";
 import { SectionHeader } from "./SectionHeader";
 import { StudioStatement } from "./StudioStatement";
-
-const UPCOMING_PROJECTS = ["PROYECTO_02", "PROYECTO_03"];
 
 export function StudioSection() {
   return (
@@ -12,13 +10,10 @@ export function StudioSection() {
         <div>
           <SectionHeader
             titleId="estudio-title"
-            title={`${STUDIO_NAME} no es una serie`}
-            blurb={
-              <>
-                Es el estudio. &quot;Japan Apocalypse&quot; es la primera producción. Cada futura
-                serie explorará un colapso distinto - no siempre zombies.
-              </>
-            }
+            title={STUDIO_SECTION.title}
+            log={STUDIO_SECTION.log}
+            blurbClassName="prose-muted mb-6"
+            blurb={STUDIO_SECTION.blurb}
           />
         </div>
 

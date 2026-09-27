@@ -1,4 +1,4 @@
-import { DISCORD_URL, SERIES_NAME } from "../content";
+import { DISCORD_URL } from "../content";
 
 export function CtaBanner() {
   return (
@@ -15,7 +15,7 @@ export function CtaBanner() {
             </h2>
             <p className="prose-muted mx-auto mb-6">
               Los próximos eventos, las transmisiones y las plazas de whitelist se anuncian primero
-              en el Discord de {SERIES_NAME}.
+              en el Discord de Wasteland.
             </p>
             <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-accent">

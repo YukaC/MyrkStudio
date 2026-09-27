@@ -17,6 +17,7 @@ React 19 · Vite 7 · TS estricto · Tailwind 4 · Vercel demo · Cloudflare DNS
 | `npm run dev` | Vite :5173 |
 | `npm run build` | build prod |
 | `npm run typecheck` | tsc |
+| `npm test` | vitest (16 tests, corre en watch con `test:watch`) |
 
 ## Gates de turno (SPEC §V9/§V10/§V11)
 
@@ -29,7 +30,7 @@ React 19 · Vite 7 · TS estricto · Tailwind 4 · Vercel demo · Cloudflare DNS
 ## Estructura
 
 ```
-src/content.ts      ← fuente única: copy, PLAZAS, STAFF, PREMIERE_DATE, WHITELIST_STEPS, FAQ
+src/content/        ← fuente única por dominio: site · plazas · series · studio · lore · faq · whitelist · nav · ui (+ index.ts barrel)
 src/App.tsx         ← solo compone secciones
 src/hooks/          ← useCountdown
 src/components/     ← 1 sección = 1 componente + primitivas (SectionHeader, Panel, PlazasMeter…)
@@ -41,7 +42,7 @@ src/components/     ← 1 sección = 1 componente + primitivas (SectionHeader, P
 - Discord default `https://discord.gg/3PvWKJBw`
 - Invite válido → prioridad (§V3). En v0 el campo no está en el form: la aplica el staff
   al revisar en Discord (SPEC T3)
-- Content copy en `src/content.ts` (fuente única plazas/staff) · nada de números o copy en el JSX
+- Content copy en `src/content/` (fuente única plazas/staff) · nada de números o copy en el JSX
 - Dato inventado nunca: si no existe (ej. `isLive`, fecha de estreno) se deja vacío o se
   documenta como supuesto en §B
 

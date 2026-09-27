@@ -28,7 +28,7 @@ Un incidente en ensayos humanos + fallo de contención → brote → colapso. El
 - Escaleta hora-a-hora / finales branching
 - Lore de personajes completo
 - Spoilers de misiones
-- Códigos/lore unlock (salvo teaser “ingresá código in-game”)
+- Códigos/lore unlock (salvo el teaser público del expediente, que solo muestra filas redactadas)
 
 ## Equipo (público mínimo)
 

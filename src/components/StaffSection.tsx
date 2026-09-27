@@ -1,5 +1,4 @@
-import { DISCORD_URL, STAFF } from "../content";
-import { DiscordIcon } from "./icons";
+import { STAFF, STAFF_SECTION } from "../content";
 import { SectionHeader } from "./SectionHeader";
 
 export function StaffSection() {
@@ -8,14 +7,10 @@ export function StaffSection() {
       <div className="page-shell">
         <SectionHeader
           titleId="staff-title"
-          title="Equipo de comando"
-          blurbClassName="mb-8"
-          blurb={
-            <>
-              Builders, guionistas y programadores en producción, con colaboración externa en
-              animación y cinemáticas. Roster completo en Discord.
-            </>
-          }
+          title={STAFF_SECTION.title}
+          log={STAFF_SECTION.log}
+          blurbClassName="prose-muted mb-8"
+          blurb={STAFF_SECTION.blurb}
         />
 
         <ul className="mb-4 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
@@ -29,16 +24,6 @@ export function StaffSection() {
             </li>
           ))}
         </ul>
-
-        <a
-          href={DISCORD_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="panel panel-hover flex items-center justify-center gap-2 py-5 font-term text-xs tracking-[0.14em] text-muted uppercase hover:text-white"
-        >
-          <DiscordIcon className="h-4 w-4" />
-          Ver equipo completo en Discord
-        </a>
       </div>
     </section>
   );

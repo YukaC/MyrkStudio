@@ -35,7 +35,7 @@ export function HeroSection() {
 
           <p className="reveal reveal-delay-2 prose-muted mb-8 lg:mx-0">
             Japón ha caído. Supervivencia, facciones y eventos guionizados en Minecraft: un
-            ecosistema letal, no una plaga genérica.
+            ecosistema letal, cada decisión cuenta.
           </p>
 
           <div className="reveal reveal-delay-3 flex w-full max-w-md flex-col gap-3 sm:flex-row lg:max-w-lg">
@@ -63,9 +63,6 @@ export function HeroSection() {
                 {WHITELIST_INVITE_NOTE}
               </p>
               <PremiereCountdown />
-              <a href="#whitelist" className="btn btn-accent w-full">
-                Reservar plaza
-              </a>
             </div>
           </Panel>
         </aside>

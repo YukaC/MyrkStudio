@@ -8,7 +8,7 @@ Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan A
 [Browser]
     │
     ▼
-[Vite React SPA] ──content.ts──► copy/plazas/staff
+[Vite React SPA] ──content/──► copy/plazas/staff
     │
     │  demo (F1): clipboard → Discord #whitelist
     │  prod (F3): POST /api/applications
@@ -37,7 +37,7 @@ Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan A
 | 1 | `SiteHeader` | nav | Nav desktop + menú mobile (overlay, foco y `body` overflow) |
 | 2 | `HeroSection` | `#top` | Brand serie · **PlazasMeter** + **StatCounters** + **PremiereCountdown** + CTA |
 | 3 | `SeriesSection` | `#serie` | Pitch no-zombie + features (`SERIES_FEATURES`) |
-| 4 | `LoreTerminal` | — | Teaser clasificado; input de código decorativo (sin submit) |
+| 4 | `ClassifiedDossier` | — | Ficha de metadatos con filas redactadas (`DOSSIER_ROWS`) + sello CLASIFICADO |
 | 5 | `EscaletaSection` | — | Semana 1 teaser; semanas 2–4 bloqueadas (⊥V7) |
 | 6 | `StudioSection` | `#estudio` | Wasteland ≠ serie + `StudioStatement` + próximos proyectos |
 | 7 | `StaffSection` | `#staff` | Roster (`STAFF`) + link Discord |
@@ -55,12 +55,14 @@ Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan A
 
 ```
 src/
-  content.ts          ← fuente única: copy, PLAZAS, STAFF, PREMIERE_DATE, WHITELIST_STEPS, FAQ
+  content/            ← fuente única por dominio: site · plazas · series · studio · lore · faq
+    index.ts            (barrel: los componentes importan from "../content")
+    whitelist.ts      (WHITELIST_STEPS, invite codes) · nav.ts (NAV_LINKS, FOOTER) · ui.ts
   App.tsx             ← orquestador (solo compone secciones)
   hooks/
     useCountdown.ts   ← tick 1s → {days,hours,minutes,seconds,isExpired}
   components/
-    SiteHeader · HeroSection · SeriesSection · LoreTerminal · EscaletaSection
+    SiteHeader · HeroSection · SeriesSection · ClassifiedDossier · EscaletaSection
     StudioSection · StaffSection · FeaturedStreamers · FaqSection · WhitelistSection
     CtaBanner · SiteFooter · StudioStatement · WhitelistForm
     SectionHeader · Panel · PlazasMeter · StatCounters · HowItWorks

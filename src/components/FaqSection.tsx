@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { accentStyle, FAQ, FAQ_SECTION } from "../content";
+import { SectionHeader } from "./SectionHeader";
 
 function ChevronIcon({ className }: { className?: string }) {
   return (
@@ -29,10 +30,13 @@ export function FaqSection() {
   return (
     <section id="faq" className="section-block" aria-labelledby="faq-title">
       <div className="page-shell">
-        <h2 id="faq-title" className="section-title">
-          {FAQ_SECTION.title}
-        </h2>
-        <p className="prose-muted mb-6 md:mb-8">{FAQ_SECTION.blurb}</p>
+        <SectionHeader
+          titleId="faq-title"
+          title={FAQ_SECTION.title}
+          log={FAQ_SECTION.log}
+          blurbClassName="prose-muted mb-6 md:mb-8"
+          blurb={FAQ_SECTION.blurb}
+        />
 
         {/* items-start: the default stretch made a closed item inherit the
             open sibling's height and read as an open-but-empty panel */}

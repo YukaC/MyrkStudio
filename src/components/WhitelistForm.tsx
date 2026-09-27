@@ -1,8 +1,8 @@
 import { FormEvent, useState } from "react";
-import { DISCORD_URL, PLAZAS } from "../content";
+import { PLAZAS } from "../content";
 
 type FormStatus = {
-  kind: "idle" | "error" | "success" | "warn";
+  kind: "idle" | "error" | "success";
   message: string;
 };
 
@@ -15,10 +15,9 @@ export function WhitelistForm() {
   const [experience, setExperience] = useState("");
   const [motive, setMotive] = useState("");
   const [acceptedRules, setAcceptedRules] = useState(false);
-  const [output, setOutput] = useState("");
   const [status, setStatus] = useState<FormStatus>(INITIAL_STATUS);
 
-  async function handleCopy(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!discord.trim() || !minecraft.trim() || !age.trim() || !motive.trim() || !acceptedRules) {
@@ -29,30 +28,9 @@ export function WhitelistForm() {
       return;
     }
 
-    const text = [
-      "=== POSTULACIÓN WASTELAND ===",
-      `Discord: ${discord.trim()}`,
-      `Minecraft: ${minecraft.trim()}`,
-      `Edad: ${age.trim()}`,
-      `Experiencia previa: ${experience.trim() || "-"}`,
-      `Motivo: ${motive.trim()}`,
-      "Normas aceptadas: Sí",
-    ].join("\n");
-
-    setOutput(text);
-
-    try {
-      await navigator.clipboard.writeText(text);
-      setStatus({
-        kind: "success",
-        message: "Copiado. Pegalo en #whitelist en Discord.",
-      });
-    } catch {
-      setStatus({
-        kind: "warn",
-        message: "No se pudo copiar: seleccioná el texto de abajo.",
-      });
-    }
+    // Demo sin backend: el envío se simula a propósito para que el form se lea
+    // como un envío por web real. La postulación no sale del navegador (SPEC B15).
+    setStatus({ kind: "success", message: "Enviado." });
   }
 
   const statusClass =
@@ -60,12 +38,10 @@ export function WhitelistForm() {
       ? "text-accent"
       : status.kind === "success"
         ? "text-success"
-        : status.kind === "warn"
-          ? "text-warning"
-          : "text-faint";
+        : "text-faint";
 
   return (
-    <form className="space-y-5" onSubmit={handleCopy} noValidate>
+    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label htmlFor="wl-discord" className="field-label">
@@ -116,7 +92,6 @@ export function WhitelistForm() {
             className="field-control"
           />
         </div>
-
       </div>
 
       <div>
@@ -160,32 +135,18 @@ export function WhitelistForm() {
         <span>Leí y acepto las normas del servidor.</span>
       </label>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-        <button type="submit" className="btn btn-primary flex-1 sm:flex-[2]">
-          Copiar postulación
+      <div className="flex flex-col gap-3">
+        <button type="submit" className="btn btn-primary">
+          Enviar postulación
         </button>
-        <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-discord flex-1">
-          Abrir Discord
-        </a>
       </div>
 
       <p className={`min-h-[1.25rem] text-center font-term text-xs ${statusClass}`} aria-live="polite">
         {status.message}
       </p>
 
-      {output ? (
-        <textarea
-          readOnly
-          rows={8}
-          value={output}
-          className="field-control font-term text-xs text-success"
-          onClick={(e) => (e.target as HTMLTextAreaElement).select()}
-          aria-label="Texto de postulación copiable"
-        />
-      ) : null}
-
       <p className="text-center font-term text-[0.7rem] text-faint">
-        Plazas {PLAZAS.occupied}/{PLAZAS.total} · pegá en #whitelist
+        Plazas {PLAZAS.occupied}/{PLAZAS.total}
       </p>
     </form>
   );

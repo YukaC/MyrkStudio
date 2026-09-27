@@ -1,4 +1,4 @@
-import { WEEK1_DAYS } from "../content";
+import { ESCALETA_SECTION, WEEK1_DAYS } from "../content";
 import { LockIcon } from "./icons";
 import { SectionHeader } from "./SectionHeader";
 
@@ -8,9 +8,9 @@ export function EscaletaSection() {
       <div className="page-shell">
         <SectionHeader
           titleId="escaleta-title"
-          title="Semana 1"
+          title={ESCALETA_SECTION.title}
           blurbClassName="mb-6 font-term text-xs tracking-wider text-faint uppercase"
-          blurb="Escaleta de eventos · en proceso"
+          blurb={ESCALETA_SECTION.blurb}
         />
 
         <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
@@ -39,11 +39,9 @@ export function EscaletaSection() {
           <LockIcon />
           <div>
             <p className="font-display text-sm font-semibold text-white uppercase">
-              Semanas 2 · 3 · 4
+              {ESCALETA_SECTION.lockedTitle}
             </p>
-            <p className="font-term text-xs text-faint">
-              Calendario bloqueado hasta progresión del servidor
-            </p>
+            <p className="font-term text-xs text-faint">{ESCALETA_SECTION.lockedDetail}</p>
           </div>
         </div>
       </div>
