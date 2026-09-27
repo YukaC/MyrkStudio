@@ -1,7 +1,7 @@
 # Plan multi-page — WLandStudio
 
 > Estado: **demo dual** (`/` scroll · `/m/*` **1 sección = 1 viewport**).
-> Materials Apple (glass nav/dock) · scroll interno solo FAQ/form · chips en home.
+> Materials Apple (glass nav/dock) · scroll interno solo FAQ/form · wayfinding = header.
 > Rollback: quitar rutas `/m` en `App.tsx` o revertir el commit del lote.
 > Docs relacionados: `SPEC.md` · `docs/ARCHITECTURE.md` · `docs/PLAN.md` · `docs/QUOTE.md`
 
@@ -15,7 +15,7 @@
 | 4 | Nav | MULTI_NAV = secciones (sin whitelist; CTA aparte) · glass material |
 | 5 | Scroll | ⊥ document scroll en `/m` · overflow interno solo faq/whitelist (y home corto) |
 | 6 | Acceso | ambas demos vivas; switcher en MultiChromeBar |
-| 7 | Chrome | PageFrame · header = mapa · home “Empezá por” = 3 cues editoriales (⊥ chips sitemap) |
+| 7 | Chrome | PageFrame · header = mapa completo · home = hero CTAs (⊥ “Empezá por” / chips sitemap — removido) |
 
 ---
 
@@ -24,7 +24,7 @@
 Hoy el sitio clásico es un **scroll Persuade** con un solo job: entender Wasteland + postular.
 
 Multi-page (pedido del dueño): **cada sección vive en su propia página/viewport**.
-Home multi = Hero (CTAs + “Empezá por” Serie/Lore/Escaleta). Mapa completo = header.
+Home multi = Hero (CTAs). Mapa completo = header.
 Cada ruta monta **una** sección con el mismo look (atmosphere, motion) y exit ramps quietos.
 
 Si una página no tiene un job distinto, no merece ruta — y cada sección del scroll **sí** lo tiene.
@@ -49,7 +49,7 @@ Fuente: `src/styles/motion.css` · `src/styles/multi.css` · tokens `--ease-out`
 
 | Superficie | Frecuencia | Motion permitido |
 |---|---|---|
-| Cambio de ruta SPA (`/m`) | Occasional | **Opacity fade 150ms** `var(--ease-out)` en `.multi-frame` / `.multi-hero`. ⊥ `translateY` / slide de página. Cooldown scroll ≥180ms (= fade + margen) |
+| Cambio de ruta SPA (`/m`) | Occasional | Enter class en `PageFrame` vía `navigate state.multiSlide`: **settle 380ms** `translateY(±10vh) scale(0.985)` + opacity. `.reveal` off durante enter (un solo movimiento). Reduced-motion: fade 200ms. Cooldown ≥420ms. Gate swipe: solo `data-scroll=true` |
 | Menú mobile panel | Occasional | Enter/exit `@starting-style` (opacity + `translateY(-6px)` 140–200ms). Se mantiene |
 | MenuIcon (burger↔X) | Occasional | 3 líneas morph 180ms `var(--ease-out)`; reduced-motion = snap |
 | Burger / chrome press | Tens/día | `:active scale(0.97)` 140ms `var(--ease-out)` (`.nav-chrome-control`, `.btn`, `.nav-cta`) |
@@ -58,8 +58,10 @@ Fuente: `src/styles/motion.css` · `src/styles/multi.css` · tokens `--ease-out`
 | FAQ open | Occasional | Answer enter `faq-answer-in` 180ms + chevron rotate 200ms. Exit nativo instant (tradeoff `<details>`) |
 | Countdown expire | Rare (1×) | `.countdown-face` opacity 200ms al flip idle→live. ⊥ animar ticks |
 | Reveal (hero/secciones) | Load | 450ms `var(--ease-out)` classic + multi (mismo budget) |
+| Wordmark `Apocalypse` | Ambient | 砂嵐: fill accent sólido + `::after` ruido negro (`multiply`, opacity baja). ⊥ hover. Reduced-motion: sin overlay |
+| CRT scanlines | Ambient | `.crt-overlay` `repeating-linear-gradient` 3px · opacity ~0.72 (multi ~0.55) |
 
-**Nunca animar:** back/forward del browser como “show”, focus jumps, countdown ticks, page wipe / slide de ruta.
+**Nunca animar:** back/forward del browser como “show”, focus jumps, countdown ticks, page wipe cinematográfico.
 
 **Easing UI:** siempre `var(--ease-out)` (`cubic-bezier(0.23, 1, 0.32, 1)`). ⊥ Tailwind `ease-out` débil en chrome interactivo.
 

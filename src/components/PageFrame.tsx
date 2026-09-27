@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
+import type { MultiLocationState } from "../hooks/useMultiSectionScroll";
 
 type PageFrameProps = {
   children: ReactNode;
@@ -25,9 +26,15 @@ export function PageFrame({
   className = "",
 }: PageFrameProps) {
   const location = useLocation();
+  const slide = (location.state as MultiLocationState | null)?.multiSlide;
+  const enterClass =
+    slide === "next" ? "multi-frame--enter-next" : slide === "prev" ? "multi-frame--enter-prev" : "";
 
   return (
-    <div key={location.pathname} className={`multi-frame ${className}`.trim()}>
+    <div
+      key={location.pathname}
+      className={["multi-frame", enterClass, className].filter(Boolean).join(" ")}
+    >
       {withAtmosphere ? (
         <>
           <div className="hero-glow" aria-hidden />

@@ -2,7 +2,7 @@ import { MULTI_WHITELIST_HREF } from "../content";
 import { HeroSection } from "../components/HeroSection";
 import { PageFrame } from "../components/PageFrame";
 
-/** One viewport: full-bleed hero. Wayfinding = header; cues = “Empezá por”. */
+/** One viewport: full-bleed hero. Wayfinding = header nav. */
 export function MultiHomePage() {
   return (
     <PageFrame withAtmosphere={false} className="multi-frame--hero-bleed">

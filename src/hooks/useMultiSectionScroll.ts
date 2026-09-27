@@ -4,12 +4,14 @@ import { MULTI_SCROLL_PATHS } from "../content";
 
 const WHEEL_THRESHOLD = 24;
 const TOUCH_THRESHOLD = 36;
-/** ≥ multi-section-fade (150ms) so data-slide is not cleared mid-animation. */
-const COOLDOWN_MS = 180;
+/** ≥ multi-section enter (380ms) so cooldown outlives the settle. */
+const COOLDOWN_MS = 420;
 
-function prefersReducedMotion(): boolean {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
+export type MultiSlideDirection = "next" | "prev";
+
+export type MultiLocationState = {
+  multiSlide?: MultiSlideDirection;
+};
 
 function normalizePath(pathname: string): string {
   if (pathname.length > 1 && pathname.endsWith("/")) {
@@ -24,13 +26,15 @@ function isEditableTarget(target: EventTarget | null): boolean {
 }
 
 /**
- * If the event is inside the page body and that body can still scroll in
- * this direction, keep the gesture local — don't jump to another section.
+ * Only FAQ/form frames (`data-scroll="true"`) gate section jumps.
+ * Clipped one-screen frames often have scrollHeight > clientHeight on mobile
+ * while overflow is hidden — treating them as scrollers blocks swipe forever.
  */
 function canNavigatePastInnerScroll(target: EventTarget | null, deltaY: number): boolean {
   if (!(target instanceof Element)) return true;
   const scroller = target.closest<HTMLElement>(".multi-frame-body");
   if (!scroller) return true;
+  if (scroller.dataset.scroll !== "true") return true;
 
   const { scrollTop, scrollHeight, clientHeight } = scroller;
   const maxScroll = scrollHeight - clientHeight;
@@ -43,15 +47,18 @@ function canNavigatePastInnerScroll(target: EventTarget | null, deltaY: number):
 
 /**
  * Wheel / touch → next|prev multi route. Cooldown + edge-aware for FAQ/form scroll.
- * Sets `data-slide` on the shell so CSS can run the section fade (next|prev
- * kept for direction bookkeeping; both use the same opacity fade).
+ * Passes `state.multiSlide` so PageFrame owns the enter class (reliable remount anim).
  */
 export function useMultiSectionScroll(shellRef: RefObject<HTMLElement | null>) {
   const navigate = useNavigate();
   const location = useLocation();
   const cooldownRef = useRef(false);
+  const cooldownTimerRef = useRef(0);
   const wheelAccRef = useRef(0);
   const touchStartYRef = useRef<number | null>(null);
+  /** Live path without re-binding listeners on every section change (mobile stuck). */
+  const pathnameRef = useRef(location.pathname);
+  pathnameRef.current = location.pathname;
 
   useEffect(() => {
     const shell = shellRef.current;
@@ -61,8 +68,12 @@ export function useMultiSectionScroll(shellRef: RefObject<HTMLElement | null>) {
     const paths = MULTI_SCROLL_PATHS.map(normalizePath);
 
     function currentIndex(): number {
-      const path = normalizePath(location.pathname);
+      const path = normalizePath(pathnameRef.current);
       return paths.indexOf(path as (typeof paths)[number]);
+    }
+
+    function releaseCooldown() {
+      cooldownRef.current = false;
     }
 
     function go(direction: 1 | -1) {
@@ -75,22 +86,12 @@ export function useMultiSectionScroll(shellRef: RefObject<HTMLElement | null>) {
       cooldownRef.current = true;
       wheelAccRef.current = 0;
 
-      const slide = direction > 0 ? "next" : "prev";
-      root.dataset.slide = slide;
-      if (prefersReducedMotion()) {
-        root.dataset.motion = "reduce";
-      } else {
-        delete root.dataset.motion;
-      }
+      const slide: MultiSlideDirection = direction > 0 ? "next" : "prev";
 
-      navigate(nextPath);
+      window.clearTimeout(cooldownTimerRef.current);
+      cooldownTimerRef.current = window.setTimeout(releaseCooldown, COOLDOWN_MS);
 
-      window.setTimeout(() => {
-        cooldownRef.current = false;
-        delete root.dataset.slide;
-        delete root.dataset.motion;
-      }, COOLDOWN_MS);
-
+      navigate(nextPath, { state: { multiSlide: slide } satisfies MultiLocationState });
       return true;
     }
 
@@ -129,6 +130,8 @@ export function useMultiSectionScroll(shellRef: RefObject<HTMLElement | null>) {
       const startY = touchStartYRef.current;
       touchStartYRef.current = null;
       if (startY === null) return;
+      if (cooldownRef.current) return;
+
       const endY = event.changedTouches[0]?.clientY;
       if (endY === undefined) return;
 
@@ -140,14 +143,22 @@ export function useMultiSectionScroll(shellRef: RefObject<HTMLElement | null>) {
       go(deltaY > 0 ? 1 : -1);
     }
 
+    function onTouchCancel() {
+      touchStartYRef.current = null;
+    }
+
     root.addEventListener("wheel", onWheel, { passive: false });
     root.addEventListener("touchstart", onTouchStart, { passive: true });
     root.addEventListener("touchend", onTouchEnd, { passive: true });
+    root.addEventListener("touchcancel", onTouchCancel, { passive: true });
 
     return () => {
+      window.clearTimeout(cooldownTimerRef.current);
+      releaseCooldown();
       root.removeEventListener("wheel", onWheel);
       root.removeEventListener("touchstart", onTouchStart);
       root.removeEventListener("touchend", onTouchEnd);
+      root.removeEventListener("touchcancel", onTouchCancel);
     };
-  }, [shellRef, navigate, location.pathname]);
+  }, [shellRef, navigate]);
 }

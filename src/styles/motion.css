@@ -184,10 +184,15 @@
   }
 
   /* Tailwind's ping is an infinite keyframe; a reduced-motion visitor should keep
-     the status dot but not the permanent pulse. */
+     the status dot but not the permanent pulse. Same for CRT wordmark bursts. */
   .animate-ping,
-  .glitch-text:hover {
+  .glitch-text,
+  .glitch-text::after {
     animation: none;
+  }
+
+  .glitch-text::after {
+    opacity: 0;
   }
 
   .mobile-menu-backdrop,

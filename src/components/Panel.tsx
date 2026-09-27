@@ -14,7 +14,7 @@ type PanelProps = {
 export function Panel({ title, badge, badgeClassName = "text-accent", children, className }: PanelProps) {
   return (
     <div className={`panel overflow-hidden ${className ?? ""}`}>
-      <div className="flex items-center justify-between gap-3 border-b border-line bg-black/50 px-4 py-2.5 sm:px-5">
+      <div className="flex items-center justify-between gap-3 border-b border-line bg-black/70 px-4 py-2.5 sm:px-5">
         <span className="font-term text-[0.7rem] tracking-wider text-faint uppercase">{title}</span>
         {badge ? <span className={`font-term text-[0.65rem] ${badgeClassName}`}>{badge}</span> : null}
       </div>

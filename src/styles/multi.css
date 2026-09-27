@@ -18,17 +18,53 @@
     flex-direction: column;
   }
 
-  /* Section enter — opacity only ≤150ms (⊥ slide; MULTI_PAGE_PLAN motion norma) */
+  /* Section enter — class on the remounted frame (from navigate state), not parent attr.
+     Strong travel so mobile swipe reads as a section change; .reveal disabled so it
+     doesn't fight the frame settle. */
   @media (prefers-reduced-motion: no-preference) {
-    .multi-shell[data-slide] .multi-frame,
-    .multi-shell[data-slide] .multi-hero {
-      animation: multi-section-fade 0.15s var(--ease-out) both;
+    .multi-frame--enter-next {
+      animation: multi-section-next 0.38s var(--ease-out) both;
+    }
+
+    .multi-frame--enter-prev {
+      animation: multi-section-prev 0.38s var(--ease-out) both;
+    }
+
+    .multi-frame--enter-next .reveal,
+    .multi-frame--enter-prev .reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
     }
   }
 
-  .multi-shell[data-motion="reduce"][data-slide] .multi-frame,
-  .multi-shell[data-motion="reduce"][data-slide] .multi-hero {
-    animation: multi-section-fade 0.12s var(--ease-out) both;
+  @media (prefers-reduced-motion: reduce) {
+    .multi-frame--enter-next,
+    .multi-frame--enter-prev {
+      animation: multi-section-fade 0.2s var(--ease-out) both;
+    }
+  }
+
+  @keyframes multi-section-next {
+    from {
+      opacity: 0;
+      transform: translateY(10vh) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes multi-section-prev {
+    from {
+      opacity: 0;
+      transform: translateY(-10vh) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   @keyframes multi-section-fade {
@@ -40,13 +76,13 @@
     }
   }
 
-  /* Softer atmosphere — materials over CRT grit */
+  /* Softer than classic, but scanlines still readable on full-bleed hero */
   .multi-shell .crt-overlay {
-    opacity: 0.08;
+    opacity: 0.55;
   }
 
   .multi-shell .noise-overlay {
-    opacity: 0.025;
+    opacity: 0.055;
   }
 
   .multi-shell .vignette {
@@ -205,14 +241,14 @@
   }
 
   .multi-hero .multi-hero-title {
-    font-size: clamp(2.25rem, 7vw, 4.25rem);
+    font-size: clamp(2.75rem, 10vw, 5.25rem);
     letter-spacing: -0.025em;
     line-height: 0.92;
     text-shadow: 0 2px 24px rgb(0 0 0 / 0.45);
   }
 
   .multi-hero-panel {
-    background: color-mix(in srgb, var(--color-panel) 55%, transparent);
+    background: color-mix(in srgb, var(--color-panel) 88%, transparent);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border-color: color-mix(in srgb, white 10%, var(--color-line));
@@ -236,79 +272,6 @@
     -webkit-backdrop-filter: blur(16px) saturate(160%);
     padding: 0.55rem clamp(1rem, 4vw, 2rem);
     padding-bottom: max(0.55rem, env(safe-area-inset-bottom, 0px));
-  }
-
-  /* Editorial “Empezá por” — text links, not a second pill navbar */
-  .multi-explore {
-    margin-top: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.45rem;
-  }
-
-  @media (min-width: 1024px) {
-    .multi-explore {
-      align-items: flex-start;
-    }
-  }
-
-  .multi-explore-label {
-    margin: 0;
-    font-family: var(--font-term);
-    font-size: 0.65rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-faint);
-  }
-
-  .multi-explore-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 0.15rem 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (min-width: 1024px) {
-    .multi-explore-list {
-      justify-content: flex-start;
-    }
-  }
-
-  .multi-explore-list > li:not(:last-child)::after {
-    content: "·";
-    margin-inline: 0.65rem;
-    color: color-mix(in srgb, var(--color-faint) 70%, transparent);
-    font-family: var(--font-term);
-    font-size: 0.7rem;
-  }
-
-  .multi-explore-link {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--color-muted);
-    transition:
-      color 160ms var(--ease-out),
-      transform 100ms var(--ease-out);
-  }
-
-  .multi-explore-link:active {
-    transform: scale(0.97);
-    color: var(--color-accent);
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .multi-explore-link:hover {
-      color: #fff;
-    }
   }
 
   /* Reveal: same 450ms budget as classic `--animate-rise` (opacity + short travel) */

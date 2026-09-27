@@ -10,7 +10,7 @@ export function PremiereCountdown() {
   const label = isExpired ? PREMIERE.expiredLabel : PREMIERE.countdownLabel;
 
   return (
-    <div className="border border-line bg-black/30 px-4 py-3">
+    <div className="border border-line bg-black/65 px-4 py-3">
       <p className="font-term text-[0.6rem] tracking-wider text-faint uppercase">
         {label} {SERIES_NAME}
       </p>

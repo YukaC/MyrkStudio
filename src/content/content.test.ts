@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import indexHtml from "../../index.html?raw";
 import * as content from "./index";
 import { FAQ } from "./faq";
-import { CTA_LABEL, FOOTER, MULTI_BASE, MULTI_HOME_PATHS, MULTI_NAV_LINKS, MULTI_SCROLL_PATHS, MULTI_WHITELIST_HREF, NAV_LINKS, WHITELIST_HREF } from "./nav";
+import { CTA_LABEL, FOOTER, MULTI_BASE, MULTI_NAV_LINKS, MULTI_SCROLL_PATHS, MULTI_WHITELIST_HREF, NAV_LINKS, WHITELIST_HREF } from "./nav";
 import { PLAZAS, plazasMeterAriaLabel, plazasPercent } from "./plazas";
 import {
   ESCALETA_VISIBLE_WEEKS,
@@ -166,13 +166,6 @@ describe("nav", () => {
     expect(CTA_LABEL).toBe("Postular");
   });
 
-  it("should keep multi home paths a short editorial subset — not a second sitemap", () => {
-    const navHrefs = new Set(MULTI_NAV_LINKS.map((link) => link.href));
-    expect(MULTI_HOME_PATHS.length).toBeLessThan(MULTI_NAV_LINKS.length);
-    expect(MULTI_HOME_PATHS.every((path) => navHrefs.has(path.href))).toBe(true);
-    expect(MULTI_HOME_PATHS.map((path) => path.href)).not.toContain(MULTI_WHITELIST_HREF);
-  });
-
   it("should order multi scroll paths as home → sections → whitelist", () => {
     expect(MULTI_SCROLL_PATHS[0]).toBe(MULTI_BASE);
     expect(MULTI_SCROLL_PATHS.at(-1)).toBe(MULTI_WHITELIST_HREF);
@@ -260,8 +253,6 @@ describe("barrel contract", () => {
       "NAV_LINKS",
       "MULTI_NAV_LINKS",
       "MULTI_BASE",
-      "MULTI_HOME_PATHS",
-      "MULTI_HOME_PATHS_LABEL",
       "MULTI_SCROLL_PATHS",
       "WHITELIST_HREF",
       "MULTI_WHITELIST_HREF",

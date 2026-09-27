@@ -25,9 +25,14 @@
 
   .crt-overlay {
     z-index: 22;
-    opacity: 0.22;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.18) 50%);
-    background-size: 100% 3px;
+    opacity: 0.72;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      rgb(0 0 0 / 0.55) 2px,
+      rgb(0 0 0 / 0.55) 3px
+    );
   }
 
   .hero-glow {
@@ -75,17 +80,34 @@
       linear-gradient(transparent 55%, color-mix(in srgb, var(--color-accent) 5%, transparent));
   }
 
+  /* Wordmark 砂嵐 — solid accent; black grit particles (multiply) for contrast on rose. */
   .glitch-text {
-    text-shadow:
-      2px 0 var(--color-accent),
-      -2px 0 #06b6d4;
+    position: relative;
+    display: inline-block;
+    color: var(--color-accent);
+    text-shadow: 0 0 12px color-mix(in srgb, var(--color-accent) 35%, transparent);
   }
 
-  /* Gated on (hover: hover) so a tap on touch cannot leave the glitch frozen
-     mid-sweep, and kept under 300ms: the sweep re-arms on every pointer pass. */
-  @media (hover: hover) and (pointer: fine) {
-    .glitch-text:hover {
-      animation: glitch-skew 0.28s var(--ease-out);
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: transparent;
+    /* High-contrast grain biased dark — reads as black speckles on red via multiply */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 56px 56px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .glitch-text::after {
+      opacity: 0.68;
+      mix-blend-mode: multiply;
+      animation: sunarashi-drift 0.32s steps(4) infinite;
     }
   }
 }

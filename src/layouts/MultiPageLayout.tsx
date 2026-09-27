@@ -8,7 +8,7 @@ import { SiteHeader } from "../components/SiteHeader";
 import { StatusBanner } from "../components/StatusBanner";
 import { useMultiSectionScroll } from "../hooks/useMultiSectionScroll";
 
-/** Multi-page shell — one viewport; wheel/swipe advances sections with a soft slide. */
+/** Multi-page shell — one viewport; wheel/swipe advances sections with a soft settle. */
 export function MultiPageLayout() {
   const shellRef = useRef<HTMLDivElement>(null);
   useMultiSectionScroll(shellRef);

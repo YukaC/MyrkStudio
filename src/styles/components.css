@@ -189,6 +189,16 @@
     border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
   }
 
+  /* Hero CTAs: darker glass so the backdrop doesn't wash them out */
+  .hero-cta.btn-discord {
+    background: rgb(7 7 8 / 0.78);
+    border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-line));
+  }
+
+  .hero-cta.btn-primary {
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35);
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .btn-discord:hover {
       background: var(--color-accent-dim);

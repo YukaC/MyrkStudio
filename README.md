@@ -22,6 +22,7 @@ Demo en curso. Mente del proyecto: [`SPEC.md`](SPEC.md).
 | [`docs/QUOTE.md`](docs/QUOTE.md) | Cotización estimada detallada |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Arquitectura |
 | [`docs/LORE.md`](docs/LORE.md) | Lore público resumido (sin spoilers guion) |
+| [`docs/MULTI_PAGE_PLAN.md`](docs/MULTI_PAGE_PLAN.md) | Demo dual `/` · `/m` · motion norma |
 | [`ROADMAP.md`](ROADMAP.md) | Hacia dónde va |
 | [`CHANGELOG.md`](CHANGELOG.md) | Cambios |
 
@@ -35,9 +36,25 @@ React 19 · Vite 7 · TypeScript · Tailwind 4 · Vercel (demo) · Cloudflare DN
 - Discord: https://discord.gg/3PvWKJBw
 - Repo: https://github.com/YukaC/WLandStudio
 - Dominio prod (plan): `WLandStudio.net`
-- **CI:** push a `main` → GitHub Actions → Vercel prod (secrets `VERCEL_*`)
+- **CI:** push a `main` → GitHub Actions (`.github/workflows/deploy.yml`) → Vercel prod
 
-> Nota: la integración nativa Vercel↔GitHub App no conecta repos privados sin instalar la app en la org/repo. Mientras tanto el workflow `.github/workflows/deploy.yml` hace el deploy.
+### Secrets CI (`VERCEL_*`)
+
+| Secret | Uso |
+|---|---|
+| `VERCEL_TOKEN` | Auth CLI (`vercel pull` / `build` / `deploy`) |
+| `VERCEL_ORG_ID` | Scope del team/cuenta |
+| `VERCEL_PROJECT_ID` | Proyecto WLandStudio |
+
+> La integración nativa Vercel↔GitHub App no conecta repos privados sin instalar la app. Mientras tanto el workflow hace el deploy.
+
+**Si el job falla en “Pull Vercel env” con** `The token provided via "--token" argument is not valid`:
+1. El código y el workflow están bien — **no es un fallo de build**.
+2. Regenerá un token en [Vercel → Account → Tokens](https://vercel.com/account/tokens) (scope del team del proyecto).
+3. Actualizá el secret `VERCEL_TOKEN` en GitHub → Settings → Secrets and variables → Actions.
+4. Re-ejecutá el workflow (`workflow_dispatch` o un push a `main`).
+
+Runs fallidos por esto: `36344124432` (2026-09-27, commit `464143f`) y `36294551223` — misma causa.
 
 ## Licencia
 

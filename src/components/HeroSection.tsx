@@ -1,7 +1,6 @@
 import { DISCORD_URL, HERO, STUDIO_NAME, WHITELIST_HREF, WHITELIST_INVITE_NOTE } from "../content";
 import { AppLink } from "./AppLink";
 import { DiscordIcon } from "./icons";
-import { HomeExplore } from "./HomeExplore";
 import { Panel } from "./Panel";
 import { PlazasMeter } from "./PlazasMeter";
 import { PremiereCountdown } from "./PremiereCountdown";
@@ -73,7 +72,7 @@ export function HeroSection({
 
       <div className="page-shell relative z-[1] grid items-center gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10 lg:text-left">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="reveal mb-4 inline-flex items-center gap-2 border border-[color-mix(in_srgb,var(--color-accent)_45%,var(--color-line))] bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] px-3 py-1.5 font-term text-[0.7rem] tracking-wider text-accent uppercase">
+          <div className="reveal mb-4 inline-flex items-center gap-2 border border-[color-mix(in_srgb,var(--color-accent)_45%,var(--color-line))] bg-[color-mix(in_srgb,var(--color-accent)_10%,rgb(7_7_8)_78%)] px-3 py-1.5 font-term text-[0.7rem] tracking-wider text-accent uppercase">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
@@ -93,7 +92,9 @@ export function HeroSection({
           >
             Japan
             <br />
-            <span className="glitch-text text-accent">Apocalypse</span>
+            <span className="glitch-text" data-text="Apocalypse">
+              Apocalypse
+            </span>
           </h1>
 
           <p
@@ -104,21 +105,19 @@ export function HeroSection({
           </p>
 
           <div className="reveal reveal-delay-3 flex w-full max-w-md flex-col gap-3 sm:flex-row lg:max-w-lg">
-            <AppLink href={whitelistHref} className="btn btn-primary flex-1">
+            <AppLink href={whitelistHref} className="btn btn-primary hero-cta flex-1">
               Postular a Whitelist
             </AppLink>
             <a
               href={DISCORD_URL}
               target="_blank"
               rel="noreferrer"
-              className="btn btn-discord flex-1"
+              className="btn btn-discord hero-cta flex-1"
             >
               <DiscordIcon />
               Discord
             </a>
           </div>
-
-          {isViewport ? <HomeExplore /> : null}
         </div>
 
         <aside className="reveal reveal-delay-2 w-full max-w-md justify-self-center lg:max-w-none lg:justify-self-stretch">

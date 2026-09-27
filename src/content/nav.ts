@@ -34,18 +34,6 @@ export const MULTI_NAV_LINKS = [
   { href: `${MULTI_BASE}/faq`, label: "FAQ" },
 ] as const satisfies readonly NavLinkItem[];
 
-/**
- * Multi home — editorial entry order (narrative), not a sitemap.
- * Full map lives in MULTI_NAV_LINKS; these are quiet “empezá por” cues under the hero CTAs.
- */
-export const MULTI_HOME_PATHS = [
-  { href: `${MULTI_BASE}/serie`, label: "La Serie" },
-  { href: `${MULTI_BASE}/lore`, label: "Lore" },
-  { href: `${MULTI_BASE}/escaleta`, label: "Escaleta" },
-] as const satisfies readonly NavLinkItem[];
-
-export const MULTI_HOME_PATHS_LABEL = "Empezá por";
-
 /** Single CTA label for header (§V6) */
 export const CTA_LABEL = "Postular";
 

@@ -51,25 +51,13 @@
     }
   }
 
-  @keyframes glitch-skew {
-    0%,
-    100% {
-      transform: none;
-      text-shadow:
-        2px 0 var(--color-accent),
-        -2px 0 #06b6d4;
+  /* 砂嵐 particles — B/W grain scrolls inside glyph mask; base text stays put. */
+  @keyframes sunarashi-drift {
+    from {
+      background-position: 0 0;
     }
-    33% {
-      transform: translate(-2px, 1px);
-      text-shadow:
-        -3px 0 var(--color-accent),
-        2px 0 #06b6d4;
-    }
-    66% {
-      transform: translate(2px, -1px);
-      text-shadow:
-        3px 0 var(--color-accent),
-        -1px 0 #06b6d4;
+    to {
+      background-position: 56px -40px;
     }
   }
 }

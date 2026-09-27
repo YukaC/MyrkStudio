@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Demo dual `/` (scroll) · `/m/*` (1 sección = 1 viewport) con wheel/swipe, glass chrome y motion norma
+- Wordmark `Apocalypse` con grano 砂嵐 (ruido negro sobre rojo); CRT scanlines más legibles
+
+### Changed
+
+- Hero multi: título al mismo clamp que classic; paneles/CTAs/countdown más opacos
+- Home multi sin bloque “Empezá por” (mapa = header)
+
+### Fixed
+
+- Scroll entre secciones en `/m` mobile: gate solo en frames `data-scroll=true`
+- Docs CI: fallo Deploy = `VERCEL_TOKEN` inválido (rotar secret; ⊥ código)
+
 ## [0.3.0] — 2026-09-26
 
 ### Changed
