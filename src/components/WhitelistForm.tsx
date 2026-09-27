@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, RefObject, useRef, useState } from "react";
 import { PLAZAS } from "../content";
 
 type FormStatus = {
@@ -6,9 +6,23 @@ type FormStatus = {
   message: string;
 };
 
+/** Required fields in visual order; the first failure is also the focus target */
+type FieldKey = "discord" | "minecraft" | "age" | "motive" | "rules";
+
+type ControlRef = RefObject<HTMLElement | null>;
+
 const INITIAL_STATUS: FormStatus = { kind: "idle", message: "" };
 
-export function WhitelistForm() {
+const STATUS_CLASS: Record<FormStatus["kind"], string> = {
+  idle: "text-faint",
+  error: "text-accent",
+  success: "text-success",
+};
+
+/** The one status line; invalid controls point at it with aria-describedby */
+const STATUS_ID = "wl-form-status";
+
+export function WhitelistForm({ compact = false }: { compact?: boolean }) {
   const [discord, setDiscord] = useState("");
   const [minecraft, setMinecraft] = useState("");
   const [age, setAge] = useState("");
@@ -16,15 +30,54 @@ export function WhitelistForm() {
   const [motive, setMotive] = useState("");
   const [acceptedRules, setAcceptedRules] = useState(false);
   const [status, setStatus] = useState<FormStatus>(INITIAL_STATUS);
+  const [invalidFields, setInvalidFields] = useState<FieldKey[]>([]);
+
+  const discordRef = useRef<HTMLInputElement>(null);
+  const minecraftRef = useRef<HTMLInputElement>(null);
+  const ageRef = useRef<HTMLInputElement>(null);
+  const motiveRef = useRef<HTMLTextAreaElement>(null);
+  const rulesRef = useRef<HTMLInputElement>(null);
+
+  const controlRefByField: Record<FieldKey, ControlRef> = {
+    discord: discordRef,
+    minecraft: minecraftRef,
+    age: ageRef,
+    motive: motiveRef,
+    rules: rulesRef,
+  };
+
+  /** Same five conditions and same order as the original single check */
+  function getInvalidFields(): FieldKey[] {
+    const fields: FieldKey[] = [];
+    if (!discord.trim()) fields.push("discord");
+    if (!minecraft.trim()) fields.push("minecraft");
+    if (!age.trim()) fields.push("age");
+    if (!motive.trim()) fields.push("motive");
+    if (!acceptedRules) fields.push("rules");
+    return fields;
+  }
+
+  /** undefined rather than false, so a passing field carries no aria-invalid */
+  function getAriaInvalid(field: FieldKey): true | undefined {
+    return invalidFields.includes(field) ? true : undefined;
+  }
+
+  function getAriaDescribedBy(field: FieldKey): string | undefined {
+    return invalidFields.includes(field) ? STATUS_ID : undefined;
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (!discord.trim() || !minecraft.trim() || !age.trim() || !motive.trim() || !acceptedRules) {
+    const failedFields = getInvalidFields();
+    setInvalidFields(failedFields);
+
+    if (failedFields.length > 0) {
       setStatus({
         kind: "error",
         message: "Completá los campos obligatorios (*) y aceptá las normas.",
       });
+      controlRefByField[failedFields[0]].current?.focus();
       return;
     }
 
@@ -33,16 +86,9 @@ export function WhitelistForm() {
     setStatus({ kind: "success", message: "Enviado." });
   }
 
-  const statusClass =
-    status.kind === "error"
-      ? "text-accent"
-      : status.kind === "success"
-        ? "text-success"
-        : "text-faint";
-
   return (
-    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-      <div className="grid gap-5 sm:grid-cols-2">
+    <form className={compact ? "space-y-3" : "space-y-5"} onSubmit={handleSubmit} noValidate>
+      <div className={compact ? "grid gap-3 sm:grid-cols-2" : "grid gap-5 sm:grid-cols-2"}>
         <div className="sm:col-span-2">
           <label htmlFor="wl-discord" className="field-label">
             Usuario de Discord *
@@ -50,6 +96,9 @@ export function WhitelistForm() {
           <input
             required
             id="wl-discord"
+            ref={discordRef}
+            aria-invalid={getAriaInvalid("discord")}
+            aria-describedby={getAriaDescribedBy("discord")}
             type="text"
             autoComplete="username"
             placeholder="tuusuario"
@@ -66,6 +115,9 @@ export function WhitelistForm() {
           <input
             required
             id="wl-mc"
+            ref={minecraftRef}
+            aria-invalid={getAriaInvalid("minecraft")}
+            aria-describedby={getAriaDescribedBy("minecraft")}
             type="text"
             autoComplete="off"
             placeholder="Steve123"
@@ -82,6 +134,9 @@ export function WhitelistForm() {
           <input
             required
             id="wl-edad"
+            ref={ageRef}
+            aria-invalid={getAriaInvalid("age")}
+            aria-describedby={getAriaDescribedBy("age")}
             type="number"
             inputMode="numeric"
             min={1}
@@ -100,7 +155,7 @@ export function WhitelistForm() {
         </label>
         <textarea
           id="wl-exp"
-          rows={2}
+          rows={compact ? 1 : 2}
           placeholder="Contanos brevemente…"
           value={experience}
           onChange={(e) => setExperience(e.target.value)}
@@ -115,7 +170,10 @@ export function WhitelistForm() {
         <textarea
           required
           id="wl-motivo"
-          rows={4}
+          ref={motiveRef}
+          aria-invalid={getAriaInvalid("motive")}
+          aria-describedby={getAriaDescribedBy("motive")}
+          rows={compact ? 2 : 4}
           placeholder="Motivación…"
           value={motive}
           onChange={(e) => setMotive(e.target.value)}
@@ -127,6 +185,9 @@ export function WhitelistForm() {
         <input
           required
           id="wl-normas"
+          ref={rulesRef}
+          aria-invalid={getAriaInvalid("rules")}
+          aria-describedby={getAriaDescribedBy("rules")}
           type="checkbox"
           checked={acceptedRules}
           onChange={(e) => setAcceptedRules(e.target.checked)}
@@ -135,13 +196,18 @@ export function WhitelistForm() {
         <span>Leí y acepto las normas del servidor.</span>
       </label>
 
-      <div className="flex flex-col gap-3">
-        <button type="submit" className="btn btn-primary">
-          Enviar postulación
-        </button>
-      </div>
+      {/* w-full, not a wrapper: `.btn` is inline-flex, so as a direct child of the
+          form it would shrink to fit its label and sit flush left. */}
+      <button type="submit" className="btn btn-primary w-full">
+        Enviar postulación
+      </button>
 
-      <p className={`min-h-[1.25rem] text-center font-term text-xs ${statusClass}`} aria-live="polite">
+      <p
+        key={status.message || "idle"}
+        id={STATUS_ID}
+        className={`form-status min-h-[1.25rem] text-center font-term text-xs ${STATUS_CLASS[status.kind]}${status.message ? " form-status--alive" : ""}`}
+        aria-live="polite"
+      >
         {status.message}
       </p>
 

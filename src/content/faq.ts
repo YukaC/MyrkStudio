@@ -19,7 +19,7 @@ export const FAQ: FaqEntry[] = [
   {
     question: "¿Wasteland es la serie o el estudio?",
     answer:
-      "Las dos cosas, pero no son lo mismo: Wasteland es el estudio y Japan Apocalypse es su primera producción. Cada serie futura explorará un colapso distinto, no siempre de zombies.",
+      "Las dos cosas, pero no son lo mismo: Wasteland es el estudio y Japan Apocalypse es su primera producción. Cada serie futura explorará una historia y colapso distinto.",
   },
   {
     question: "¿Cómo se accede al servidor?",

@@ -1,9 +1,13 @@
 import { STUDIO_NAME } from "./site";
 
+export type NavLinkItem = {
+  href: string;
+  label: string;
+};
+
 /**
- * Site navigation — single source for header and footer (§V6).
- * Whitelist is not listed: the header CTA already targets `#whitelist`, and a
- * nav link to the same anchor reads as two ways to do the same thing.
+ * Single-page nav — in-page anchors (§V6).
+ * Whitelist is not listed: the header CTA already targets it.
  */
 export const NAV_LINKS = [
   { href: "#serie", label: "La Serie" },
@@ -11,12 +15,55 @@ export const NAV_LINKS = [
   { href: "#staff", label: "Staff" },
   { href: "#streamers", label: "Equipo" },
   { href: "#faq", label: "FAQ" },
-] as const;
+] as const satisfies readonly NavLinkItem[];
 
-/** Single CTA label for header and footer (§V6) */
+/** Multi-page demo base path — classic scroll stays at `/` */
+export const MULTI_BASE = "/m";
+
+/**
+ * Multi-page nav — one link per section page (despejado: sin apilar secciones).
+ * Whitelist = CTA, no ítem de nav.
+ */
+export const MULTI_NAV_LINKS = [
+  { href: `${MULTI_BASE}/serie`, label: "La Serie" },
+  { href: `${MULTI_BASE}/lore`, label: "Lore" },
+  { href: `${MULTI_BASE}/escaleta`, label: "Escaleta" },
+  { href: `${MULTI_BASE}/estudio`, label: "Estudio" },
+  { href: `${MULTI_BASE}/staff`, label: "Staff" },
+  { href: `${MULTI_BASE}/canales`, label: "Canales" },
+  { href: `${MULTI_BASE}/faq`, label: "FAQ" },
+] as const satisfies readonly NavLinkItem[];
+
+/**
+ * Multi home — editorial entry order (narrative), not a sitemap.
+ * Full map lives in MULTI_NAV_LINKS; these are quiet “empezá por” cues under the hero CTAs.
+ */
+export const MULTI_HOME_PATHS = [
+  { href: `${MULTI_BASE}/serie`, label: "La Serie" },
+  { href: `${MULTI_BASE}/lore`, label: "Lore" },
+  { href: `${MULTI_BASE}/escaleta`, label: "Escaleta" },
+] as const satisfies readonly NavLinkItem[];
+
+export const MULTI_HOME_PATHS_LABEL = "Empezá por";
+
+/** Single CTA label for header (§V6) */
 export const CTA_LABEL = "Postular";
 
-/** Footer copy — the sitemap is `NAV_LINKS` itself, never a parallel list (§V6 · §V15) */
+/** Whitelist targets per demo variant */
+export const WHITELIST_HREF = "#whitelist";
+export const MULTI_WHITELIST_HREF = `${MULTI_BASE}/whitelist`;
+
+/**
+ * Scroll order for multi-page wheel/swipe navigation.
+ * Home → nav sections → whitelist (CTA destination last).
+ */
+export const MULTI_SCROLL_PATHS = [
+  MULTI_BASE,
+  ...MULTI_NAV_LINKS.map((link) => link.href),
+  MULTI_WHITELIST_HREF,
+] as const;
+
+/** Footer copy — sitemap is the active NAV list, never a parallel (§V6 · §V15) */
 export const FOOTER = {
   tagline: `Whitelist, escaleta y novedades de ${STUDIO_NAME} en un solo lugar.`,
   legal: `Minecraft es marca de Mojang Studios / Microsoft. ${STUDIO_NAME} Studio no está afiliado a Mojang ni a Microsoft.`,

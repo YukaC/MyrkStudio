@@ -1,21 +1,7 @@
 import { useState } from "react";
-import { accentStyle, FAQ, FAQ_SECTION } from "../content";
+import { FAQ, FAQ_SECTION } from "../content";
+import { ChevronIcon } from "./icons";
 import { SectionHeader } from "./SectionHeader";
-
-function ChevronIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-      aria-hidden
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-    </svg>
-  );
-}
 
 export function FaqSection() {
   // Everything starts collapsed so every row loads at the same height.
@@ -48,13 +34,12 @@ export function FaqSection() {
               open={openIndex === index}
               onToggle={(event) => handleToggle(index, event.currentTarget.open)}
               className="faq-item panel group p-5"
-              style={accentStyle(index)}
             >
               <summary className="flex items-start justify-between gap-3 font-display text-sm font-semibold text-white uppercase sm:text-base">
                 <span>{entry.question}</span>
-                <ChevronIcon className="mt-0.5 size-4 shrink-0 text-faint transition-transform duration-200 group-open:rotate-180" />
+                <ChevronIcon className="faq-chevron mt-0.5 text-faint group-open:rotate-180" />
               </summary>
-              <p className="mt-2 text-sm leading-relaxed text-muted">{entry.answer}</p>
+              <p className="faq-answer text-sm leading-relaxed text-muted">{entry.answer}</p>
             </details>
           ))}
         </div>

@@ -1,45 +1,44 @@
-import { CtaBanner } from "./components/CtaBanner";
-import { EscaletaSection } from "./components/EscaletaSection";
-import { FaqSection } from "./components/FaqSection";
-import { FeaturedStreamers } from "./components/FeaturedStreamers";
-import { HeroSection } from "./components/HeroSection";
-import { ClassifiedDossier } from "./components/ClassifiedDossier";
-import { SeriesSection } from "./components/SeriesSection";
-import { SiteFooter } from "./components/SiteFooter";
-import { SiteHeader } from "./components/SiteHeader";
-import { StaffSection } from "./components/StaffSection";
-import { StatusBanner } from "./components/StatusBanner";
-import { StudioSection } from "./components/StudioSection";
-import { WhitelistSection } from "./components/WhitelistSection";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { MULTI_BASE } from "./content";
+import { MultiPageLayout } from "./layouts/MultiPageLayout";
+import { SinglePageLayout } from "./layouts/SinglePageLayout";
+import { CanalesPage } from "./pages/CanalesPage";
+import { EscaletaPage } from "./pages/EscaletaPage";
+import { EstudioPage } from "./pages/EstudioPage";
+import { FaqPage } from "./pages/FaqPage";
+import { LorePage } from "./pages/LorePage";
+import { MultiHomePage } from "./pages/MultiHomePage";
+import { SeriePage } from "./pages/SeriePage";
+import { StaffPage } from "./pages/StaffPage";
+import { WhitelistPage } from "./pages/WhitelistPage";
 
+/**
+ * Demo variants:
+ *   `/`     — classic single-page scroll
+ *   `/m/*`  — one section = one page (despejado)
+ */
 export default function App() {
   return (
-    <div className="relative min-h-dvh overflow-x-hidden">
-      <div className="crt-overlay" aria-hidden />
-      <div className="noise-overlay" aria-hidden />
-      <div className="vignette" aria-hidden />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SinglePageLayout />} />
 
-      <a href="#whitelist" className="skip-link">
-        Ir a postulación
-      </a>
+        <Route path={MULTI_BASE} element={<MultiPageLayout />}>
+          <Route index element={<MultiHomePage />} />
+          <Route path="serie" element={<SeriePage />} />
+          <Route path="lore" element={<LorePage />} />
+          <Route path="escaleta" element={<EscaletaPage />} />
+          <Route path="estudio" element={<EstudioPage />} />
+          <Route path="staff" element={<StaffPage />} />
+          <Route path="canales" element={<CanalesPage />} />
+          <Route path="faq" element={<FaqPage />} />
+          <Route path="whitelist" element={<WhitelistPage />} />
+          {/* Legacy aliases from first multi draft */}
+          <Route path="equipo" element={<Navigate to={`${MULTI_BASE}/staff`} replace />} />
+        </Route>
 
-      <StatusBanner />
-      <SiteHeader />
-      <HeroSection />
-
-      <main>
-        <SeriesSection />
-        <ClassifiedDossier />
-        <EscaletaSection />
-        <StudioSection />
-        <StaffSection />
-        <FeaturedStreamers />
-        <FaqSection />
-        <WhitelistSection />
-      </main>
-
-      <CtaBanner />
-      <SiteFooter />
-    </div>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

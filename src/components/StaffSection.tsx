@@ -24,6 +24,10 @@ export function StaffSection() {
             </li>
           ))}
         </ul>
+
+        <p className="mt-4 font-term text-[0.7rem] tracking-wide text-faint">
+          {STAFF_SECTION.note}
+        </p>
       </div>
     </section>
   );

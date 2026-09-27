@@ -1,0 +1,59 @@
+/* Form primitives. Split out of components.css only to stay under the
+   300-line file budget; the layer is the same one. */
+
+@layer components {
+  /* —— Fields —— */
+  .field-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-family: var(--font-term);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .field-control {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--color-line);
+    background: var(--color-background-elevated);
+    color: #fff;
+    font: inherit;
+    font-size: 1rem;
+    border-radius: 0;
+    transition:
+      border-color 160ms var(--ease-out),
+      box-shadow 160ms var(--ease-out);
+  }
+
+  .field-control::placeholder {
+    color: #52525b;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .field-control:hover {
+      border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-line));
+    }
+  }
+
+  .field-control:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+
+  textarea.field-control {
+    min-height: auto;
+    resize: vertical;
+  }
+
+  select.field-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath stroke='%23a1a1aa' stroke-width='1.5' d='m1 1 5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    padding-right: 2.25rem;
+  }
+}

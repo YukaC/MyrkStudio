@@ -9,6 +9,8 @@ function HeartIcon() {
 }
 
 export function StudioStatement() {
+  const { emblem } = STUDIO_STATEMENT;
+
   return (
     <div className="panel relative overflow-hidden">
       <div className="statement-glow" aria-hidden />
@@ -19,15 +21,18 @@ export function StudioStatement() {
 
         <div className="grid items-center gap-8 md:grid-cols-2">
           <figure className="mx-auto w-full max-w-xs text-center">
-            <div className="flex aspect-[4/5] flex-col items-center justify-center gap-3 border border-dashed border-line-strong bg-black/30 p-6">
-              <p className="font-display text-4xl leading-none font-bold text-white uppercase">
-                {STUDIO_NAME}
-                <span className="text-accent">.</span>
-              </p>
-              <p className="font-term text-[0.65rem] tracking-[0.2em] text-faint uppercase">
-                Japan Apocalypse
-              </p>
-            </div>
+            <picture>
+              <source srcSet={emblem.webp} type="image/webp" />
+              <img
+                src={emblem.jpeg}
+                alt={emblem.alt}
+                width={emblem.width}
+                height={emblem.height}
+                loading="lazy"
+                decoding="async"
+                className="aspect-square w-full border border-line object-cover"
+              />
+            </picture>
             <figcaption className="mt-3 font-term text-xs tracking-wide text-muted">
               {STUDIO_STATEMENT.signature}
             </figcaption>

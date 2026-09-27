@@ -1,0 +1,258 @@
+@layer components {
+  /* —— Surfaces —— */
+  .panel {
+    background: color-mix(in srgb, var(--color-panel) 90%, transparent);
+    border: 1px solid var(--color-line);
+  }
+
+  /* Hover = color only (⊥ lift). Press scale lives on interactive cards below. */
+  .panel-hover {
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .panel-hover:hover {
+      border-color: color-mix(in srgb, var(--color-accent) 42%, var(--color-line));
+      background: color-mix(in srgb, var(--color-panel) 100%, var(--color-accent) 4%);
+    }
+  }
+
+  /* —— Accent rotation (streamer cards). --card-accent is set per call site. —— */
+  .card-accent {
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      transform 140ms var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-accent:hover {
+      border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
+      background: color-mix(in srgb, var(--color-accent) 8%, var(--color-panel));
+    }
+  }
+
+  /* These cards are anchors: without a press state a tap on touch gives nothing. */
+  .card-accent:active {
+    transform: scale(0.98);
+  }
+
+  .avatar-ring {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-line) 80%, transparent),
+      0 0 28px -10px var(--card-accent);
+  }
+
+  /* —— Feature list —— */
+  .feature-row {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) {
+    .feature-row {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .feature-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem 1rem;
+    align-items: start;
+    padding: 1.1rem 1.15rem;
+  }
+
+  .feature-index {
+    font-family: var(--font-term);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    padding-top: 0.15rem;
+  }
+
+  /* —— Faq (native exclusive accordion via details[name]) —— */
+  .faq-item {
+    transition:
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out);
+  }
+
+  .faq-item[open] {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, var(--color-line));
+    background: color-mix(in srgb, var(--color-accent) 7%, var(--color-panel));
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-chevron {
+    transition: transform 200ms var(--ease-out);
+  }
+
+  .faq-item summary:active {
+    color: var(--color-accent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faq-item:hover {
+      border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-line));
+      background: color-mix(in srgb, var(--color-accent) 9%, var(--color-panel));
+    }
+
+    .faq-item:hover summary {
+      color: var(--color-accent);
+    }
+  }
+
+  /* —— Classified dossier ——
+     The stamp wrapper carries the entrance motion so the inner rotation survives
+     it: one element with both `animation: rise` and `transform: rotate()` would
+     have the animation's `transform: none` final keyframe wipe the rotation. */
+  .dossier-stamp {
+    display: inline-block;
+    padding: 0.5rem 1.1rem;
+    border: 3px solid var(--color-accent);
+    outline: 1px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+    outline-offset: 4px;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transform: rotate(-9deg);
+    opacity: 0.85;
+    max-width: 100%;
+  }
+
+  /* —— Buttons ——
+     Rest + hover stay in the accent rose family so white/Discord blue
+     don't flash into rose on hover. —— */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    max-width: 100%;
+    padding: 0.75rem 1.25rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    /* Not `nowrap`: at 320px the CTA banner had 240px of inner width and its
+       label needed 253px, so overflow-x clipping ate the final letter with no
+       scrollbar to reveal it. Wrapping self-heals at any label length. */
+    white-space: normal;
+    transition:
+      transform 140ms var(--ease-out),
+      background-color 160ms var(--ease-out),
+      color 160ms var(--ease-out),
+      border-color 160ms var(--ease-out),
+      box-shadow 160ms var(--ease-out);
+  }
+
+  .btn:active {
+    scale: 0.97;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: var(--color-accent-dim);
+      box-shadow: 0 0 0 1px color-mix(in srgb, #fff 28%, var(--color-accent-dim));
+    }
+  }
+
+  .btn-discord {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: #fff;
+    border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-line));
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-discord:hover {
+      background: var(--color-accent-dim);
+      border-color: var(--color-accent-dim);
+      box-shadow: 0 0 0 1px color-mix(in srgb, #fff 28%, var(--color-accent-dim));
+    }
+  }
+
+  .btn-accent {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-accent:hover {
+      background: var(--color-accent-dim);
+      box-shadow: 0 0 0 1px color-mix(in srgb, #fff 28%, var(--color-accent-dim));
+    }
+  }
+
+  /* Default border was --color-line-strong (~1.9:1 on bg/panel) — fails the
+     3:1 non-text UI floor. Muted zinc clears AA on both surfaces. */
+  .btn-ghost {
+    background: transparent;
+    color: #fff;
+    border-color: var(--color-muted);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ghost:hover {
+      background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+  }
+
+  /* 2.75rem = 44px, the minimum touch target. */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      transform 140ms var(--ease-out),
+      background-color 160ms var(--ease-out),
+      box-shadow 160ms var(--ease-out);
+  }
+
+  .nav-cta:active {
+    scale: 0.97;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-cta:hover {
+      background: var(--color-accent-dim);
+      box-shadow: 0 0 0 1px color-mix(in srgb, #fff 28%, var(--color-accent-dim));
+    }
+  }
+}

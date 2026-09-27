@@ -2,9 +2,14 @@ import { describe, expect, it } from "vitest";
 import indexHtml from "../../index.html?raw";
 import * as content from "./index";
 import { FAQ } from "./faq";
-import { CTA_LABEL, FOOTER, NAV_LINKS } from "./nav";
+import { CTA_LABEL, FOOTER, MULTI_BASE, MULTI_HOME_PATHS, MULTI_NAV_LINKS, MULTI_SCROLL_PATHS, MULTI_WHITELIST_HREF, NAV_LINKS, WHITELIST_HREF } from "./nav";
 import { PLAZAS, plazasMeterAriaLabel, plazasPercent } from "./plazas";
-import { STAFF, STREAMERS } from "./studio";
+import {
+  ESCALETA_VISIBLE_WEEKS,
+  ESCALETA_WEEKS,
+  getVisibleEscaletaWeeks,
+} from "./series";
+import { STAFF, STREAMERS, liveXAvatarUrl, twitterHandleFromUrl } from "./studio";
 import { accentStyle } from "./ui";
 import { getDemoInviteCodes, isValidDemoInvite } from "./whitelist";
 
@@ -66,6 +71,28 @@ describe("plazas", () => {
   });
 });
 
+describe("escaleta", () => {
+  it("should model a 4-week event with 6 days and Main Event on day 6", () => {
+    expect(ESCALETA_WEEKS).toHaveLength(4);
+    ESCALETA_WEEKS.forEach((week) => {
+      expect(week.days).toHaveLength(6);
+      expect(week.days[5].detail).toBe("Main Event");
+      expect(week.days[5].state).toBe("open");
+      week.days.slice(1, 5).forEach((day) => {
+        expect(day.state).toBe("corrupt");
+      });
+    });
+  });
+
+  it("should only expose weeks up to ESCALETA_VISIBLE_WEEKS", () => {
+    expect(ESCALETA_VISIBLE_WEEKS).toBeGreaterThanOrEqual(1);
+    expect(ESCALETA_VISIBLE_WEEKS).toBeLessThanOrEqual(ESCALETA_WEEKS.length);
+    expect(getVisibleEscaletaWeeks()).toHaveLength(ESCALETA_VISIBLE_WEEKS);
+    expect(getVisibleEscaletaWeeks(0)).toHaveLength(0);
+    expect(getVisibleEscaletaWeeks(99)).toHaveLength(ESCALETA_WEEKS.length);
+  });
+});
+
 describe("studio", () => {
   it("should derive STREAMERS from STAFF instead of keeping a parallel roster", () => {
     expect(STREAMERS).toHaveLength(STAFF.length);
@@ -74,7 +101,18 @@ describe("studio", () => {
       expect(streamer.displayName).toBe(member.name);
       expect(streamer.tag).toBe(member.role);
       expect(streamer.url).toBe(member.twitter);
+      expect(streamer.avatarSrc).toBe(member.avatarSrc);
+      expect(member.avatarSrc.startsWith("/avatars/")).toBe(true);
+      expect(streamer.avatarLive).toBe(liveXAvatarUrl(member.twitter));
     });
+  });
+
+  it("should resolve live X avatar URLs from staff twitter links", () => {
+    expect(twitterHandleFromUrl("https://x.com/IAmKudaoficial")).toBe("IAmKudaoficial");
+    expect(liveXAvatarUrl("https://x.com/IAmKudaoficial")).toBe(
+      "https://unavatar.io/x/IAmKudaoficial",
+    );
+    expect(twitterHandleFromUrl("https://twitter.com/intent/tweet")).toBe(null);
   });
 });
 
@@ -96,12 +134,28 @@ describe("whitelist invites", () => {
 describe("nav", () => {
   it("should not list the whitelist anchor that the CTA already targets", () => {
     expect(NAV_LINKS.map((link) => link.href)).not.toContain("#whitelist");
+    expect(MULTI_NAV_LINKS.map((link) => link.href)).not.toContain(MULTI_WHITELIST_HREF);
   });
 
-  it("should keep every nav href a unique in-page anchor", () => {
+  it("should keep every classic nav href a unique in-page anchor", () => {
     const hrefs = NAV_LINKS.map((link) => link.href);
     expect(hrefs.every((href) => href.startsWith("#"))).toBe(true);
     expect(new Set(hrefs).size).toBe(hrefs.length);
+  });
+
+  it("should keep every multi nav href under /m with unique paths", () => {
+    const hrefs = MULTI_NAV_LINKS.map((link) => link.href);
+    expect(hrefs.every((href) => href.startsWith(`${MULTI_BASE}/`))).toBe(true);
+    expect(new Set(hrefs).size).toBe(hrefs.length);
+    expect(hrefs).toEqual([
+      `${MULTI_BASE}/serie`,
+      `${MULTI_BASE}/lore`,
+      `${MULTI_BASE}/escaleta`,
+      `${MULTI_BASE}/estudio`,
+      `${MULTI_BASE}/staff`,
+      `${MULTI_BASE}/canales`,
+      `${MULTI_BASE}/faq`,
+    ]);
   });
 
   it("should keep the footer free of a parallel sitemap", () => {
@@ -111,12 +165,30 @@ describe("nav", () => {
   it("should keep a single CTA label for header and footer", () => {
     expect(CTA_LABEL).toBe("Postular");
   });
+
+  it("should keep multi home paths a short editorial subset — not a second sitemap", () => {
+    const navHrefs = new Set(MULTI_NAV_LINKS.map((link) => link.href));
+    expect(MULTI_HOME_PATHS.length).toBeLessThan(MULTI_NAV_LINKS.length);
+    expect(MULTI_HOME_PATHS.every((path) => navHrefs.has(path.href))).toBe(true);
+    expect(MULTI_HOME_PATHS.map((path) => path.href)).not.toContain(MULTI_WHITELIST_HREF);
+  });
+
+  it("should order multi scroll paths as home → sections → whitelist", () => {
+    expect(MULTI_SCROLL_PATHS[0]).toBe(MULTI_BASE);
+    expect(MULTI_SCROLL_PATHS.at(-1)).toBe(MULTI_WHITELIST_HREF);
+    expect(MULTI_SCROLL_PATHS.slice(1, -1)).toEqual(MULTI_NAV_LINKS.map((link) => link.href));
+  });
+
+  it("should expose distinct whitelist targets per demo variant", () => {
+    expect(WHITELIST_HREF).toBe("#whitelist");
+    expect(MULTI_WHITELIST_HREF).toBe(`${MULTI_BASE}/whitelist`);
+  });
 });
 
 describe("primary CTAs", () => {
   it("should keep Discord and the whitelist CTA only in the hero, the header and the closing banner", () => {
     const ctaFiles = Object.entries(componentSources)
-      .filter(([, source]) => /href=\{DISCORD_URL\}|href="#whitelist"/.test(source))
+      .filter(([, source]) => /href=\{DISCORD_URL\}|whitelistHref/.test(source))
       .map(([path]) => path.split("/").pop()?.replace(".tsx", ""))
       .sort();
     expect(ctaFiles).toEqual(["CtaBanner", "HeroSection", "SiteHeader"]);
@@ -127,7 +199,8 @@ describe("primary CTAs", () => {
   });
 
   it("should show the whitelist CTA once per surface, mobile/desktop pair aside", () => {
-    expect(countAnchors(/href="#whitelist"/g)).toBe(4);
+    // SiteHeader ×2 (desktop+mobile) · Hero ×1 · CtaBanner ×1
+    expect(countAnchors(/href=\{whitelistHref\}/g)).toBe(4);
   });
 });
 
@@ -165,12 +238,17 @@ describe("barrel contract", () => {
       "PREMIERE",
       "SERIES_FEATURES",
       "ESCALETA_SECTION",
+      "ESCALETA_WEEKS",
+      "ESCALETA_VISIBLE_WEEKS",
+      "getVisibleEscaletaWeeks",
       "WEEK1_DAYS",
       "accentStyle",
       "STAFF",
       "STUDIO_STATEMENT",
       "STREAMERS",
       "STREAMERS_SECTION",
+      "liveXAvatarUrl",
+      "twitterHandleFromUrl",
       "LORE_DOSSIER",
       "DOSSIER_ROWS",
       "FAQ",
@@ -180,6 +258,13 @@ describe("barrel contract", () => {
       "getDemoInviteCodes",
       "isValidDemoInvite",
       "NAV_LINKS",
+      "MULTI_NAV_LINKS",
+      "MULTI_BASE",
+      "MULTI_HOME_PATHS",
+      "MULTI_HOME_PATHS_LABEL",
+      "MULTI_SCROLL_PATHS",
+      "WHITELIST_HREF",
+      "MULTI_WHITELIST_HREF",
       "FOOTER",
       "CTA_LABEL",
       "HERO",

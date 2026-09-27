@@ -1,6 +1,11 @@
-import { DISCORD_URL } from "../content";
+import { DISCORD_URL, WHITELIST_HREF } from "../content";
+import { AppLink } from "./AppLink";
 
-export function CtaBanner() {
+type CtaBannerProps = {
+  whitelistHref?: string;
+};
+
+export function CtaBanner({ whitelistHref = WHITELIST_HREF }: CtaBannerProps) {
   return (
     <section className="section-block" aria-labelledby="cta-title">
       <div className="page-shell">
@@ -21,9 +26,9 @@ export function CtaBanner() {
               <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-accent">
                 Entrar al Discord
               </a>
-              <a href="#whitelist" className="btn btn-ghost">
+              <AppLink href={whitelistHref} className="btn btn-ghost">
                 Postular a la whitelist
-              </a>
+              </AppLink>
             </div>
           </div>
         </div>

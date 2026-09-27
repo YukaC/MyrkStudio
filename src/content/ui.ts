@@ -3,6 +3,14 @@ import type { CSSProperties } from "react";
 /** Hero copy with state semantics — single source (§V6) */
 export const HERO = {
   statusLabel: "Building",
+  /** Multi-page home full-bleed backdrop (Japan Apocalypse landscape). */
+  backdrop: {
+    webp: "/hero-backdrop.webp",
+    webpSm: "/hero-backdrop-sm.webp",
+    jpeg: "/hero-backdrop.jpg",
+    width: 1024,
+    height: 576,
+  },
 } as const;
 
 /** Premiere instant for the countdown; single source (§V6). */

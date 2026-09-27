@@ -1,14 +1,36 @@
+import { useState } from "react";
 import { accentStyle, STREAMERS, STREAMERS_SECTION } from "../content";
 import type { FeaturedStreamer } from "../content";
+import { LiveBadge } from "./icons";
 import { SectionHeader } from "./SectionHeader";
 
 const MC_HEADS_ORIGIN = "https://mc-heads.net";
 
-/** Only resolves for published profiles; the crew fallback is the monogram */
-function resolveAvatarUrl(minecraftName: string | undefined): string | null {
-  const username = minecraftName?.trim();
-  if (!username) return null;
-  return `${MC_HEADS_ORIGIN}/head/${encodeURIComponent(username)}/128`;
+/**
+ * Session memory of the last URL that loaded for a streamer.
+ * Survives remounts within the tab; local /avatars/* is the durable disk fallback.
+ */
+const avatarMemory = new Map<string, string>();
+
+function buildAvatarCascade(streamer: FeaturedStreamer): string[] {
+  const remembered = avatarMemory.get(streamer.displayName);
+  const candidates = [
+    remembered,
+    streamer.avatarLive?.trim(),
+    streamer.avatarSrc?.trim(),
+    streamer.minecraftName?.trim()
+      ? `${MC_HEADS_ORIGIN}/head/${encodeURIComponent(streamer.minecraftName.trim())}/128`
+      : undefined,
+  ];
+
+  const seen = new Set<string>();
+  const cascade: string[] = [];
+  for (const url of candidates) {
+    if (!url || seen.has(url)) continue;
+    seen.add(url);
+    cascade.push(url);
+  }
+  return cascade;
 }
 
 function getInitials(displayName: string): string {
@@ -19,37 +41,39 @@ function getInitials(displayName: string): string {
 }
 
 function StreamerAvatar({ streamer }: { streamer: FeaturedStreamer }) {
-  const avatarUrl = resolveAvatarUrl(streamer.minecraftName);
+  const cascade = buildAvatarCascade(streamer);
+  const [step, setStep] = useState(0);
+  const src = cascade[step] ?? null;
 
-  return (
-    <span className="avatar-ring flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-black/40 sm:size-16">
-      {avatarUrl ? (
-        <img
-          src={avatarUrl}
-          alt=""
-          width={64}
-          height={64}
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          className="size-full object-cover"
-        />
-      ) : (
+  if (!src) {
+    return (
+      <span className="avatar-ring flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-black/40 sm:size-16">
         <span aria-hidden className="font-display text-2xl leading-none font-semibold text-accent">
           {getInitials(streamer.displayName)}
         </span>
-      )}
-    </span>
-  );
-}
-
-function LiveBadge() {
-  return (
-    <span className="absolute -top-2 left-1/2 inline-flex -translate-x-1/2 items-center gap-1.5 border border-[color-mix(in_srgb,var(--color-success)_55%,var(--color-line))] bg-black/80 px-2 py-0.5 font-term text-[0.6rem] tracking-wider text-success uppercase">
-      <span className="relative flex h-1.5 w-1.5">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
-        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
       </span>
-      En vivo
+    );
+  }
+
+  return (
+    <span className="avatar-ring flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-black/40 sm:size-16">
+      <img
+        key={src}
+        src={src}
+        alt=""
+        width={64}
+        height={64}
+        loading="lazy"
+        decoding="async"
+        referrerPolicy="no-referrer"
+        className="size-full object-cover"
+        onLoad={() => {
+          avatarMemory.set(streamer.displayName, src);
+        }}
+        onError={() => {
+          setStep((current) => current + 1);
+        }}
+      />
     </span>
   );
 }
@@ -76,7 +100,7 @@ function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: 
             {streamer.displayName}
           </span>
           {streamer.tag ? (
-            <span className="font-term text-[0.65rem] leading-snug tracking-wider text-muted uppercase">
+            <span className="font-term text-[0.65rem] leading-snug tracking-wider break-words text-muted uppercase">
               {streamer.tag}
             </span>
           ) : null}
@@ -90,7 +114,7 @@ function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: 
             {streamer.displayName}
           </span>
           {streamer.tag ? (
-            <span className="font-term text-[0.65rem] leading-snug tracking-wider text-muted uppercase">
+            <span className="font-term text-[0.65rem] leading-snug tracking-wider break-words text-muted uppercase">
               {streamer.tag}
             </span>
           ) : null}
@@ -112,7 +136,8 @@ export function FeaturedStreamers() {
           blurb={STREAMERS_SECTION.blurb}
         />
 
-        <ol className="grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3">
+        {/* pt-2: the live badge is -top-2, so it escapes the card upward by 8px */}
+        <ol className="grid list-none grid-cols-2 gap-3 p-0 pt-2 sm:grid-cols-3">
           {STREAMERS.map((streamer, index) => (
             <StreamerCard key={streamer.displayName} streamer={streamer} index={index} />
           ))}

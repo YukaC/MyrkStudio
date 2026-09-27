@@ -1,0 +1,216 @@
+@layer components {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: var(--animate-rise);
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 60ms;
+    }
+    .reveal-delay-2 {
+      animation-delay: 120ms;
+    }
+    .reveal-delay-3 {
+      animation-delay: 180ms;
+    }
+  }
+
+  /* —— Mobile menu ——
+     Keep nodes mounted; data-open drives enter/exit so exit can transition.
+     display + allow-discrete + @starting-style = enter without JS mount flags. —— */
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 39;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    cursor: default;
+    background: rgb(0 0 0 / 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 140ms var(--ease-out);
+  }
+
+  .mobile-menu-backdrop[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+    transition-duration: 180ms;
+  }
+
+  .mobile-menu-panel {
+    display: none;
+    flex-direction: column;
+    max-height: calc(100dvh - var(--nav-h) - env(safe-area-inset-top, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-top: 1px solid var(--color-line);
+    background: var(--color-background);
+    padding-bottom: env(safe-area-inset-bottom);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 140ms var(--ease-out),
+      transform 140ms var(--ease-out),
+      display 140ms allow-discrete;
+  }
+
+  .mobile-menu-panel[data-open="true"] {
+    display: flex;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out),
+      display 200ms allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-menu-backdrop,
+    .mobile-menu-panel {
+      display: none !important;
+    }
+  }
+
+  /* —— FAQ answer enter ——
+     Native <details> hides content with display:none on close, so exit stays
+     instant; enter gets the bridge. —— */
+  .faq-answer {
+    margin-top: 0.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .faq-item[open] .faq-answer {
+      animation: faq-answer-in 180ms var(--ease-out) both;
+    }
+  }
+
+  /* —— Form status morph (Enviado. / errors) —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .form-status--alive {
+      animation: form-status-in 200ms var(--ease-out) both;
+    }
+  }
+
+  /* —— Countdown face: only when key flips idle→expired (never on ticks) —— */
+  @media (prefers-reduced-motion: no-preference) {
+    .countdown-face {
+      animation: countdown-face-in 200ms var(--ease-out) both;
+    }
+  }
+
+  /* —— Mobile chrome: color (+ transform on burger :active) via --ease-out —— */
+  .nav-chrome-control {
+    transition:
+      color 150ms var(--ease-out),
+      background-color 150ms var(--ease-out),
+      transform 140ms var(--ease-out);
+  }
+
+  /* —— MenuIcon: 3 lines → X —— */
+  .menu-icon-line {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      transform 180ms var(--ease-out),
+      opacity 180ms var(--ease-out);
+  }
+
+  .menu-icon[data-open="true"] .menu-icon-line-top {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .menu-icon[data-open="true"] .menu-icon-line-mid {
+    opacity: 0;
+  }
+
+  .menu-icon[data-open="true"] .menu-icon-line-bot {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+}
+
+@keyframes faq-answer-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes form-status-in {
+  from {
+    opacity: 0.7;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+@keyframes countdown-face-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stated accessibility preferences outrank the design system, so these stay
+   unlayered on purpose — that is what lets them beat Tailwind's own
+   `animate-ping` from the utilities layer. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .crt-overlay,
+  .noise-overlay {
+    opacity: 0.1;
+  }
+
+  /* Tailwind's ping is an infinite keyframe; a reduced-motion visitor should keep
+     the status dot but not the permanent pulse. */
+  .animate-ping,
+  .glitch-text:hover {
+    animation: none;
+  }
+
+  .mobile-menu-backdrop,
+  .mobile-menu-panel,
+  .mobile-menu-panel[data-open="true"] {
+    transform: none;
+    transition: opacity 120ms ease, display 120ms allow-discrete;
+  }
+
+  .mobile-menu-panel[data-open="true"] {
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  .faq-item[open] .faq-answer,
+  .form-status--alive,
+  .countdown-face {
+    animation: none;
+  }
+
+  .menu-icon-line {
+    transition: none;
+  }
+}

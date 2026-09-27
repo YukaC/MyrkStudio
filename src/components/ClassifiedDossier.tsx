@@ -26,7 +26,7 @@ export function ClassifiedDossier() {
                     className="flex items-baseline gap-3 font-term text-[0.72rem] tracking-wider uppercase"
                   >
                     <dt className="w-24 shrink-0 text-faint sm:w-28">{row.label}</dt>
-                    <dd className="text-foreground">
+                    <dd className="min-w-0 break-words text-foreground">
                       {row.isRedacted ? (
                         <>
                           <span
@@ -51,8 +51,14 @@ export function ClassifiedDossier() {
               </div>
             </div>
 
-            {/* stamp wrapper carries the entrance motion so the inner rotation survives it */}
-            <span className="reveal reveal-delay-2 justify-self-start md:justify-self-end" aria-hidden>
+            {/* stamp wrapper carries the entrance motion so the inner rotation survives it.
+                pb-2 reserves room for the stamp's outline-offset (4px + 1px) drawn in its
+                rotated space: -9deg on a ~190px box overhangs the layout box by ~15px
+                vertically, and the panel's overflow-hidden would clip it. */}
+            <span
+              className="reveal reveal-delay-2 justify-self-start pb-2 md:justify-self-end"
+              aria-hidden
+            >
               <span className="dossier-stamp">{LORE_DOSSIER.stamp}</span>
             </span>
           </div>

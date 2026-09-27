@@ -14,15 +14,17 @@ export function PremiereCountdown() {
       <p className="font-term text-[0.6rem] tracking-wider text-faint uppercase">
         {label} {SERIES_NAME}
       </p>
-      {isExpired ? (
-        <p className="font-display text-base font-semibold text-accent uppercase">
-          {PREMIERE.liveNow}
-        </p>
-      ) : (
-        <p className="font-display text-xl font-bold text-white tabular-nums">
-          {days}d {pad(hours)}:{pad(minutes)}:{pad(seconds)}
-        </p>
-      )}
+      {/* key flips only on expire — ticks must never remount/animate */}
+      <p
+        key={isExpired ? "live" : "count"}
+        className={
+          isExpired
+            ? "countdown-face font-display text-base font-semibold text-accent uppercase"
+            : "font-display text-xl font-bold text-white tabular-nums"
+        }
+      >
+        {isExpired ? PREMIERE.liveNow : `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`}
+      </p>
     </div>
   );
 }
