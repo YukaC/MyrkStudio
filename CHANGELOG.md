@@ -14,10 +14,14 @@ All notable changes to this project will be documented in this file.
 - Hero multi: título al mismo clamp que classic; paneles/CTAs/countdown más opacos
 - Home multi sin bloque “Empezá por” (mapa = header)
 
+### Removed
+
+- GitHub Actions `deploy.yml` (CLI + `VERCEL_*`); deploy = Vercel Git nativo
+- `public/studio-mark.svg` (nunca montado; `StudioStatement` sigue con fallback)
+
 ### Fixed
 
 - Scroll entre secciones en `/m` mobile: gate solo en frames `data-scroll=true`
-- Docs CI: fallo Deploy = `VERCEL_TOKEN` inválido (rotar secret; ⊥ código)
 
 ## [0.3.0] — 2026-09-26
 
