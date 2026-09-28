@@ -1,6 +1,6 @@
 # WLandStudio
 
-> Web oficial de **Wasteland Studio** y su serie flagship **Wasteland: Japan Apocalypse** (Minecraft narrativo post-apocalíptico). Whitelist por invitación + formulario público.
+> Web oficial de **Myrk Studio** y su serie flagship **Wasteland: Japan Apocalypse** (Minecraft narrativo post-apocalíptico). Whitelist por invitación + formulario público.
 
 ## Cómo correr
 

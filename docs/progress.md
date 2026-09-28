@@ -12,6 +12,7 @@
 | 2026-09-26 | STREAMERS derivado de STAFF (X/Twitter real) + `LiveBadge` tras `isLive` (T14). |
 | 2026-09-26 | Extracción: `App.tsx` 513 → 45 líneas, 19 componentes + `useCountdown` (T12). |
 | 2026-09-26 | B1–B7 registradas en SPEC · V9/V10/V11 agregadas · docs (PLAN/ARCHITECTURE/ROADMAP) actualizados con los desvíos. |
+| 2026-09-27 | **Estudio renombrado a `Myrk Studio`** (serie `Wasteland` y episodio `Japan Apocalypse` sin cambio) → copy, SEO, JSON-LD, manifest, LICENSE y docs alineados; wordmark de nav/footer desde `STUDIO_NAME`; §V18 + tests de naming (T36 · B21). |
 
 Hecho: T1–T5, T11–T14 · CI deploy.
 Próximo: T3 (decidir invites) · F2/T6 Cloudflare `WLandStudio.net` · instalar Vercel GitHub App en el repo privado (opcional).

@@ -11,17 +11,22 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+- **El estudio se llama `Myrk Studio`**: la serie sigue siendo `Wasteland` y el episodio actual `Japan Apocalypse`. Copy derivado (hero · footer · statement · banner de cierre), SEO, `index.html` (author/OG/JSON-LD), manifest, `LICENSE` y docs alineados
+- Wordmark del header/nav: `WASTELAND.` → `MYRK STUDIO.`, leyendo `STUDIO_NAME` como el footer (antes hardcodeado en el JSX de `SiteHeader`)
+- FAQ "¿Wasteland es la serie o el estudio?": la respuesta ya no afirma que Wasteland sea el estudio
 - Hero multi: título al mismo clamp que classic; paneles/CTAs/countdown más opacos
 - Home multi sin bloque “Empezá por” (mapa = header)
+
+### Fixed
+
+- `Myrk Studio Studio` / `Myrk Studio studio`: 3 call sites pegaban el sufijo "Studio" sobre un `STUDIO_NAME` que ya lo trae (typecheck y build en verde: era bug de string, no de tipos)
+- `StudioStatement`: el nombre del estudio estaba en el label que heads la cita `att. Kuda · Holy`, así que el motto "Porque todos amamos este mundo" quedaba atribuido al estudio → el log dice `// manifiesto`
+- Scroll entre secciones en `/m` mobile: gate solo en frames `data-scroll=true`
 
 ### Removed
 
 - GitHub Actions `deploy.yml` (CLI + `VERCEL_*`); deploy = Vercel Git nativo
 - `public/studio-mark.svg` (nunca montado; `StudioStatement` sigue con fallback)
-
-### Fixed
-
-- Scroll entre secciones en `/m` mobile: gate solo en frames `data-scroll=true`
 
 ## [0.3.0] — 2026-09-26
 

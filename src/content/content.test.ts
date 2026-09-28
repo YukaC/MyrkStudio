@@ -4,6 +4,7 @@ import * as content from "./index";
 import { FAQ } from "./faq";
 import { CTA_LABEL, FOOTER, MULTI_BASE, MULTI_NAV_LINKS, MULTI_SCROLL_PATHS, MULTI_WHITELIST_HREF, NAV_LINKS, WHITELIST_HREF } from "./nav";
 import { PLAZAS, plazasMeterAriaLabel, plazasPercent } from "./plazas";
+import { SERIES_NAME, STUDIO_NAME } from "./site";
 import {
   ESCALETA_VISIBLE_WEEKS,
   ESCALETA_WEEKS,
@@ -19,6 +20,15 @@ const componentSources = import.meta.glob("../components/*.tsx", {
   import: "default",
   eager: true,
 }) as Record<string, string>;
+
+/** Data modules too (tests excluded), so naming drift is caught in copy as well (§V18) */
+const contentSources = import.meta.glob(["../content/*.ts", "!../content/*.test.ts"], {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const namingSources = [...Object.values(componentSources), ...Object.values(contentSources)];
 
 function countAnchors(pattern: RegExp): number {
   return Object.values(componentSources).reduce(
@@ -195,6 +205,40 @@ describe("primary CTAs", () => {
   it("should show the whitelist CTA once per surface, mobile/desktop pair aside", () => {
     // SiteHeader ×2 (desktop+mobile) · Hero ×1 · CtaBanner ×1
     expect(countAnchors(/href=\{whitelistHref\}/g)).toBe(4);
+  });
+});
+
+describe("naming", () => {
+  it("should keep the studio, the series and the episode as three distinct names", () => {
+    expect(STUDIO_NAME).not.toBe(SERIES_NAME);
+    expect(SERIES_NAME).not.toContain(STUDIO_NAME);
+  });
+
+  it("should never glue a Studio suffix onto STUDIO_NAME, which already carries it", () => {
+    // Matches both call styles: `{STUDIO_NAME} Studio` in JSX, `${STUDIO_NAME} Studio` in content.
+    const offenders = namingSources.filter(
+      (source) => /(?:\$)?\{STUDIO_NAME\}\s+Studio\b/.test(source) || /Studio\s+Studio/.test(source),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("should brand the nav and the footer from the same STUDIO_NAME, never a hardcoded wordmark", () => {
+    const sourceOf = (component: string): string =>
+      Object.entries(componentSources).find(([path]) => path.endsWith(`${component}.tsx`))?.[1] ?? "";
+    ["SiteHeader", "SiteFooter"].forEach((component) => {
+      expect(sourceOf(component), component).toContain("{STUDIO_NAME}");
+      expect(sourceOf(component), component).not.toMatch(/WASTELAND|MYRK/i);
+    });
+  });
+
+  it("should publish STUDIO_NAME as the site author and og:site_name in index.html", () => {
+    expect(indexHtml).toContain(`<meta name="author" content="${STUDIO_NAME}" />`);
+    expect(indexHtml).toContain(`<meta property="og:site_name" content="${STUDIO_NAME}" />`);
+  });
+
+  it("should name the studio in the FAQ answer that separates studio, series and episode", () => {
+    const studioVsSeries = FAQ.find((entry) => entry.question.includes("serie o el estudio"));
+    expect(studioVsSeries?.answer).toContain(STUDIO_NAME);
   });
 });
 

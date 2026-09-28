@@ -1,4 +1,4 @@
-import { DISCORD_URL, WHITELIST_HREF } from "../content";
+import { DISCORD_URL, STUDIO_NAME, WHITELIST_HREF } from "../content";
 import { AppLink } from "./AppLink";
 
 type CtaBannerProps = {
@@ -20,7 +20,7 @@ export function CtaBanner({ whitelistHref = WHITELIST_HREF }: CtaBannerProps) {
             </h2>
             <p className="prose-muted mx-auto mb-6">
               Los próximos eventos, las transmisiones y las plazas de whitelist se anuncian primero
-              en el Discord de Wasteland.
+              en el Discord de {STUDIO_NAME}.
             </p>
             <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-accent">

@@ -54,5 +54,5 @@ export const MULTI_SCROLL_PATHS = [
 /** Footer copy — sitemap is the active NAV list, never a parallel (§V6 · §V15) */
 export const FOOTER = {
   tagline: `Whitelist, escaleta y novedades de ${STUDIO_NAME} en un solo lugar.`,
-  legal: `Minecraft es marca de Mojang Studios / Microsoft. ${STUDIO_NAME} Studio no está afiliado a Mojang ni a Microsoft.`,
+  legal: `Minecraft es marca de Mojang Studios / Microsoft. ${STUDIO_NAME} no está afiliado a Mojang ni a Microsoft.`,
 } as const;

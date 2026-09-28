@@ -21,7 +21,7 @@
 
 ## 0. Tesis
 
-Hoy el sitio clásico es un **scroll Persuade** con un solo job: entender Wasteland + postular.
+Hoy el sitio clásico es un **scroll Persuade** con un solo job: entender la serie Wasteland + postular.
 
 Multi-page (pedido del dueño): **cada sección vive en su propia página/viewport**.
 Home multi = Hero (CTAs). Mapa completo = header.
@@ -111,7 +111,7 @@ Implementación: mapa en el router + `Navigate` / `useEffect` en mount si hay ha
 | | |
 |---|---|
 | **Job** | Reconocer marca + decidir postular o Discord en ≤1 viewport + scroll corto |
-| **Primer viewport** | Brand `WASTELAND.` · h1 serie · 1 frase · CTA Postular + Discord · countdown/plazas compactos |
+| **Primer viewport** | Brand `MYRK STUDIO.` · h1 serie · 1 frase · CTA Postular + Discord · countdown/plazas compactos |
 | **Debajo** | 1 bloque “por qué no es vanilla” (3 bullets max) · link “Ver la serie →” · teaser dossier 2 líneas · link “Equipo →” |
 | **⊥** | FAQ completo · form · roster largo · escaleta completa |
 | **CTA** | Header sticky + hero (cuenta §V15) |
@@ -130,7 +130,7 @@ Implementación: mapa en el router + `Navigate` / `useEffect` en mount si hay ha
 
 | | |
 |---|---|
-| **Job** | Separar Wasteland (studio) de Japan Apocalypse (serie) — §V1 |
+| **Job** | Separar Myrk Studio (estudio) / Wasteland (serie) / Japan Apocalypse (episodio) — §V1 |
 | **Contenido** | `StudioSection` (+ statement cuando T9/T30) |
 | **CTA** | Ghost a `/whitelist` + texto Discord solo si §V15 lo permite (preferible no: Discord queda en shell) |
 

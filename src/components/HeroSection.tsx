@@ -80,7 +80,7 @@ export function HeroSection({
             {HERO.statusLabel}
           </div>
           <p className="reveal reveal-delay-1 mb-2 font-term text-[0.7rem] tracking-[0.22em] text-faint uppercase sm:text-xs">
-            {STUDIO_NAME} Studio presenta
+            {STUDIO_NAME} presenta
           </p>
 
           <h1

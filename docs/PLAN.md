@@ -6,8 +6,9 @@ Ordenado para **demo rápida → prod con dominio → backend whitelist**.
 
 | Concepto | Qué es |
 |---|---|
-| **Wasteland** | El **studio** (varias series post-apo, no solo zombies) |
-| **Wasteland: Japan Apocalypse** | La **serie** flagship (MC narrativo, Japón colapsado, virus NETFO) |
+| **Myrk Studio** | El **estudio** desarrollador (varias series post-apo, no solo zombies) |
+| **Wasteland** | La **serie** flagship (MC narrativo, Japón colapsado, virus NETFO) |
+| **Japan Apocalypse** | El **episodio** actual de la serie Wasteland |
 | **Whitelist** | Acceso al servidor: **invitación + form público** |
 | **Invitación** | Código → reserva plaza y/o prioridad en cola |
 | **Discord** | Hub comunidad: https://discord.gg/3PvWKJBw |

@@ -5,8 +5,9 @@
 
 ## Studio vs serie
 
-- **Wasteland** = estudio de series post-apocalípticas (no solo zombies).
-- **Wasteland: Japan Apocalypse** = primera producción: Japón colapsado, supervivencia, facciones, eventos guionizados en Minecraft.
+- **Myrk Studio** = estudio desarrollador de series post-apocalípticas (no solo zombies).
+- **Wasteland** = la serie: Japón colapsado, supervivencia, facciones, eventos guionizados en Minecraft.
+- **Japan Apocalypse** = el episodio actual de la serie Wasteland.
 
 ## Cómo empieza el apocalipsis (teaser público)
 

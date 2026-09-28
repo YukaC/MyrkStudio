@@ -1,10 +1,9 @@
-import { STUDIO_NAME } from "./site";
+import { SERIES_NAME, STUDIO_NAME } from "./site";
 
 export const STUDIO_SECTION = {
   log: { main: "El estudio", tail: "about" },
   title: `Nosotros somos ${STUDIO_NAME}`,
-  blurb:
-    'Somos un estudio. "Japan Apocalypse" es nuestra primera producción. Cada futura serie explorará un colapso distinto.',
+  blurb: `"${SERIES_NAME}" es nuestra primera producción. Cada futura serie explorará un colapso distinto.`,
 } as const;
 
 /** Rendered as classified cards until the studio announces them (no teaser data) */
@@ -90,7 +89,7 @@ export const STUDIO_STATEMENT = {
     jpeg: "/studio-emblem.jpg",
     width: 800,
     height: 800,
-    alt: "Emblema de Wasteland Studio: la W en un páramo con motivos japoneses",
+    alt: "Emblema de Myrk Studio: la W de Wasteland en un páramo con motivos japoneses",
   },
 } as const;
 

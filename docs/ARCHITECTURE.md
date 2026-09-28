@@ -2,7 +2,7 @@
 
 ## Visión
 
-Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan Apocalypse** es el producto visible; el studio es la marca paraguas.
+Sitio marketing + funnel whitelist para **Myrk Studio**. La serie **Wasteland** (episodio actual **Japan Apocalypse**) es el producto visible; el studio es la marca paraguas.
 
 ```
 [Browser]
@@ -39,7 +39,7 @@ Sitio marketing + funnel whitelist para **Wasteland Studio**. La serie **Japan A
 | 3 | `SeriesSection` | `#serie` | Pitch no-zombie + features (`SERIES_FEATURES`) |
 | 4 | `ClassifiedDossier` | — | Ficha de metadatos con filas redactadas (`DOSSIER_ROWS`) + sello CLASIFICADO |
 | 5 | `EscaletaSection` | — | Semana 1 teaser; semanas 2–4 bloqueadas (⊥V7) |
-| 6 | `StudioSection` | `#estudio` | Wasteland ≠ serie + `StudioStatement` + próximos proyectos |
+| 6 | `StudioSection` | `#estudio` | Myrk Studio ≠ Wasteland ≠ Japan Apocalypse + `StudioStatement` + próximos proyectos |
 | 7 | `StaffSection` | `#staff` | Roster (`STAFF`) + link Discord |
 | 8 | `FeaturedStreamers` | `#streamers` | Cards con avatar mc-heads; derivado de `STAFF`; `LiveBadge` si `isLive` |
 | 9 | `FaqSection` | `#faq` | Accordion nativo (`details[name]`) |

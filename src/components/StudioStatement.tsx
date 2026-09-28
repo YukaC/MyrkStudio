@@ -1,4 +1,4 @@
-import { STUDIO_NAME, STUDIO_STATEMENT } from "../content";
+import { STUDIO_STATEMENT } from "../content";
 
 function HeartIcon() {
   return (
@@ -16,7 +16,7 @@ export function StudioStatement() {
       <div className="statement-glow" aria-hidden />
       <div className="relative p-5 sm:p-8">
         <p className="log-label mb-5 text-center sm:text-left">
-          [LOG] <b>Nosotros</b> // {STUDIO_NAME} studio
+          [LOG] <b>Nosotros</b> // manifiesto
         </p>
 
         <div className="grid items-center gap-8 md:grid-cols-2">

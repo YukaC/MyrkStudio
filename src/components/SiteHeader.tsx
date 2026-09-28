@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { CTA_LABEL, DISCORD_URL, type NavLinkItem } from "../content";
+import { CTA_LABEL, DISCORD_URL, STUDIO_NAME, type NavLinkItem } from "../content";
 import { AppLink } from "./AppLink";
 import { DiscordIcon, MenuIcon } from "./icons";
 
@@ -87,10 +87,11 @@ export function SiteHeader({ navLinks, whitelistHref }: SiteHeaderProps) {
         <nav className="page-shell nav-inner" aria-label="Principal">
           <AppLink
             href={brandHref}
-            className="font-display text-lg font-bold tracking-tight text-white sm:text-xl"
+            className="font-display text-lg font-bold tracking-tight text-white uppercase sm:text-xl"
             onClick={closeMobileMenu}
           >
-            WASTELAND<span className="text-accent">.</span>
+            {STUDIO_NAME}
+            <span className="text-accent">.</span>
           </AppLink>
 
           <div className="hidden items-center gap-0.5 lg:flex">

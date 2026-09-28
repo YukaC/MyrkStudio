@@ -4,7 +4,7 @@
 
 ## Rol
 
-Landing + whitelist para estudio Minecraft narrativo. Prioridad: copy correcto (studio ≠ serie), form usable, invites.
+Landing + whitelist para estudio Minecraft narrativo. Prioridad: copy correcto (estudio ≠ serie ≠ episodio), form usable, invites.
 
 ## Stack
 
@@ -38,7 +38,7 @@ src/components/     ← 1 sección = 1 componente + primitivas (SectionHeader, P
 
 ## Siempre
 
-- Distinguir **Wasteland** (studio) vs **Japan Apocalypse** (serie)
+- Distinguir **Myrk Studio** (estudio) vs **Wasteland** (serie) vs **Japan Apocalypse** (episodio)
 - Discord default `https://discord.gg/3PvWKJBw`
 - Invite válido → prioridad (§V3). En v0 el campo no está en el form: la aplica el staff
   al revisar en Discord (SPEC T3)
@@ -50,5 +50,5 @@ src/components/     ← 1 sección = 1 componente + primitivas (SectionHeader, P
 
 - Spoilers de guion/escaleta completa en web pública
 - Secretos en repo
-- Confundir nombres studio/serie
+- Confundir los nombres estudio/serie/episodio (o duplicar el sufijo: `STUDIO_NAME` ya es `Myrk Studio`)
 - Parsear copy con `split()`/regex: si hay que resaltar algo, va como campo en el dato
