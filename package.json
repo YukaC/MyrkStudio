@@ -15,7 +15,8 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "sync:avatars": "node scripts/sync-avatars.mjs"
   },
   "dependencies": {
     "react": "^19.0.0",

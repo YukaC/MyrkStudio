@@ -54,13 +54,21 @@ export function twitterHandleFromUrl(twitterUrl: string): string | null {
 }
 
 /**
+ * Day bucket for unavatar URLs. Their CDN caches ~28d; a daily `?v=` forces
+ * one fresh fetch per calendar day (UTC) without manual bumps.
+ */
+function avatarCacheDayKey(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
  * Live profile photo via unavatar (proxies X/Twitter CDN).
  * Prefer this at runtime; fall back to the local `avatarSrc` copy on error.
  */
 export function liveXAvatarUrl(twitterUrl: string): string | null {
   const handle = twitterHandleFromUrl(twitterUrl);
   if (!handle) return null;
-  return `https://unavatar.io/x/${encodeURIComponent(handle)}`;
+  return `https://unavatar.io/x/${encodeURIComponent(handle)}?v=${avatarCacheDayKey()}`;
 }
 
 export const STAFF_SECTION = {

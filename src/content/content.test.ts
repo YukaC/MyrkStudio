@@ -109,8 +109,9 @@ describe("studio", () => {
 
   it("should resolve live X avatar URLs from staff twitter links", () => {
     expect(twitterHandleFromUrl("https://x.com/IAmKudaoficial")).toBe("IAmKudaoficial");
+    const dayKey = new Date().toISOString().slice(0, 10);
     expect(liveXAvatarUrl("https://x.com/IAmKudaoficial")).toBe(
-      "https://unavatar.io/x/IAmKudaoficial",
+      `https://unavatar.io/x/IAmKudaoficial?v=${dayKey}`,
     );
     expect(twitterHandleFromUrl("https://twitter.com/intent/tweet")).toBe(null);
   });
