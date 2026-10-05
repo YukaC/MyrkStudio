@@ -137,7 +137,7 @@ export function SiteHeader({ navLinks, whitelistHref }: SiteHeaderProps) {
             href={DISCORD_URL}
             target="_blank"
             rel="noreferrer"
-            className="nav-chrome-control flex items-center gap-2 px-6 py-4 font-term text-xs tracking-[0.14em] text-[#a5b4fc] uppercase hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)] hover:text-accent"
+            className="nav-chrome-control flex items-center gap-2 px-6 py-4 font-term text-xs tracking-[0.14em] text-discord uppercase hover:bg-[color-mix(in_srgb,var(--color-accent)_10%,transparent)] hover:text-accent"
             onClick={closeMobileMenu}
           >
             <DiscordIcon className="h-4 w-4" />

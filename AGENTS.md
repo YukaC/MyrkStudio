@@ -23,7 +23,7 @@ React 19 · Vite 7 · TS estricto · Tailwind 4 · Vercel demo · Cloudflare DNS
 
 1. `npm run typecheck` **antes** de editar. Si falla al arrancar → drift externo en el working
    tree: restituir y reportar, no seguir editando encima.
-2. Todo componente en `src/components/` debe estar montado desde `App.tsx` (huérfano = drift).
+2. Todo componente en `src/components/` debe estar en el árbol montado desde `App.tsx` (layouts/pages; huérfano = drift).
 3. `App.tsx` es orquestador: sin markup de sección. 1 sección = 1 componente, <300 líneas.
 4. `npm run build` verde antes de dar por cerrado un bloque.
 

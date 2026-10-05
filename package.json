@@ -16,6 +16,7 @@
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run",
     "test:watch": "vitest",
+    "check": ".ra/checks/ra-checks .",
     "sync:avatars": "node scripts/sync-avatars.mjs"
   },
   "dependencies": {

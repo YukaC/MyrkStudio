@@ -12,6 +12,8 @@ dist-ssr/
 coverage/
 .vite/
 *.tsbuildinfo
+.codegraph/
+**/__pycache__/
 .idea/
 .vscode/*
 !.vscode/extensions.json

@@ -71,7 +71,7 @@ V6: plazas ocupadas/total = fuente única content config (no hardcode disperso)
 V7: lore público teaser; ⊥ spoiler guion/escaleta completa en web abierta
 V8: TypeScript estricto · ⊥ `any`
 V9: baseline verde antes de editar (`npm run typecheck`); si falla al arrancar turno → drift externo en working tree → restituir y reportar antes de tocar nada
-V10: todo componente en `src/components/` ! está montado desde `App.tsx` (component huérfano = drift, la clase de bug que causó B1)
+V10: todo componente en `src/components/` ! está en el árbol montado desde `App.tsx` (layouts `SinglePageLayout`/`MultiPageLayout`, `pages/*` y primitivas transitivas); huérfano = drift (clase de bug B2)
 V11: `App.tsx` = orquestador; ! contiene markup de sección (extraer a `src/components/`)
 V12: cambio de contrato (semántica) de prop compartida en `src/components/` → grep de **todos** los call sites en el mismo turno; ⊥ dejar call sites con la semántica vieja (regresión silenciosa: typecheck + build en verde)
 V13: escritura por lotes → snapshot `git diff` antes/después del lote; si cambió algo fuera del lote → parar y reportar, ⊥ seguir editando encima (V9 cubre solo el drift al arrancar)
@@ -91,7 +91,7 @@ T8|.|admin/staff panel revisar postulaciones|V3
 T9|.|contenido real staff bios + assets brand|V1
 T10|.|próximas series placeholders → CMS/content|V1,V7
 T11|x|secciones: streamers destacados + nosotros + FAQ accordion + CTA banner|V1,V7
-T12|x|extracción: `App.tsx` 513→45 líneas = 19 componentes + `useCountdown` (§V11)|V10,V11
+T12|x|extracción: secciones fuera de `App.tsx` → layouts + 19 componentes + `useCountdown`; `App.tsx` solo enruta (single `/` + multi `/m/*`) (§V11)|V10,V11
 T13|x|countdown estreno (2027-09-26) + StatCounters (derivados de PLAZAS) en hero|V6,V7
 T14|x|STREAMERS derivado de STAFF (twitter real) + LiveBadge tras `isLive`|V6
 T15|.|SEO/OG: `index.html` hardcodea og: contra `SEO`/`SITE_URL`/`absoluteUrl` en `content/site.ts` (sin uso) → elegir fuente única al migrar dominio|T6,V6
