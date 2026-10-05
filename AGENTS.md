@@ -17,7 +17,7 @@ React 19 · Vite 7 · TS estricto · Tailwind 4 · Vercel demo · Cloudflare DNS
 | `npm run dev` | Vite :5173 |
 | `npm run build` | build prod |
 | `npm run typecheck` | tsc |
-| `npm test` | vitest (16 tests, corre en watch con `test:watch`) |
+| `npm test` | vitest (31 tests, corre en watch con `test:watch`) |
 
 ## Gates de turno (SPEC §V9/§V10/§V11)
 
@@ -31,9 +31,10 @@ React 19 · Vite 7 · TS estricto · Tailwind 4 · Vercel demo · Cloudflare DNS
 
 ```
 src/content/        ← fuente única por dominio: site · plazas · series · studio · lore · faq · whitelist · nav · ui (+ index.ts barrel)
-src/App.tsx         ← solo compone secciones
+src/App.tsx         ← rutas: `/` scroll editorial · `/m/*` redirect home
+src/layouts/        ← SinglePageLayout (Bunkr/MYRK shell)
 src/hooks/          ← useCountdown
-src/components/     ← 1 sección = 1 componente + primitivas (SectionHeader, Panel, PlazasMeter…)
+src/components/     ← secciones + `editorial/*` (Nav, Hero, Card) + primitivas (SectionHeader, Panel…)
 ```
 
 ## Siempre

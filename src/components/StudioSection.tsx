@@ -1,5 +1,6 @@
 import { STUDIO_SECTION, UPCOMING_PROJECTS } from "../content";
 import { LockIcon } from "./icons";
+import { EditorialCard } from "./editorial/EditorialCard";
 import { SectionHeader } from "./SectionHeader";
 import { StudioStatement } from "./StudioStatement";
 
@@ -13,34 +14,31 @@ export function StudioSection() {
             titleId="estudio-title"
             title={STUDIO_SECTION.title}
             log={STUDIO_SECTION.log}
-            blurbClassName="prose-muted mb-6"
             blurb={STUDIO_SECTION.blurb}
           />
         </div>
 
         <div>
-          <h3 className="mb-3 font-term text-[0.7rem] tracking-[0.16em] text-faint uppercase">
+          <h3 className="mb-3 font-editorial text-lg tracking-wide text-cream/55 uppercase">
             Próximas producciones
           </h3>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
-            {UPCOMING_PROJECTS.map((projectId) => (
-              <div
-                key={projectId}
-                className="studio-project-card flex min-h-[7rem] flex-col items-center justify-center gap-2 border border-dashed border-line-strong bg-[color-mix(in_srgb,var(--color-panel)_40%,transparent)] p-5 text-center"
-              >
+            {UPCOMING_PROJECTS.map((projectId, index) => (
+              <EditorialCard key={projectId} className="flex min-h-[7rem] flex-col items-center justify-center gap-2 p-5 text-center">
+                <span className="editorial-streamer-rank">{String(index + 1).padStart(2, "0")}</span>
                 <LockIcon />
-                <span className="font-term text-xs tracking-wider text-faint">
+                <span className="font-term text-xs tracking-wider text-cream/45 uppercase">
                   {projectId}
                   <br />
-                  [CLASIFICADO]
+                  clasificado
                 </span>
-              </div>
+              </EditorialCard>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="mt-10 lg:mt-14 multi-estudio-statement">
+      <div className="page-shell mt-10 lg:mt-14">
         <StudioStatement />
       </div>
     </section>

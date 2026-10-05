@@ -517,4 +517,75 @@
     font-size: 1rem;
     color: color-mix(in srgb, var(--color-accent) 75%, var(--color-cream));
   }
+
+  .editorial-card {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--color-cream) 14%, var(--color-line));
+    background:
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--color-cream) 4%, transparent),
+        transparent 40%
+      ),
+      color-mix(in srgb, var(--color-void) 88%, var(--color-panel));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, white 3%, transparent) inset,
+      0 20px 40px -32px color-mix(in srgb, black 80%, transparent);
+    transition:
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    a.editorial-card:hover {
+      border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-cream));
+      transform: translateY(-2px);
+    }
+  }
+
+  .editorial-streamer-rank {
+    font-family: var(--font-editorial);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    color: color-mix(in srgb, var(--color-accent) 70%, var(--color-cream));
+  }
+
+  .editorial-escaleta-week-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 0 0 1rem;
+    font-family: var(--font-editorial);
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-cream);
+  }
+
+  .editorial-escaleta-day {
+    min-height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0.85rem;
+  }
+
+  .editorial-dossier-extract {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  }
+
+  .editorial-form-shell {
+    border: 1px solid color-mix(in srgb, var(--color-cream) 16%, var(--color-line));
+    background: color-mix(in srgb, var(--color-void) 82%, transparent);
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .editorial-status-banner {
+    border-bottom-color: color-mix(in srgb, var(--color-cream) 15%, var(--color-line));
+    background: color-mix(in srgb, var(--color-void) 90%, transparent);
+    color: color-mix(in srgb, var(--color-cream) 80%, transparent);
+  }
 }

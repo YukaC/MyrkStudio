@@ -1,6 +1,8 @@
 # Plan multi-page — WLandStudio
 
-> Estado: **demo dual** (`/` scroll · `/m/*` **1 sección = 1 viewport**).
+> **Estado (2026-10): RETIRADO.** Demo canónica = **`/` scroll editorial** (Bunkr · `editorial.css` · SPEC T40). `/m/*` redirige a home. Este doc queda como archivo histórico de la demo dual; no implementar de nuevo salvo decisión explícita del dueño.
+>
+> ~~Estado: **demo dual** (`/` scroll · `/m/*` **1 sección = 1 viewport**).~~
 > Materials Apple (glass nav/dock) · scroll interno solo FAQ/form · wayfinding = header.
 > Rollback: quitar rutas `/m` en `App.tsx` o revertir el commit del lote.
 > Docs relacionados: `SPEC.md` · `docs/ARCHITECTURE.md` · `docs/PLAN.md` · `docs/QUOTE.md`

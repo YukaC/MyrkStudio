@@ -123,15 +123,6 @@ export function EditorialNav() {
               {link.label}
             </AppLink>
           ))}
-          <a
-            href={DISCORD_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="editorial-mobile-link text-discord"
-            onClick={closeMobileMenu}
-          >
-            Discord
-          </a>
         </div>
       </header>
     </>

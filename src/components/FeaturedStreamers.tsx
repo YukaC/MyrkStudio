@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { accentStyle, STREAMERS, STREAMERS_SECTION } from "../content";
+import { STREAMERS, STREAMERS_SECTION } from "../content";
 import type { FeaturedStreamer } from "../content";
+import { EditorialCard } from "./editorial/EditorialCard";
 import { LiveBadge } from "./icons";
 import { SectionHeader } from "./SectionHeader";
 
 const MC_HEADS_ORIGIN = "https://mc-heads.net";
 
-/**
- * Session memory of the last URL that loaded for a streamer.
- * Survives remounts within the tab; local /avatars/* is the durable disk fallback.
- */
 const avatarMemory = new Map<string, string>();
 
 function buildAvatarCascade(streamer: FeaturedStreamer): string[] {
@@ -47,8 +44,8 @@ function StreamerAvatar({ streamer }: { streamer: FeaturedStreamer }) {
 
   if (!src) {
     return (
-      <span className="avatar-ring flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-black/40 sm:size-16">
-        <span aria-hidden className="font-display text-2xl leading-none font-semibold text-accent">
+      <span className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] bg-[color-mix(in_srgb,var(--color-void)_65%,transparent)] sm:size-16">
+        <span aria-hidden className="font-editorial text-2xl leading-none font-semibold text-accent">
           {getInitials(streamer.displayName)}
         </span>
       </span>
@@ -56,7 +53,7 @@ function StreamerAvatar({ streamer }: { streamer: FeaturedStreamer }) {
   }
 
   return (
-    <span className="avatar-ring flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-line bg-black/40 sm:size-16">
+    <span className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] bg-[color-mix(in_srgb,var(--color-void)_65%,transparent)] sm:size-16">
       <img
         key={src}
         src={src}
@@ -79,46 +76,33 @@ function StreamerAvatar({ streamer }: { streamer: FeaturedStreamer }) {
 }
 
 function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: number }) {
-  const rank = `#${String(index + 1).padStart(2, "0")}`;
-  const cardClass =
-    "card-accent panel relative flex h-full flex-col items-center gap-3 p-4 text-center";
+  const rank = String(index + 1).padStart(2, "0");
+  const body = (
+    <>
+      {streamer.isLive ? <LiveBadge /> : null}
+      <span className="editorial-streamer-rank">{rank}</span>
+      <StreamerAvatar streamer={streamer} />
+      <span className="font-editorial text-base font-semibold leading-snug text-cream uppercase">
+        {streamer.displayName}
+      </span>
+      {streamer.tag ? (
+        <span className="font-term text-[0.65rem] leading-snug tracking-wider text-cream/60 uppercase">
+          {streamer.tag}
+        </span>
+      ) : null}
+    </>
+  );
+
+  const cardClass = "relative flex h-full flex-col items-center gap-3 p-4 text-center";
 
   return (
-    <li className="h-full">
+    <li className="h-full list-none">
       {streamer.url ? (
-        <a
-          href={streamer.url}
-          target="_blank"
-          rel="noreferrer"
-          className={cardClass}
-          style={accentStyle(index)}
-        >
-          {streamer.isLive ? <LiveBadge /> : null}
-          <span className="font-term text-[0.65rem] tracking-[0.14em] text-faint">{rank}</span>
-          <StreamerAvatar streamer={streamer} />
-          <span className="font-display text-sm font-semibold leading-snug text-white uppercase">
-            {streamer.displayName}
-          </span>
-          {streamer.tag ? (
-            <span className="font-term text-[0.65rem] leading-snug tracking-wider break-words text-muted uppercase">
-              {streamer.tag}
-            </span>
-          ) : null}
-        </a>
+        <EditorialCard as="a" href={streamer.url} target="_blank" rel="noreferrer" className={cardClass}>
+          {body}
+        </EditorialCard>
       ) : (
-        <div className={cardClass} style={accentStyle(index)}>
-          {streamer.isLive ? <LiveBadge /> : null}
-          <span className="font-term text-[0.65rem] tracking-[0.14em] text-faint">{rank}</span>
-          <StreamerAvatar streamer={streamer} />
-          <span className="font-display text-sm font-semibold leading-snug text-white uppercase">
-            {streamer.displayName}
-          </span>
-          {streamer.tag ? (
-            <span className="font-term text-[0.65rem] leading-snug tracking-wider break-words text-muted uppercase">
-              {streamer.tag}
-            </span>
-          ) : null}
-        </div>
+        <EditorialCard className={cardClass}>{body}</EditorialCard>
       )}
     </li>
   );
@@ -133,20 +117,16 @@ export function FeaturedStreamers() {
           titleId="streamers-title"
           title={STREAMERS_SECTION.title}
           log={STREAMERS_SECTION.log}
-          blurbClassName="prose-muted mb-6 md:mb-8"
           blurb={STREAMERS_SECTION.blurb}
         />
 
-        {/* pt-2: the live badge is -top-2, so it escapes the card upward by 8px */}
-        <ol className="grid list-none grid-cols-2 gap-3 p-0 pt-2 sm:grid-cols-3">
+        <ol className="grid grid-cols-2 gap-3 p-0 pt-2 sm:grid-cols-3">
           {STREAMERS.map((streamer, index) => (
             <StreamerCard key={streamer.displayName} streamer={streamer} index={index} />
           ))}
         </ol>
 
-        <p className="mt-4 font-term text-[0.7rem] tracking-wide text-faint">
-          {STREAMERS_SECTION.note}
-        </p>
+        <p className="mt-4 text-sm text-cream/50">{STREAMERS_SECTION.note}</p>
       </div>
     </section>
   );

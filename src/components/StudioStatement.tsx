@@ -12,11 +12,10 @@ export function StudioStatement() {
   const { emblem } = STUDIO_STATEMENT;
 
   return (
-    <div className="panel relative overflow-hidden">
+    <div className="editorial-card relative overflow-hidden">
       <div className="statement-glow" aria-hidden />
       <div className="relative p-5 sm:p-8">
         <p className="editorial-section-kicker mb-5 text-center sm:text-left">
-          <span className="editorial-section-index">05</span>
           <span>
             <b>Nosotros</b>
             <span className="text-faint"> · </span>

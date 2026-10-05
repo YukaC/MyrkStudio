@@ -28,7 +28,7 @@ export function ClassifiedDossier() {
                     className="flex items-baseline gap-3 font-term text-[0.72rem] tracking-wider uppercase"
                   >
                     <dt className="w-24 shrink-0 text-faint sm:w-28">{row.label}</dt>
-                    <dd className="min-w-0 break-words text-foreground">
+                    <dd className="min-w-0 break-words text-cream/85">
                       {row.isRedacted ? (
                         <>
                           <span
@@ -45,11 +45,9 @@ export function ClassifiedDossier() {
                 ))}
               </dl>
 
-              <div className="border-t border-line pt-4">
-                <p className="text-sm leading-relaxed text-muted">{LORE_DOSSIER.extract}</p>
-                <p className="mt-3 font-term text-xs leading-relaxed text-faint">
-                  {LORE_DOSSIER.note}
-                </p>
+              <div className="border-t border-[color-mix(in_srgb,var(--color-cream)_12%,transparent)] pt-4">
+                <p className="editorial-dossier-extract">{LORE_DOSSIER.extract}</p>
+                <p className="mt-3 text-xs leading-relaxed text-cream/50">{LORE_DOSSIER.note}</p>
               </div>
             </div>
 

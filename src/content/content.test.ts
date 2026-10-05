@@ -208,8 +208,8 @@ describe("primary CTAs", () => {
     expect(ctaFiles).toEqual(["CtaBanner", "EditorialHero", "EditorialNav"]);
   });
 
-  it("should show Discord on nav (desktop + mobile drawer), hero and closing banner", () => {
-    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(4);
+  it("should show Discord on nav desktop, hero and closing banner", () => {
+    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(3);
   });
 
   it("should show the whitelist CTA once per surface, mobile/desktop pair aside", () => {
