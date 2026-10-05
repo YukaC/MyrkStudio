@@ -1,23 +1,21 @@
 import type { ReactNode } from "react";
-import { motion } from "motion/react";
-import { useMyrkMultiChrome } from "../hooks/useMyrkMultiChrome";
+import { motion, useReducedMotion } from "motion/react";
 
 type SectionHeaderProps = {
+  /** Editorial section index, e.g. "02" */
+  index?: string;
   title: string;
-  /** Required whenever the section wraps this in aria-labelledby */
   titleId?: string;
-  /** Label line: main text bolded, tail after "//" */
   log?: { main: string; tail: string };
   blurb?: ReactNode;
-  /** Hidden h2 for sections whose visible label is the log line (a11y keeps the heading) */
   isTitleHidden?: boolean;
-  /** Full class for the blurb; include the color you want so it never fights prose-muted */
   blurbClassName?: string;
 };
 
-const DEFAULT_BLURB_CLASS = "prose-muted mb-6";
+const DEFAULT_BLURB_CLASS = "editorial-section-blurb";
 
 export function SectionHeader({
+  index,
   title,
   titleId,
   log,
@@ -25,43 +23,44 @@ export function SectionHeader({
   isTitleHidden = false,
   blurbClassName = DEFAULT_BLURB_CLASS,
 }: SectionHeaderProps) {
-  const isMyrkMulti = useMyrkMultiChrome();
+  const reducedMotion = useReducedMotion();
 
   const kicker = log ? (
-    isMyrkMulti ? (
-      <p className="myrk-section-kicker mb-3">
+    <p className="editorial-section-kicker">
+      {index ? <span className="editorial-section-index">{index}</span> : null}
+      <span>
         <b>{log.main}</b>
         <span className="text-faint"> · </span>
         {log.tail}
-      </p>
-    ) : (
-      <p className="log-label mb-3">
-        [LOG] <b>{log.main}</b> // {log.tail}
-      </p>
-    )
+      </span>
+    </p>
+  ) : index ? (
+    <p className="editorial-section-kicker">
+      <span className="editorial-section-index">{index}</span>
+    </p>
   ) : null;
 
-  const titleClass = isTitleHidden ? "sr-only" : "section-title";
-  const titleEl =
-    isMyrkMulti && !isTitleHidden ? (
-      <motion.h2
-        id={titleId}
-        layoutId="myrk-section-title"
-        className={titleClass}
-        transition={{ type: "spring", stiffness: 380, damping: 34 }}
-      >
-        {title}
-      </motion.h2>
-    ) : (
-      <h2 id={titleId} className={titleClass}>
-        {title}
-      </h2>
-    );
+  const titleClass = isTitleHidden ? "sr-only" : "editorial-section-title";
 
   return (
     <>
       {kicker}
-      {titleEl}
+      {reducedMotion ? (
+        <h2 id={titleId} className={titleClass}>
+          {title}
+        </h2>
+      ) : (
+        <motion.h2
+          id={titleId}
+          className={titleClass}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10% 0px" }}
+          transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] as const }}
+        >
+          {title}
+        </motion.h2>
+      )}
       {blurb ? <p className={blurbClassName}>{blurb}</p> : null}
     </>
   );

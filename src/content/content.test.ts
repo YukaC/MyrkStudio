@@ -15,11 +15,17 @@ import { accentStyle } from "./ui";
 import { getDemoInviteCodes, isValidDemoInvite } from "./whitelist";
 
 /** Every component source at once so CTA repetition can be counted page-wide (§V15) */
-const componentSources = import.meta.glob("../components/*.tsx", {
-  query: "?raw",
-  import: "default",
-  eager: true,
-}) as Record<string, string>;
+const componentSources = import.meta.glob(
+  [
+    "../components/**/*.tsx",
+    "!../components/**/*.test.tsx",
+  ],
+  {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  },
+) as Record<string, string>;
 
 /** Data modules too (tests excluded), so naming drift is caught in copy as well (§V18) */
 const contentSources = import.meta.glob(["../content/*.ts", "!../content/*.test.ts"], {
@@ -35,6 +41,10 @@ function countAnchors(pattern: RegExp): number {
     (total, source) => total + (source.match(pattern)?.length ?? 0),
     0,
   );
+}
+
+function countWhitelistAnchors(): number {
+  return countAnchors(/href=\{(whitelistHref|WHITELIST_HREF)\}/g);
 }
 
 type QuestionNode = {
@@ -195,16 +205,16 @@ describe("primary CTAs", () => {
       .filter(([, source]) => /href=\{DISCORD_URL\}|whitelistHref/.test(source))
       .map(([path]) => path.split("/").pop()?.replace(".tsx", ""))
       .sort();
-    expect(ctaFiles).toEqual(["CtaBanner", "HeroSection", "SiteHeader"]);
+    expect(ctaFiles).toEqual(["CtaBanner", "EditorialHero", "EditorialNav"]);
   });
 
-  it("should show Discord once per surface, the header one living in the mobile menu", () => {
-    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(3);
+  it("should show Discord on nav (desktop + mobile drawer), hero and closing banner", () => {
+    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(4);
   });
 
   it("should show the whitelist CTA once per surface, mobile/desktop pair aside", () => {
-    // SiteHeader ×2 (desktop+mobile) · Hero ×1 · CtaBanner ×1
-    expect(countAnchors(/href=\{whitelistHref\}/g)).toBe(4);
+    // EditorialNav ×1 · EditorialHero ×1 · CtaBanner ×1
+    expect(countWhitelistAnchors()).toBe(3);
   });
 });
 
@@ -228,9 +238,11 @@ describe("naming", () => {
     expect(sourceOf("SiteFooter")).toContain("{STUDIO_NAME}");
     expect(sourceOf("SiteFooter")).not.toMatch(/WASTELAND|MYRK/i);
 
-    expect(sourceOf("SiteHeader")).toContain("{STUDIO_NAME}");
-    expect(sourceOf("SiteHeader")).toContain("{SERIES_NAME}");
-    expect(sourceOf("SiteHeader")).not.toMatch(/["'`]Wasteland|["'`]Myrk Studio/i);
+    expect(sourceOf("EditorialNav")).toContain("{STUDIO_NAME}");
+    expect(sourceOf("EditorialNav")).not.toMatch(/["'`]Wasteland|["'`]Myrk Studio/i);
+
+    expect(sourceOf("EditorialHero")).toMatch(/STUDIO_NAME/);
+    expect(sourceOf("EditorialHero")).toContain("{SERIES_NAME}");
   });
 
   it("should publish STUDIO_NAME as the site author and og:site_name in index.html", () => {

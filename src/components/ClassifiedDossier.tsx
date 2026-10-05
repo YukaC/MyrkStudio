@@ -5,11 +5,13 @@ import { SectionHeader } from "./SectionHeader";
 export function ClassifiedDossier() {
   return (
     <section
-      className="section-block bg-[color-mix(in_srgb,var(--color-background-elevated)_70%,transparent)]"
+      id="lore"
+      className="editorial-section section-block bg-[color-mix(in_srgb,var(--color-void)_88%,transparent)]"
       aria-labelledby="lore-title"
     >
       <div className="page-shell">
         <SectionHeader
+          index="03"
           titleId="lore-title"
           title={LORE_DOSSIER.heading}
           isTitleHidden

@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import { FaqSection } from "./FaqSection";
+import { EditorialNav } from "./editorial/EditorialNav";
 import { ChevronIcon, DiscordIcon, LockIcon } from "./icons";
 
 function renderedClasses(element: React.ReactElement): string[] {
@@ -31,21 +31,19 @@ describe("icons keep their box", () => {
   });
 });
 
-describe("faq disclosure", () => {
-  it("should keep every chevron sized, since a bare viewBox svg falls back to 300x150", () => {
+describe("editorial nav", () => {
+  it("should render a sized menu icon in the mobile chrome", () => {
     const svgClassLists = [
       ...renderToStaticMarkup(
         <MemoryRouter initialEntries={["/"]}>
-          <FaqSection />
+          <EditorialNav />
         </MemoryRouter>,
       ).matchAll(/<svg[^>]*class="([^"]*)"/g),
     ].map((match) => match[1]);
 
     expect(svgClassLists.length).toBeGreaterThan(0);
-
     for (const classList of svgClassLists) {
-      expect(classList).toContain("size-4");
+      expect(classList).toMatch(/size-4|h-4|h-5|h-6|w-6/);
     }
   });
 });
-

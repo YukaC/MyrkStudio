@@ -25,12 +25,12 @@ export function EscaletaSection() {
   const hasUpcoming = ESCALETA_VISIBLE_WEEKS < ESCALETA_WEEKS.length;
 
   return (
-    <section className="section-block" aria-labelledby="escaleta-title">
+    <section id="escaleta" className="editorial-section section-block" aria-labelledby="escaleta-title">
       <div className="page-shell">
         <SectionHeader
+          index="04"
           titleId="escaleta-title"
           title={ESCALETA_SECTION.title}
-          blurbClassName="mb-6 font-term text-xs tracking-wider text-faint uppercase"
           blurb={ESCALETA_SECTION.blurb}
         />
 

@@ -19,8 +19,8 @@ export function WhitelistSection({ compact = false }: WhitelistSectionProps) {
          the safe-area is a floor on top of the shared value, not a replacement. */
       className={
         compact
-          ? "section-block !py-2"
-          : "section-block pb-[max(clamp(2.75rem,7vw,5rem),env(safe-area-inset-bottom))]"
+          ? "editorial-section section-block !py-2"
+          : "editorial-section section-block pb-[max(clamp(2.75rem,7vw,5rem),env(safe-area-inset-bottom))]"
       }
       aria-labelledby="whitelist-title"
     >
@@ -33,6 +33,7 @@ export function WhitelistSection({ compact = false }: WhitelistSectionProps) {
       >
         <div>
           <SectionHeader
+            index="09"
             titleId="whitelist-title"
             title="Reservá tu plaza"
             log={{ main: "Postulación", tail: "whitelist" }}

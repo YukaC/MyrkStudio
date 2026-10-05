@@ -15,8 +15,13 @@ export function StudioStatement() {
     <div className="panel relative overflow-hidden">
       <div className="statement-glow" aria-hidden />
       <div className="relative p-5 sm:p-8">
-        <p className="log-label mb-5 text-center sm:text-left">
-          [LOG] <b>Nosotros</b> // manifiesto
+        <p className="editorial-section-kicker mb-5 text-center sm:text-left">
+          <span className="editorial-section-index">05</span>
+          <span>
+            <b>Nosotros</b>
+            <span className="text-faint"> · </span>
+            manifiesto
+          </span>
         </p>
 
         <div className="grid items-center gap-8 md:grid-cols-2">
@@ -39,7 +44,7 @@ export function StudioStatement() {
           </figure>
 
           <div className="flex flex-col items-center text-center md:items-start md:text-left">
-            <blockquote className="font-display text-lg leading-snug text-pretty text-white sm:text-xl">
+            <blockquote className="font-editorial text-xl leading-snug text-pretty text-cream sm:text-2xl">
               &ldquo;{STUDIO_STATEMENT.quote}&rdquo;
             </blockquote>
             <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-muted">

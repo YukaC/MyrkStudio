@@ -5,10 +5,11 @@ import { StudioStatement } from "./StudioStatement";
 
 export function StudioSection() {
   return (
-    <section id="estudio" className="section-block" aria-labelledby="estudio-title">
-      <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-14 multi-estudio-top">
+    <section id="estudio" className="editorial-section section-block" aria-labelledby="estudio-title">
+      <div className="page-shell grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:items-start lg:gap-14">
         <div>
           <SectionHeader
+            index="05"
             titleId="estudio-title"
             title={STUDIO_SECTION.title}
             log={STUDIO_SECTION.log}

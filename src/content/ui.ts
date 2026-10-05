@@ -3,6 +3,8 @@ import type { CSSProperties } from "react";
 /** Hero copy with state semantics — single source (§V6) */
 export const HERO = {
   statusLabel: "Building",
+  lede:
+    "Serie narrada en Minecraft: supervivencia, facciones y eventos guionizados en un Japón colapsado. Postulación por invitación — cada decisión cuenta.",
   /** Multi-page home full-bleed backdrop (Japan Apocalypse landscape). */
   backdrop: {
     webp: "/hero-backdrop.webp",

@@ -126,9 +126,10 @@ function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: 
 
 export function FeaturedStreamers() {
   return (
-    <section id="streamers" className="section-block" aria-labelledby="streamers-title">
+    <section id="streamers" className="editorial-section section-block" aria-labelledby="streamers-title">
       <div className="page-shell">
         <SectionHeader
+          index="07"
           titleId="streamers-title"
           title={STREAMERS_SECTION.title}
           log={STREAMERS_SECTION.log}

@@ -7,18 +7,23 @@ type CtaBannerProps = {
 
 export function CtaBanner({ whitelistHref = WHITELIST_HREF }: CtaBannerProps) {
   return (
-    <section className="section-block" aria-labelledby="cta-title">
+    <section className="editorial-section section-block" aria-labelledby="cta-title">
       <div className="page-shell">
         <div className="panel relative overflow-hidden p-6 text-center sm:p-12">
           <div className="cta-glow" aria-hidden />
           <div className="relative">
-            <p className="log-label mb-3">
-              [LOG] <b>Señal abierta</b> // discord
+            <p className="editorial-section-kicker mb-3 justify-center">
+              <span className="editorial-section-index">10</span>
+              <span>
+                <b>Señal abierta</b>
+                <span className="text-faint"> · </span>
+                discord
+              </span>
             </p>
-            <h2 id="cta-title" className="section-title">
+            <h2 id="cta-title" className="editorial-section-title">
               La zona cero no espera
             </h2>
-            <p className="prose-muted mx-auto mb-6">
+            <p className="editorial-section-blurb mx-auto mb-6 text-center">
               Los próximos eventos, las transmisiones y las plazas de whitelist se anuncian primero
               en el Discord de {STUDIO_NAME}.
             </p>
