@@ -1,0 +1,130 @@
+/* MYRK multi-page redesign — scoped under .myrk-multi-v2 (classic `/` untouched). */
+
+@layer components {
+  .myrk-multi-v2 {
+    --myrk-ritual-glow: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    --myrk-ice: var(--color-myrk-ice);
+    background-color: var(--color-myrk-void);
+  }
+
+  .myrk-multi-v2 .vignette {
+    opacity: 0.92;
+    background: radial-gradient(
+      ellipse 85% 70% at 50% 45%,
+      transparent 0%,
+      color-mix(in srgb, var(--color-myrk-void) 40%, transparent) 55%,
+      var(--color-myrk-void) 100%
+    );
+  }
+
+  .myrk-multi-v2 .noise-overlay {
+    opacity: 0.07;
+  }
+
+  .myrk-multi-v2 .site-nav--myrk {
+    border-bottom-color: color-mix(in srgb, var(--myrk-ice) 12%, var(--color-line));
+    background: color-mix(in srgb, var(--color-myrk-void) 72%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, white 6%, transparent),
+      0 24px 48px -32px color-mix(in srgb, black 90%, transparent);
+  }
+
+  .myrk-multi-v2 .site-nav--myrk .nav-chrome-control:hover,
+  .myrk-multi-v2 .site-nav--myrk .nav-chrome-control:active {
+    background: color-mix(in srgb, var(--myrk-ice) 8%, transparent);
+  }
+
+  .myrk-multi-v2 .myrk-brand-lockup {
+    font-family: var(--font-myrk);
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    color: color-mix(in srgb, var(--myrk-ice) 88%, white);
+    text-shadow: 0 0 32px color-mix(in srgb, var(--myrk-ice) 35%, transparent);
+  }
+
+  .myrk-multi-v2 .myrk-section-kicker {
+    font-family: var(--font-term);
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--myrk-ice) 55%, var(--color-faint));
+  }
+
+  .myrk-multi-v2 .myrk-section-kicker b {
+    color: color-mix(in srgb, var(--myrk-ice) 85%, white);
+    font-weight: 600;
+  }
+
+  .myrk-multi-v2 .section-title {
+    font-family: var(--font-myrk);
+    letter-spacing: 0.04em;
+    text-shadow: 0 12px 40px color-mix(in srgb, black 80%, transparent);
+  }
+
+  .myrk-multi-v2 .multi-chrome {
+    border-top-color: color-mix(in srgb, var(--myrk-ice) 10%, var(--color-line));
+    background: color-mix(in srgb, var(--color-myrk-void) 85%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .myrk-multi-v2 .panel,
+  .myrk-multi-v2 .feature-item {
+    border-color: color-mix(in srgb, var(--myrk-ice) 14%, var(--color-line));
+    background: color-mix(in srgb, var(--color-myrk-slate) 88%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, white 4%, transparent) inset,
+      0 24px 48px -36px color-mix(in srgb, black 85%, transparent);
+  }
+
+  .myrk-multi-v2 .panel:hover,
+  .myrk-multi-v2 .feature-item:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 35%, var(--myrk-ice) 20%);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent) inset,
+      0 28px 56px -32px var(--myrk-ritual-glow);
+  }
+
+  .myrk-multi-v2 .multi-hero-title {
+    font-family: var(--font-myrk);
+    letter-spacing: 0.06em;
+    line-height: 1.05;
+    text-shadow:
+      0 0 48px color-mix(in srgb, var(--color-accent) 25%, transparent),
+      0 16px 48px color-mix(in srgb, black 75%, transparent);
+  }
+
+  .myrk-multi-v2 .myrk-hero-studio {
+    font-family: var(--font-myrk);
+    font-size: clamp(1.35rem, 4vw, 2rem);
+    letter-spacing: 0.22em;
+    color: color-mix(in srgb, var(--myrk-ice) 92%, white);
+  }
+
+  .myrk-multi-v2 .myrk-hero-series {
+    font-family: var(--font-display);
+    font-size: clamp(0.7rem, 2.2vw, 0.85rem);
+    letter-spacing: 0.16em;
+    color: color-mix(in srgb, var(--color-muted) 90%, var(--myrk-ice));
+  }
+
+  .myrk-multi-v2 .multi-hero-scrim {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-myrk-void) 35%, transparent) 0%,
+      color-mix(in srgb, var(--color-myrk-void) 75%, transparent) 45%,
+      var(--color-myrk-void) 100%
+    );
+  }
+
+  .myrk-multi-v2 .dossier-stamp {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+
+  .myrk-multi-v2 .multi-frame-body[data-scroll="true"] {
+    scrollbar-color: color-mix(in srgb, var(--myrk-ice) 30%, var(--color-line)) transparent;
+  }
+}

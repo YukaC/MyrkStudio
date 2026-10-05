@@ -1,4 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { FaqSection } from "./FaqSection";
 import { ChevronIcon, DiscordIcon, LockIcon } from "./icons";
@@ -32,9 +33,13 @@ describe("icons keep their box", () => {
 
 describe("faq disclosure", () => {
   it("should keep every chevron sized, since a bare viewBox svg falls back to 300x150", () => {
-    const svgClassLists = [...renderToStaticMarkup(<FaqSection />).matchAll(/<svg[^>]*class="([^"]*)"/g)].map(
-      (match) => match[1],
-    );
+    const svgClassLists = [
+      ...renderToStaticMarkup(
+        <MemoryRouter initialEntries={["/"]}>
+          <FaqSection />
+        </MemoryRouter>,
+      ).matchAll(/<svg[^>]*class="([^"]*)"/g),
+    ].map((match) => match[1]);
 
     expect(svgClassLists.length).toBeGreaterThan(0);
 

@@ -7,12 +7,16 @@
 @import "./styles/forms.css";
 @import "./styles/motion.css";
 @import "./styles/multi.css";
+@import "./styles/myrk-multi.css";
 
 /* Design tokens. Colors and fonts live here as the single source; type sizes and
    component styling live in src/styles/*.css. */
 @theme {
   --color-background: #070708;
   --color-background-elevated: #0c0c0f;
+  --color-myrk-void: #040406;
+  --color-myrk-slate: #0a0a10;
+  --color-myrk-ice: #c4d4e0;
   --color-foreground: #e4e4e7;
   --color-muted: #a1a1aa;
   --color-faint: #71717a;
@@ -30,6 +34,7 @@
 
   --font-sans: "IBM Plex Sans", system-ui, sans-serif;
   --font-display: Oswald, "IBM Plex Sans", sans-serif;
+  --font-myrk: Cinzel, "IBM Plex Sans", serif;
   --font-term: "Share Tech Mono", ui-monospace, monospace;
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

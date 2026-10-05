@@ -29,7 +29,8 @@ Landing + form whitelist (invitación prioriza plaza) para Myrk Studio; serie fl
 - **streaming**: `FeaturedStreamer.isLive` existe pero es **dato de entrada**, nunca se adivina; sin data real = badge oculto
 - **tests**: vitest 5 (`npm test` / `test:watch`) como red anti-drift de §V6 — ok del dueño 2026-09-26 · leer el HTML con `?raw` de Vite, ⊥ sumar `@types/node`
 - **imágenes**: no hay generador de imágenes en el entorno → los PNG (`favicon-*.png` `icon-192` `apple-touch-icon` `og`) son externos. Para el emblema del estudio se **escribe SVG a mano** en `public/` (W voxel isométrica al estilo del favicon, 4:5): geometría por polígonos, tokens del sitio, ⊥ assets/texturas de Mojang (la web declara no afiliación)
-- **vocabulario visual**: toda sección abre con `[LOG] <asunto> // <token>` (una sola voz en el scroll) · el hero es la excepción (badge de estado) · `.btn` tiene `min-height: 3rem` → los links de apoyo van inline, ⊥ como botón chico · relleno de demo **sin inventar datos**: copy genérico del género o placeholders visibles, nunca números/fechas/nombres propios
+- **vocabulario visual**: toda sección abre con `[LOG] <asunto> // <token>` (una sola voz en el scroll) · el hero es la excepción (badge de estado) · en **`/m/*` (MYRK redesign)** el kicker es tipográfico sin prefijo `[LOG]` · `.btn` tiene `min-height: 3rem` → los links de apoyo van inline, ⊥ como botón chico · relleno de demo **sin inventar datos**: copy genérico del género o placeholders visibles, nunca números/fechas/nombres propios
+- **MYRK multi UX**: estética nórdica/ancestral (Cinzel + hielo/obsidiana + acento ritual rojo) · motion vía `motion/react` · transiciones de ruta + `layoutId` en títulos · demo `/` congelada salvo fixes
 
 ## §I
 
@@ -116,6 +117,9 @@ T33|x|demo dual: `/` scroll · `/m/*` 1 sección=1 viewport (RR7 · multi.css gl
 T34|x|motion norma + craft hero: section enter vía `state.multiSlide` · MenuIcon morph · opacidad panels/CTAs · wordmark 砂嵐 · CRT scanlines · docs `MULTI_PAGE_PLAN` §1|V17
 T35|x|Deploy: borrado GHA `deploy.yml` (token inválido). Queda Vercel Git nativo (repo ya vinculado). Secrets `VERCEL_*` opcionales de borrar en GitHub|B20
 T36|x|**renombre del estudio**: `STUDIO_NAME` = `Myrk Studio` (serie `Wasteland` y episodio `Japan Apocalypse` intactos) → copy derivado (hero · footer · statement · banner · SEO), FAQ "¿Wasteland es la serie o el estudio?" reescrita + espejo JSON-LD, alt del emblema, `index.html` (author/og:site_name/og:image:alt/JSON-LD), `site.webmanifest`, `package.json`, `LICENSE`, README, docs (PLAN ARCHITECTURE LORE MULTI) y §G/§C/§V1. 3 call sites.concatenate sufijos rotos (`HeroSection`, `StudioStatement`, `nav.legal`) → **V18** + test|V1,V6,V18
+T37|x|rediseño MYRK F1: dep `motion` · tokens `--color-myrk-*`/`--font-myrk` (Cinzel) · `.myrk-multi-v2` shell · `MultiAnimatedOutlet` + `LayoutGroup` · SectionHeader myrk kicker + `layoutId` títulos · nav glass dual lockup · hero multi · `npm run check` verde|V10,V15,V17
+T38|x|rediseño MYRK F2: `/m/*` hereda panels/atmosphere · stagger serie/staff · lore teaser copy · chrome bar · `/` congelada|V1,V6,V7
+T39|x|rediseño MYRK F3: gates typecheck+vitest+build+ra-checks · §V15 CTAs intactos · reduced-motion respetado|V9,V15
 
 ## §B
 

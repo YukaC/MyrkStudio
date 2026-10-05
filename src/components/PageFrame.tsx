@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { useLocation } from "react-router-dom";
 import type { MultiLocationState } from "../hooks/useMultiSectionScroll";
+import { useMyrkMultiChrome } from "../hooks/useMyrkMultiChrome";
 
 type PageFrameProps = {
   children: ReactNode;
@@ -26,9 +27,16 @@ export function PageFrame({
   className = "",
 }: PageFrameProps) {
   const location = useLocation();
+  const isMyrkMulti = useMyrkMultiChrome();
   const slide = (location.state as MultiLocationState | null)?.multiSlide;
   const enterClass =
-    slide === "next" ? "multi-frame--enter-next" : slide === "prev" ? "multi-frame--enter-prev" : "";
+    isMyrkMulti
+      ? ""
+      : slide === "next"
+        ? "multi-frame--enter-next"
+        : slide === "prev"
+          ? "multi-frame--enter-prev"
+          : "";
 
   return (
     <div

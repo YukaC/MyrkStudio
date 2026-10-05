@@ -1,7 +1,8 @@
+import { LayoutGroup } from "motion/react";
 import { useRef } from "react";
-import { Outlet } from "react-router-dom";
 import { MULTI_NAV_LINKS, MULTI_WHITELIST_HREF } from "../content";
 import { AppLink } from "../components/AppLink";
+import { MultiAnimatedOutlet } from "../components/MultiAnimatedOutlet";
 import { MultiChromeBar } from "../components/MultiChromeBar";
 import { MultiHashRedirect } from "../components/MultiHashRedirect";
 import { SiteHeader } from "../components/SiteHeader";
@@ -14,7 +15,7 @@ export function MultiPageLayout() {
   useMultiSectionScroll(shellRef);
 
   return (
-    <div ref={shellRef} className="multi-shell relative">
+    <div ref={shellRef} className="multi-shell myrk-multi-v2 relative">
       <div className="crt-overlay" aria-hidden />
       <div className="noise-overlay" aria-hidden />
       <div className="vignette" aria-hidden />
@@ -28,7 +29,9 @@ export function MultiPageLayout() {
       <SiteHeader navLinks={MULTI_NAV_LINKS} whitelistHref={MULTI_WHITELIST_HREF} />
 
       <main className="multi-main">
-        <Outlet />
+        <LayoutGroup id="myrk-multi">
+          <MultiAnimatedOutlet />
+        </LayoutGroup>
       </main>
 
       <MultiChromeBar />

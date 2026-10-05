@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import { useLocation } from "react-router-dom";
-import { CTA_LABEL, DISCORD_URL, STUDIO_NAME, type NavLinkItem } from "../content";
+import { CTA_LABEL, DISCORD_URL, SERIES_NAME, STUDIO_NAME, type NavLinkItem } from "../content";
+import { useMyrkMultiChrome } from "../hooks/useMyrkMultiChrome";
 import { AppLink } from "./AppLink";
 import { DiscordIcon, MenuIcon } from "./icons";
 
@@ -13,6 +15,7 @@ export function SiteHeader({ navLinks, whitelistHref }: SiteHeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const location = useLocation();
+  const isMyrkMulti = useMyrkMultiChrome();
 
   // Close the drawer on route change (multi-page); hash jumps on single-page
   // still use onClick on each link.
@@ -83,15 +86,32 @@ export function SiteHeader({ navLinks, whitelistHref }: SiteHeaderProps) {
         onClick={closeMobileMenu}
       />
 
-      <header ref={headerRef} className="site-nav">
+      <header ref={headerRef} className={isMyrkMulti ? "site-nav site-nav--myrk" : "site-nav"}>
         <nav className="page-shell nav-inner" aria-label="Principal">
           <AppLink
             href={brandHref}
-            className="font-display text-lg font-bold tracking-tight text-white uppercase sm:text-xl"
+            className={
+              isMyrkMulti
+                ? "myrk-brand-lockup block max-w-[14rem] leading-tight uppercase"
+                : "font-display text-lg font-bold tracking-tight text-white uppercase sm:text-xl"
+            }
             onClick={closeMobileMenu}
           >
-            {STUDIO_NAME}
-            <span className="text-accent">.</span>
+            {isMyrkMulti ? (
+              <>
+                <motion.span layoutId="myrk-studio-wordmark" className="block">
+                  {STUDIO_NAME.replace(" ", "\u00a0")}
+                </motion.span>
+                <span className="mt-0.5 block font-display text-[0.55rem] tracking-[0.2em] text-muted normal-case sm:text-[0.6rem]">
+                  {SERIES_NAME}
+                </span>
+              </>
+            ) : (
+              <>
+                {STUDIO_NAME}
+                <span className="text-accent">.</span>
+              </>
+            )}
           </AppLink>
 
           <div className="hidden items-center gap-0.5 lg:flex">

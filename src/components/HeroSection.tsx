@@ -1,4 +1,6 @@
-import { DISCORD_URL, HERO, STUDIO_NAME, WHITELIST_HREF, WHITELIST_INVITE_NOTE } from "../content";
+import { DISCORD_URL, HERO, SERIES_NAME, STUDIO_NAME, WHITELIST_HREF, WHITELIST_INVITE_NOTE } from "../content";
+import { motion } from "motion/react";
+import { useMyrkMultiChrome } from "../hooks/useMyrkMultiChrome";
 import { AppLink } from "./AppLink";
 import { DiscordIcon } from "./icons";
 import { Panel } from "./Panel";
@@ -42,6 +44,7 @@ export function HeroSection({
   layout = "scroll",
 }: HeroSectionProps) {
   const isViewport = layout === "viewport";
+  const isMyrkMulti = useMyrkMultiChrome() && isViewport;
 
   return (
     <div
@@ -80,7 +83,14 @@ export function HeroSection({
             {HERO.statusLabel}
           </div>
           <p className="reveal reveal-delay-1 mb-2 font-term text-[0.7rem] tracking-[0.22em] text-faint uppercase sm:text-xs">
-            {STUDIO_NAME} presenta
+            {isMyrkMulti ? (
+              <>
+                <span className="myrk-hero-studio block">{STUDIO_NAME}</span>
+                <span className="myrk-hero-series mt-1 block">{SERIES_NAME}</span>
+              </>
+            ) : (
+              <>{STUDIO_NAME} presenta</>
+            )}
           </p>
 
           <h1
@@ -90,11 +100,23 @@ export function HeroSection({
                 : "reveal reveal-delay-1 font-display mb-4 max-w-[14ch] text-[clamp(2.75rem,10vw,5.25rem)] leading-[0.92] font-bold text-white uppercase"
             }
           >
-            Japan
-            <br />
-            <span className="glitch-text" data-text="Apocalypse">
-              Apocalypse
-            </span>
+            {isMyrkMulti ? (
+              <>
+                Japan
+                <br />
+                <motion.span layoutId="myrk-hero-apocalypse" className="glitch-text inline-block" data-text="Apocalypse">
+                  Apocalypse
+                </motion.span>
+              </>
+            ) : (
+              <>
+                Japan
+                <br />
+                <span className="glitch-text" data-text="Apocalypse">
+                  Apocalypse
+                </span>
+              </>
+            )}
           </h1>
 
           <p

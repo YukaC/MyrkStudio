@@ -11,8 +11,8 @@ export const LORE_DOSSIER = {
   heading: "Lore clasificado",
   redactedLabel: "Redactado",
   extract:
-    "Japón colapsó: perdimos todo contacto con los supervivientes. El territorio, recursos y una amenaza latente que solo los altos mandos conocen. Eso es todo lo que pudimos descifrar — el resto del expediente circula solo en un grupo reducido dentro del servidor.",
-  note: "La verdad está en el servidor. Encontrá cintas y documentos en la zona de exclusión.",
+    "Tras el colapso, Japón quedó fuera del mapa usable. Lo poco que filtró habla de supervivencia sin red, recursos disputados y una amenaza que los informes oficiales no nombran. El resto del archivo sigue sellado — circula solo entre quienes ya cruzaron la exclusión.",
+  note: "En el servidor, las cintas y los documentos rotos completan lo que esta ficha no puede decir.",
 } as const;
 
 export const DOSSIER_ROWS: DossierRow[] = [

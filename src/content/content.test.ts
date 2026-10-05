@@ -222,13 +222,15 @@ describe("naming", () => {
     expect(offenders).toEqual([]);
   });
 
-  it("should brand the nav and the footer from the same STUDIO_NAME, never a hardcoded wordmark", () => {
+  it("should brand the nav and the footer from STUDIO_NAME, not hardcoded wordmarks", () => {
     const sourceOf = (component: string): string =>
       Object.entries(componentSources).find(([path]) => path.endsWith(`${component}.tsx`))?.[1] ?? "";
-    ["SiteHeader", "SiteFooter"].forEach((component) => {
-      expect(sourceOf(component), component).toContain("{STUDIO_NAME}");
-      expect(sourceOf(component), component).not.toMatch(/WASTELAND|MYRK/i);
-    });
+    expect(sourceOf("SiteFooter")).toContain("{STUDIO_NAME}");
+    expect(sourceOf("SiteFooter")).not.toMatch(/WASTELAND|MYRK/i);
+
+    expect(sourceOf("SiteHeader")).toContain("{STUDIO_NAME}");
+    expect(sourceOf("SiteHeader")).toContain("{SERIES_NAME}");
+    expect(sourceOf("SiteHeader")).not.toMatch(/["'`]Wasteland|["'`]Myrk Studio/i);
   });
 
   it("should publish STUDIO_NAME as the site author and og:site_name in index.html", () => {
