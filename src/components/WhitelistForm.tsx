@@ -1,8 +1,9 @@
 import { FormEvent, RefObject, useRef, useState } from "react";
 import { PLAZAS } from "../content";
+import { gsap } from "../lib/gsap";
 
 type FormStatus = {
-  kind: "idle" | "error" | "success";
+  kind: "idle" | "error" | "success" | "pending";
   message: string;
 };
 
@@ -17,6 +18,7 @@ const STATUS_CLASS: Record<FormStatus["kind"], string> = {
   idle: "text-faint",
   error: "text-accent",
   success: "text-success",
+  pending: "text-cream/80",
 };
 
 /** The one status line; invalid controls point at it with aria-describedby */
@@ -83,7 +85,10 @@ export function WhitelistForm({ compact = false }: { compact?: boolean }) {
 
     // Demo sin backend: el envío se simula a propósito para que el form se lea
     // como un envío por web real. La postulación no sale del navegador (SPEC B15).
-    setStatus({ kind: "success", message: "Enviado." });
+    setStatus({ kind: "pending", message: "Enviando…" });
+    gsap.delayedCall(0.55, () => {
+      setStatus({ kind: "success", message: "Enviado." });
+    });
   }
 
   return (
@@ -198,8 +203,17 @@ export function WhitelistForm({ compact = false }: { compact?: boolean }) {
 
       {/* w-full, not a wrapper: `.btn` is inline-flex, so as a direct child of the
           form it would shrink to fit its label and sit flush left. */}
-      <button type="submit" className="btn btn-primary w-full">
-        Enviar postulación
+      <button
+        type="submit"
+        className="btn btn-primary w-full"
+        data-magnetic=""
+        disabled={status.kind === "pending" || status.kind === "success"}
+      >
+        {status.kind === "pending"
+          ? "Enviando…"
+          : status.kind === "success"
+            ? "Postulación enviada ✓"
+            : "Enviar postulación"}
       </button>
 
       <p

@@ -1,6 +1,23 @@
 # WLandStudio
 
+> **Demo en vivo: <https://myrkstudio.vercel.app>**
+
 > Web oficial de **Myrk Studio** y su serie flagship **Wasteland: Japan Apocalypse** (Minecraft narrativo post-apocalíptico). Whitelist por invitación + formulario público.
+
+## Naturaleza de este proyecto (leer antes de mostrarlo)
+
+Es un **sitio de marca para una serie ficticia**: Myrk Studio y "Wasteland: Japan Apocalypse" no existen
+fuera de este proyecto. Está hecho como pieza de oficio (dirección de arte, motion, WebGL, CSS de sistema)
+para mostrar capacidad de ejecución, no como sitio de un cliente real.
+
+Qué es real y qué no:
+
+| Superficie | Estado |
+|---|---|
+| Diseño, motion, FX, accesibilidad, performance | real |
+| Contenido (lore, staff, escaleta, plazas, countdown) | inventado, editable en `src/content/` |
+| Formulario de postulación | **simulado**: no envía a ningún lado (`SPEC.md` §B B15) |
+| Backend de whitelist | no existe; las funciones de invitación quedan reservadas en `src/content/whitelist.ts` |
 
 ## Cómo correr
 
@@ -9,6 +26,14 @@ npm install
 npm run dev        # http://localhost:5173
 npm run build      # dist/
 npm run typecheck
+```
+
+## Deploy
+
+Vercel, build estático con `vercel.json` ya configurado (`framework: vite`, `dist`, rewrite SPA):
+
+```bash
+npx vercel deploy --prod   # https://myrkstudio.vercel.app
 ```
 
 ## Estado

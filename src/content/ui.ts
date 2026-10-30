@@ -3,16 +3,9 @@ import type { CSSProperties } from "react";
 /** Hero copy with state semantics — single source (§V6) */
 export const HERO = {
   statusLabel: "Building",
+  presentsLabel: "presenta",
   lede:
     "Serie narrada en Minecraft: supervivencia, facciones y eventos guionizados en un Japón colapsado. Postulación por invitación — cada decisión cuenta.",
-  /** Multi-page home full-bleed backdrop (Japan Apocalypse landscape). */
-  backdrop: {
-    webp: "/hero-backdrop.webp",
-    webpSm: "/hero-backdrop-sm.webp",
-    jpeg: "/hero-backdrop.jpg",
-    width: 1024,
-    height: 576,
-  },
 } as const;
 
 /** Premiere instant for the countdown; single source (§V6). */

@@ -19,8 +19,20 @@
   }
 
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: calc(env(safe-area-inset-top, 0px) + var(--nav-h) + 0.75rem);
+    /* Full-viewport frames: a pull-to-refresh gesture would steal the downward
+       swipe (Android answers it with touchcancel) and on iOS the rubber band
+       hides the top of the page. Both are accidents on this layout. */
+    overscroll-behavior-y: none;
+  }
+
+  /* Smooth anchor travel only where a smooth engine exists (desktop). On touch
+     an instant jump lands correctly thanks to scroll-padding-top, and Safari's
+     `scroll-behavior: smooth` on the root is a known scroll-lock trigger. */
+  @media (hover: hover) and (pointer: fine) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {

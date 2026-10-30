@@ -10,20 +10,22 @@ export function PremiereCountdown() {
   const label = isExpired ? PREMIERE.expiredLabel : PREMIERE.countdownLabel;
 
   return (
-    <div className="border border-line bg-black/65 px-4 py-3">
-      <p className="font-term text-[0.6rem] tracking-wider text-faint uppercase">
+    <div className="premiere-countdown">
+      <p className="premiere-countdown-label">
         {label} {SERIES_NAME}
       </p>
-      {/* key flips only on expire — ticks must never remount/animate */}
       <p
         key={isExpired ? "live" : "count"}
         className={
-          isExpired
-            ? "countdown-face font-display text-base font-semibold text-accent uppercase"
-            : "font-display text-xl font-bold text-white tabular-nums"
+          isExpired ? "premiere-countdown-value is-live countdown-face" : "premiere-countdown-value"
         }
       >
-        {isExpired ? PREMIERE.liveNow : `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`}
+        {isExpired ? PREMIERE.liveNow : `${days}d ${pad(hours)}:${pad(minutes)}:`}
+        {!isExpired ? (
+          <span key={seconds} className="countdown-tick">
+            {pad(seconds)}
+          </span>
+        ) : null}
       </p>
     </div>
   );

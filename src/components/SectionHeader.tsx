@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
 
 type SectionHeaderProps = {
   /** Editorial section index, e.g. "02" */
@@ -23,10 +22,8 @@ export function SectionHeader({
   isTitleHidden = false,
   blurbClassName = DEFAULT_BLURB_CLASS,
 }: SectionHeaderProps) {
-  const reducedMotion = useReducedMotion();
-
   const kicker = log ? (
-    <p className="editorial-section-kicker">
+    <p className="editorial-section-kicker" data-reveal="">
       {index ? <span className="editorial-section-index">{index}</span> : null}
       <span>
         <b>{log.main}</b>
@@ -35,7 +32,7 @@ export function SectionHeader({
       </span>
     </p>
   ) : index ? (
-    <p className="editorial-section-kicker">
+    <p className="editorial-section-kicker" data-reveal="">
       <span className="editorial-section-index">{index}</span>
     </p>
   ) : null;
@@ -43,25 +40,20 @@ export function SectionHeader({
   const titleClass = isTitleHidden ? "sr-only" : "editorial-section-title";
 
   return (
-    <>
+    <div className="editorial-section-head">
       {kicker}
-      {reducedMotion ? (
-        <h2 id={titleId} className={titleClass}>
-          {title}
-        </h2>
-      ) : (
-        <motion.h2
-          id={titleId}
-          className={titleClass}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10% 0px" }}
-          transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] as const }}
-        >
-          {title}
-        </motion.h2>
-      )}
-      {blurb ? <p className={blurbClassName}>{blurb}</p> : null}
-    </>
+      <h2
+        id={titleId}
+        className={titleClass}
+        {...(isTitleHidden ? {} : { "data-split": "lines" })}
+      >
+        {title}
+      </h2>
+      {blurb ? (
+        <p className={blurbClassName} data-reveal="">
+          {blurb}
+        </p>
+      ) : null}
+    </div>
   );
 }

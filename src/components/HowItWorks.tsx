@@ -1,14 +1,15 @@
 import { WHITELIST_STEPS } from "../content";
+import { EditorialScrollItem, EditorialScrollStagger } from "./editorial/EditorialScrollStagger";
 
 export function HowItWorks() {
   return (
-    <ol className="editorial-process-list">
+    <EditorialScrollStagger as="ol" className="editorial-process-list" stagger={0.07}>
       {WHITELIST_STEPS.map((step) => (
-        <li key={step.id} className="editorial-process-step">
+        <EditorialScrollItem key={step.id} as="li" className="editorial-process-step">
           <span className="editorial-process-step-id">{step.id}</span>
           <span>{step.text}</span>
-        </li>
+        </EditorialScrollItem>
       ))}
-    </ol>
+    </EditorialScrollStagger>
   );
 }

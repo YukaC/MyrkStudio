@@ -1,11 +1,9 @@
-import { motion, useReducedMotion } from "motion/react";
 import { SERIES_FEATURES, SERIES_SECTION } from "../content";
 import { EditorialCard } from "./editorial/EditorialCard";
+import { EditorialScrollItem, EditorialScrollStagger } from "./editorial/EditorialScrollStagger";
 import { SectionHeader } from "./SectionHeader";
 
 export function SeriesSection() {
-  const reducedMotion = useReducedMotion();
-
   return (
     <section id="serie" className="editorial-section section-block" aria-labelledby="serie-title">
       <div className="page-shell">
@@ -17,34 +15,14 @@ export function SeriesSection() {
           blurb={SERIES_SECTION.blurb}
         />
 
-        <motion.ul
-          className="feature-row list-none p-0"
-          {...(reducedMotion
-            ? {}
-            : {
-                initial: "hidden",
-                whileInView: "show",
-                viewport: { once: true, margin: "-5% 0px" },
-                variants: {
-                  hidden: { opacity: 0 },
-                  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-                },
-              })}
-        >
+        <EditorialScrollStagger as="ul" className="editorial-feature-list list-none p-0" stagger={0.09}>
           {SERIES_FEATURES.map((feature) => (
-            <motion.li
-              key={feature.id}
-              className="list-none"
-              {...(reducedMotion
-                ? {}
-                : {
-                    variants: {
-                      hidden: { opacity: 0, y: 16 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-                    },
-                  })}
-            >
-              <EditorialCard className="feature-item grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 p-4 sm:p-5">
+            <EditorialScrollItem key={feature.id} as="li" className="list-none">
+              <EditorialCard
+                scrollMotion={false}
+                data-tilt=""
+                className="editorial-feature-card grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 p-4 sm:p-5"
+              >
                 <span className="editorial-section-index" aria-hidden>
                   {feature.id}
                 </span>
@@ -55,9 +33,9 @@ export function SeriesSection() {
                   <p className="text-sm leading-relaxed text-cream/70">{feature.body}</p>
                 </div>
               </EditorialCard>
-            </motion.li>
+            </EditorialScrollItem>
           ))}
-        </motion.ul>
+        </EditorialScrollStagger>
       </div>
     </section>
   );

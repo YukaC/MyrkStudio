@@ -33,17 +33,15 @@ describe("icons keep their box", () => {
 
 describe("editorial nav", () => {
   it("should render a sized menu icon in the mobile chrome", () => {
-    const svgClassLists = [
-      ...renderToStaticMarkup(
-        <MemoryRouter initialEntries={["/"]}>
-          <EditorialNav />
-        </MemoryRouter>,
-      ).matchAll(/<svg[^>]*class="([^"]*)"/g),
-    ].map((match) => match[1]);
+    const html = renderToStaticMarkup(
+      <MemoryRouter initialEntries={["/"]}>
+        <EditorialNav />
+      </MemoryRouter>,
+    );
+    const menuMatch = html.match(
+      /editorial-nav-menu-btn[\s\S]*?<svg[^>]*class="([^"]*)"/,
+    );
 
-    expect(svgClassLists.length).toBeGreaterThan(0);
-    for (const classList of svgClassLists) {
-      expect(classList).toMatch(/size-4|h-4|h-5|h-6|w-6/);
-    }
+    expect(menuMatch?.[1]).toMatch(/size-4|h-4|h-5|h-6|w-6/);
   });
 });

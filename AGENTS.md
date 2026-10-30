@@ -40,6 +40,7 @@ src/components/     ← secciones + `editorial/*` (Nav, Hero, Card) + primitivas
 ## Siempre
 
 - Distinguir **Myrk Studio** (estudio) vs **Wasteland** (serie) vs **Japan Apocalypse** (episodio)
+- El naming triple (dir `MyrkStudio` · `package.json`/repo/dominio `WLandStudio` · marca `Myrk Studio`) es **deliberado** (SPEC §B21): `WLandStudio` es identidad de infra (Vercel/DNS/repo), renombrarla rompe el deploy. ⊥ "unificar" nombres de infra.
 - Discord default `https://discord.gg/3PvWKJBw`
 - Invite válido → prioridad (§V3). En v0 el campo no está en el form: la aplica el staff
   al revisar en Discord (SPEC T3)

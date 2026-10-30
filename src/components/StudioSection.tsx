@@ -1,6 +1,8 @@
 import { STUDIO_SECTION, UPCOMING_PROJECTS } from "../content";
 import { LockIcon } from "./icons";
 import { EditorialCard } from "./editorial/EditorialCard";
+import { EditorialScrollItem, EditorialScrollStagger } from "./editorial/EditorialScrollStagger";
+import { EditorialScrollReveal } from "./editorial/EditorialScrollReveal";
 import { SectionHeader } from "./SectionHeader";
 import { StudioStatement } from "./StudioStatement";
 
@@ -19,27 +21,31 @@ export function StudioSection() {
         </div>
 
         <div>
-          <h3 className="mb-3 font-editorial text-lg tracking-wide text-cream/55 uppercase">
+          <h3 className="mb-3 font-sans text-sm font-semibold tracking-[0.16em] text-cream/55 uppercase">
             Próximas producciones
           </h3>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <EditorialScrollStagger className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1" stagger={0.1}>
             {UPCOMING_PROJECTS.map((projectId, index) => (
-              <EditorialCard key={projectId} className="flex min-h-[7rem] flex-col items-center justify-center gap-2 p-5 text-center">
-                <span className="editorial-streamer-rank">{String(index + 1).padStart(2, "0")}</span>
-                <LockIcon />
-                <span className="font-term text-xs tracking-wider text-cream/45 uppercase">
-                  {projectId}
-                  <br />
-                  clasificado
-                </span>
-              </EditorialCard>
+              <EditorialScrollItem key={projectId}>
+                <EditorialCard scrollMotion={false} data-tilt="" className="flex min-h-[7rem] flex-col items-center justify-center gap-2 p-5 text-center">
+                  <span className="editorial-streamer-rank">{String(index + 1).padStart(2, "0")}</span>
+                  <LockIcon />
+                  <span className="font-term text-xs tracking-wider text-cream/45 uppercase">
+                    {projectId}
+                    <br />
+                    clasificado
+                  </span>
+                </EditorialCard>
+              </EditorialScrollItem>
             ))}
-          </div>
+          </EditorialScrollStagger>
         </div>
       </div>
 
       <div className="page-shell mt-10 lg:mt-14">
-        <StudioStatement />
+        <EditorialScrollReveal delay={0.08}>
+          <StudioStatement />
+        </EditorialScrollReveal>
       </div>
     </section>
   );

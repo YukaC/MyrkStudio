@@ -18,15 +18,11 @@ export function StatCounters() {
   const stats = buildWhitelistStats();
 
   return (
-    <dl aria-label={STAT_COUNTERS_LABEL} className="grid grid-cols-3 gap-3">
+    <dl aria-label={STAT_COUNTERS_LABEL} className="stat-counters grid grid-cols-3 gap-2 sm:gap-3">
       {stats.map((stat) => (
-        <div key={stat.label} className="border border-line bg-black/60 px-3 py-2.5 text-center">
-          <dt className="font-term text-[0.6rem] tracking-wider text-faint uppercase">
-            {stat.label}
-          </dt>
-          <dd className="font-display text-xl font-bold text-white tabular-nums sm:text-2xl">
-            {stat.value}
-          </dd>
+        <div key={stat.label} className="stat-counter">
+          <dt className="stat-counter-label">{stat.label}</dt>
+          <dd className="stat-counter-value tabular-nums">{stat.value}</dd>
         </div>
       ))}
     </dl>

@@ -11,7 +11,7 @@ import {
   getVisibleEscaletaWeeks,
 } from "./series";
 import { STAFF, STREAMERS, liveXAvatarUrl, twitterHandleFromUrl } from "./studio";
-import { accentStyle } from "./ui";
+import { accentStyle, HERO } from "./ui";
 import { getDemoInviteCodes, isValidDemoInvite } from "./whitelist";
 
 /** Every component source at once so CTA repetition can be counted page-wide (§V15) */
@@ -200,16 +200,16 @@ describe("nav", () => {
 });
 
 describe("primary CTAs", () => {
-  it("should keep Discord and the whitelist CTA only in the hero, the header and the closing banner", () => {
-    const ctaFiles = Object.entries(componentSources)
-      .filter(([, source]) => /href=\{DISCORD_URL\}|whitelistHref/.test(source))
+  it("should keep Discord only in the hero and the closing banner", () => {
+    const discordFiles = Object.entries(componentSources)
+      .filter(([, source]) => /href=\{DISCORD_URL\}/.test(source))
       .map(([path]) => path.split("/").pop()?.replace(".tsx", ""))
       .sort();
-    expect(ctaFiles).toEqual(["CtaBanner", "EditorialHero", "EditorialNav"]);
+    expect(discordFiles).toEqual(["CtaBanner", "EditorialHero"]);
   });
 
-  it("should show Discord on nav desktop, hero and closing banner", () => {
-    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(3);
+  it("should show Discord on hero and closing banner (not nav)", () => {
+    expect(countAnchors(/href=\{DISCORD_URL\}/g)).toBe(2);
   });
 
   it("should show the whitelist CTA once per surface, mobile/desktop pair aside", () => {
@@ -241,8 +241,10 @@ describe("naming", () => {
     expect(sourceOf("EditorialNav")).toContain("{STUDIO_NAME}");
     expect(sourceOf("EditorialNav")).not.toMatch(/["'`]Wasteland|["'`]Myrk Studio/i);
 
-    expect(sourceOf("EditorialHero")).toMatch(/STUDIO_NAME/);
+    expect(sourceOf("EditorialHero")).toContain("{STUDIO_NAME}");
+    expect(sourceOf("EditorialHero")).toContain("{HERO.presentsLabel}");
     expect(sourceOf("EditorialHero")).toContain("{SERIES_NAME}");
+    expect(HERO.presentsLabel).toBe("presenta");
   });
 
   it("should publish STUDIO_NAME as the site author and og:site_name in index.html", () => {

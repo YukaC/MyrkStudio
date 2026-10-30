@@ -2,6 +2,7 @@ import { useState } from "react";
 import { STREAMERS, STREAMERS_SECTION } from "../content";
 import type { FeaturedStreamer } from "../content";
 import { EditorialCard } from "./editorial/EditorialCard";
+import { EditorialScrollItem, EditorialScrollStagger } from "./editorial/EditorialScrollStagger";
 import { LiveBadge } from "./icons";
 import { SectionHeader } from "./SectionHeader";
 
@@ -45,7 +46,7 @@ function StreamerAvatar({ streamer }: { streamer: FeaturedStreamer }) {
   if (!src) {
     return (
       <span className="flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[color-mix(in_srgb,var(--color-cream)_22%,transparent)] bg-[color-mix(in_srgb,var(--color-void)_65%,transparent)] sm:size-16">
-        <span aria-hidden className="font-editorial text-2xl leading-none font-semibold text-accent">
+        <span aria-hidden className="font-sans text-2xl leading-none font-semibold text-accent">
           {getInitials(streamer.displayName)}
         </span>
       </span>
@@ -82,7 +83,7 @@ function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: 
       {streamer.isLive ? <LiveBadge /> : null}
       <span className="editorial-streamer-rank">{rank}</span>
       <StreamerAvatar streamer={streamer} />
-      <span className="font-editorial text-base font-semibold leading-snug text-cream uppercase">
+      <span className="font-sans text-base font-semibold leading-snug text-cream uppercase">
         {streamer.displayName}
       </span>
       {streamer.tag ? (
@@ -95,16 +96,21 @@ function StreamerCard({ streamer, index }: { streamer: FeaturedStreamer; index: 
 
   const cardClass = "relative flex h-full flex-col items-center gap-3 p-4 text-center";
 
-  return (
-    <li className="h-full list-none">
-      {streamer.url ? (
-        <EditorialCard as="a" href={streamer.url} target="_blank" rel="noreferrer" className={cardClass}>
-          {body}
-        </EditorialCard>
-      ) : (
-        <EditorialCard className={cardClass}>{body}</EditorialCard>
-      )}
-    </li>
+  return streamer.url ? (
+    <EditorialCard
+      as="a"
+      href={streamer.url}
+      target="_blank"
+      rel="noreferrer"
+      scrollMotion={false}
+      className={cardClass}
+    >
+      {body}
+    </EditorialCard>
+  ) : (
+    <EditorialCard scrollMotion={false} className={cardClass}>
+      {body}
+    </EditorialCard>
   );
 }
 
@@ -120,11 +126,13 @@ export function FeaturedStreamers() {
           blurb={STREAMERS_SECTION.blurb}
         />
 
-        <ol className="grid grid-cols-2 gap-3 p-0 pt-2 sm:grid-cols-3">
+        <EditorialScrollStagger as="ol" className="grid grid-cols-2 gap-3 p-0 pt-2 sm:grid-cols-3" stagger={0.07}>
           {STREAMERS.map((streamer, index) => (
-            <StreamerCard key={streamer.displayName} streamer={streamer} index={index} />
+            <EditorialScrollItem key={streamer.displayName} as="li" className="h-full list-none">
+              <StreamerCard streamer={streamer} index={index} />
+            </EditorialScrollItem>
           ))}
-        </ol>
+        </EditorialScrollStagger>
 
         <p className="mt-4 text-sm text-cream/50">{STREAMERS_SECTION.note}</p>
       </div>

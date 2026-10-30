@@ -1,123 +1,195 @@
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
-import {
-  DISCORD_URL,
-  HERO,
-  SERIES_NAME,
-  STUDIO_NAME,
-  WHITELIST_HREF,
-  WHITELIST_INVITE_NOTE,
-} from "../../content";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { DISCORD_URL, HERO, SERIES_NAME, STUDIO_NAME, WHITELIST_HREF } from "../../content";
+import { DUR, EASE, gsap, ScrollTrigger, useGSAP } from "../../lib/gsap";
+import { prefersReducedMotion } from "../../lib/useReducedMotion";
 import { AppLink } from "../AppLink";
-import { DiscordIcon } from "../icons";
-import { Panel } from "../Panel";
-import { PlazasMeter } from "../PlazasMeter";
-import { PremiereCountdown } from "../PremiereCountdown";
-import { StatCounters } from "../StatCounters";
+import HeroEmblem from "../fx/HeroEmblem";
+import { EditorialHeroSignal } from "./EditorialHeroSignal";
+
+const HeroCanvas = lazy(() => import("../fx/HeroCanvas"));
 
 type EditorialHeroProps = {
   whitelistHref?: string;
 };
 
-function HeroBackdrop() {
-  const { backdrop } = HERO;
-  return (
-    <div className="editorial-hero-media" aria-hidden>
-      <picture>
-        <source media="(max-width: 640px)" srcSet={backdrop.webpSm} type="image/webp" />
-        <source srcSet={backdrop.webp} type="image/webp" />
-        <img
-          src={backdrop.jpeg}
-          alt=""
-          width={backdrop.width}
-          height={backdrop.height}
-          decoding="async"
-          fetchPriority="high"
-          className="editorial-hero-image"
-        />
-      </picture>
-      <div className="editorial-hero-scrim" />
-    </div>
-  );
+/**
+ * The sky is the hero's only background: no still image sits behind it, so there
+ * is nothing to swap out when the shader arrives. A device that cannot give us a
+ * WebGL2 context gets the flat field instead of a photograph, and a visitor who
+ * asked for reduced motion gets one frame of the same sky rather than a loop.
+ */
+function canUseHeroWebGL(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(canvas.getContext("webgl2"));
+  } catch {
+    return false;
+  }
 }
 
 export function EditorialHero({ whitelistHref = WHITELIST_HREF }: EditorialHeroProps) {
-  const reducedMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const wordmarkY = useTransform(scrollYProgress, [0, 1], [0, 80]);
-  const wordmarkOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.35]);
-  const motionProps = reducedMotion
-    ? {}
-    : {
-        initial: { opacity: 0, y: 24 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1] as const },
+  const copyRef = useRef<HTMLDivElement>(null);
+  const scrollProgress = useRef(0);
+  const [useWebGL, setUseWebGL] = useState(false);
+  const [inView, setInView] = useState(true);
+  const reduced = prefersReducedMotion();
+  // Reduced motion still gets the sky, just not a moving one: one frame, drawn on
+  // demand, is the same composition with the loop removed.
+  const frameloop = reduced ? "demand" : inView ? "always" : "never";
+
+  useEffect(() => {
+    setUseWebGL(canUseHeroWebGL());
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero || !useWebGL) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(Boolean(entry?.isIntersecting));
+      },
+      { threshold: 0 },
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [useWebGL]);
+
+  useGSAP(
+    () => {
+      const hero = heroRef.current;
+      if (!hero || reduced) return;
+
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onUpdate: (self) => {
+          scrollProgress.current = self.progress;
+        },
+      });
+
+      const copy = copyRef.current;
+      if (copy) {
+        gsap.to(copy, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom 30%",
+            scrub: true,
+          },
+        });
+      }
+
+      const runIntro = () => {
+        const badge = hero.querySelector(".editorial-hero-badge");
+        const studio = hero.querySelector(".editorial-hero-studio");
+        const presents = hero.querySelector(".editorial-hero-presents");
+        const series = hero.querySelector(".editorial-hero-series");
+        const actions = hero.querySelector(".editorial-hero-actions");
+        const signal = hero.querySelector(".editorial-hero-signal-wrap");
+        const lede = hero.querySelector(".editorial-hero-lede");
+
+        const targets = [lede, badge, studio, presents, series, actions, signal].filter(
+          Boolean,
+        ) as Element[];
+        gsap.from(targets, {
+          y: 28,
+          opacity: 0,
+          duration: DUR.base,
+          ease: EASE,
+          stagger: 0.15,
+        });
       };
 
+      let introPlayed = false;
+      const onDone = () => {
+        if (introPlayed) return;
+        introPlayed = true;
+        runIntro();
+      };
+
+      window.addEventListener("preloader:done", onDone);
+      try {
+        if (sessionStorage.getItem("pl") === "1" || prefersReducedMotion()) {
+          onDone();
+        }
+      } catch {
+        onDone();
+      }
+
+      return () => {
+        window.removeEventListener("preloader:done", onDone);
+      };
+    },
+    { scope: heroRef },
+  );
+
   return (
-    <section id="top" ref={heroRef} className="editorial-hero">
-      <HeroBackdrop />
-
-      <div className="editorial-hero-copy page-shell">
-        <motion.p className="editorial-hero-lede" {...motionProps}>
-          {HERO.lede}
-        </motion.p>
-
-        <div className="editorial-hero-status">
-          <span className="editorial-hero-badge">{HERO.statusLabel}</span>
+    <section
+      id="top"
+      ref={heroRef}
+      className="editorial-hero"
+      style={{ position: "relative", overflow: "hidden" }}
+    >
+      {useWebGL ? (
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+          <Suspense fallback={null}>
+            <HeroCanvas scroll={scrollProgress} frameloop={frameloop} />
+          </Suspense>
         </div>
-      </div>
+      ) : null}
 
-      <div className="editorial-hero-wordmark-wrap page-shell">
-        <motion.div
-          className="editorial-hero-wordmark"
-          style={reducedMotion ? undefined : { y: wordmarkY, opacity: wordmarkOpacity }}
-          {...(reducedMotion
-            ? {}
-            : {
-                initial: { opacity: 0, y: "12%" },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 1, delay: 0.15, ease: [0.23, 1, 0.32, 1] as const },
-              })}
-        >
-          <p className="editorial-hero-studio">{STUDIO_NAME.replace(" Studio", "")}</p>
-          <p className="editorial-hero-studio-sub">Studio</p>
-          <p className="editorial-hero-series">{SERIES_NAME}</p>
-        </motion.div>
-      </div>
+      <HeroEmblem />
+      <div aria-hidden="true" className="hero-ridge" />
 
-      <div className="editorial-hero-panel-wrap page-shell">
-        <motion.div
-          className="editorial-hero-actions"
-          {...(reducedMotion
-            ? {}
-            : {
-                initial: { opacity: 0, y: 16 },
-                animate: { opacity: 1, y: 0 },
-                transition: { duration: 0.55, delay: 0.35 },
-              })}
-        >
-          <AppLink href={whitelistHref} className="btn btn-primary editorial-cta">
-            Postular
-          </AppLink>
-          <a href={DISCORD_URL} target="_blank" rel="noreferrer" className="btn btn-discord editorial-cta">
-            <DiscordIcon />
-            Discord
-          </a>
-        </motion.div>
-
-        <Panel title="Plazas · estreno" badge="LIVE" badgeClassName="text-success" className="editorial-status-panel">
-          <div className="space-y-4 p-4 sm:p-5">
-            <PlazasMeter compact />
-            <StatCounters />
-            <p className="font-term text-[0.7rem] leading-relaxed text-muted">{WHITELIST_INVITE_NOTE}</p>
-            <PremiereCountdown />
+      <div ref={copyRef} className="hero-content" data-speed="0.9">
+        <div className="editorial-hero-copy page-shell">
+          <p className="editorial-hero-lede">{HERO.lede}</p>
+          <div className="editorial-hero-status">
+            <span className="editorial-hero-badge">{HERO.statusLabel}</span>
           </div>
-        </Panel>
+        </div>
+
+        <div className="editorial-hero-wordmark-wrap page-shell">
+          <div className="editorial-hero-wordmark">
+            <p className="editorial-hero-studio">{STUDIO_NAME}</p>
+            <p className="editorial-hero-presents">{HERO.presentsLabel}</p>
+            <p className="editorial-hero-series" data-split="lines">
+              {SERIES_NAME}
+            </p>
+          </div>
+        </div>
+
+        <div className="editorial-hero-foot page-shell">
+          <div className="editorial-hero-actions">
+            <AppLink
+              href={whitelistHref}
+              className="editorial-btn editorial-btn-primary"
+              data-magnetic=""
+            >
+              Postular
+              <span aria-hidden> →</span>
+            </AppLink>
+            <a
+              href={DISCORD_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="editorial-btn editorial-btn-outline"
+              data-magnetic=""
+            >
+              Discord
+            </a>
+          </div>
+
+          <div className="editorial-hero-signal-wrap">
+            <EditorialHeroSignal />
+          </div>
+        </div>
       </div>
     </section>
   );
